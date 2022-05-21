@@ -1,5 +1,4 @@
-/*
- * timer.c
+/* timer.c
  *
  * Created: 16/5/2022 13:49:27
  *  Author: Lenovo

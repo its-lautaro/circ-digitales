@@ -9,17 +9,11 @@
 #ifndef RELOJ_H_
 #define RELOJ_H_
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include "lcd.h"
-#include "keypad.h"
+#include "utils.h"
 
 void RELOJinit();
-uint8_t leap(uint8_t );
-uint8_t maximo(uint8_t ,uint8_t );
-void actualizarFecha();
-void actualizarLCD();
-void RELOJupdate(volatile uint8_t*);
+void RELOJupdate();
+fecha RELOJgetTime();
+void RELOJsetTime(fecha);
 
 #endif /* RELOJ_H_ */
