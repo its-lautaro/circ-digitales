@@ -88,30 +88,37 @@ uint8_t KEYPAD_Scan(uint8_t *pkey) {
 	PORTD|=(1<<7);
 	return 0;
 }
-
-uint8_t KEYPAD_update(uint8_t *pkey) // Returns 0 if there is no key press
+/************************************************************************/
+/* La funcion KEYPAD_update evita el efecto rebote de manera no bloqueante, descartando
+pulsaciones dobles consecutivas de la misma tecla*/
+/************************************************************************/
+uint8_t KEYPAD_update(uint8_t *pkey)
 {
 	static uint8_t Old_key;
 	uint8_t Key;
-	static uint8_t Last_valid_key = 0xFF; // no hay tecla presionada. Tengo 2 variables para hacer 2 verificaciones
-
-	if (!KEYPAD_Scan(&Key)) // si devuelve un 0 no hay tecla presionada
+	static uint8_t Last_valid_key = 0xFF;
+	
+	//lee el teclado
+	if (!KEYPAD_Scan(&Key))
 	{
-		Old_key = 0xFF; // no hay tecla presionada
+		//si no se recibe una tecla se resetean los valores y se devuelve 0
+		Old_key = 0xFF;
 		Last_valid_key = 0xFF;
 		return 0;
 	}
-
+	
+	//Si la ultima tecla leida sigue presionada. Esto permite que se estabilice la señal del teclado.
 	if (Key == Old_key)
-	{ // 2da verificaci?n
-		if (Key != Last_valid_key)
-		{ // evita m?ltiple detecci?n
+	{
+		//verifica que no sea una pulsacion consecutiva y la valida
+		if (Key != Last_valid_key){
 			*pkey = Key;
 			Last_valid_key = Key;
 			return 1;
 		}
 	}
-
-	Old_key = Key; // 1era verificaci?n
+	
+	//Se detecta la primera pulsacion de la tecla
+	Old_key = Key;
 	return 0;
 }

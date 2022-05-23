@@ -8,10 +8,10 @@
 
 #include "reloj.h"
 
-//si bien el año es mostrado con dos cifras, consideramos necesario almacenarlo completo
-//para un calculo preciso del año bisiesto
 fecha actual;
-
+/************************************************************************/
+/* Inicializa el reloj configurando una fecha en tiempo de compilacion*/
+/************************************************************************/
 void RELOJinit(){
 	actual.day=31;
 	actual.mnth=12;
@@ -24,10 +24,6 @@ void RELOJinit(){
 
 /************************************************************************
 Actualiza todos los campos de la fecha actual, teniendo en cuenta los limites de cada rango
-Luego, si se esta editando la fecha, tambien actualiza la variable temporal 'modificada'
-exceptuando los campos que ya se hayan modificado y se esten modificando en ese momento.
-
-Para esto ultimo se basa en el estado actual de la MEF, pasado por argumento.
 ************************************************************************/
 void RELOJupdate(){
 	if(++actual.sec == 60){
@@ -47,11 +43,15 @@ void RELOJupdate(){
 		}
 	}
 }
-
+/************************************************************************/
+/* Actualiza el valor de la fecha al valor pasado por argumento.*/
+/************************************************************************/
 void RELOJsetTime(fecha new){
 	actual=new;
 }
-
+/************************************************************************/
+/* Devuele el valor actual de la fecha*/
+/************************************************************************/
 fecha RELOJgetTime(){
 	return actual;
 }

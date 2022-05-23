@@ -7,16 +7,16 @@
 
 /************************************************************************
 Utiliza el timer 1 de 16bits para lograr interrupciones cada 100ms
-Debe contar hasta 1562 con un prescaler de 1024 para este fin,
-logrando los 100ms con un error del orden 0.1;
+Debe contar hasta 25.000 con un prescaler de 64 para este fin,
+logrando interrupciones precisas de 100ms;
 ************************************************************************/
 void TIMERinit(){
-	// Configura el timer1 en modo CTC con prescaler 1024
+	// Configura el timer1 en modo CTC con prescaler 64
 	TCCR1A = 0;
 	TCCR1B = 0;
 	TCNT1  = 0;  //Inicializa el contador
-	TCCR1B |= (1 << WGM12)|(1<<CS10)|(1 << CS12);   // modo CTC, prescaler de 1024
-	OCR1A = 0x61A;	// configura el contador de comparacion para 1562
-	TIMSK1 |= (1 << OCIE1A);  // habilita interrupción por igualdade de comparación
+	TCCR1B |= (1 << WGM12)|(1<<CS11)|(1 << CS10);   // modo CTC, prescaler de 64
+	OCR1A = 0x61A8;	// configura el contador de comparacion para 25.000
+	TIMSK1 |= (1 << OCIE1A);  // habilita interrupción por igualdad de comparación
 	sei(); //habilita las interrupciones para el MCU
 }

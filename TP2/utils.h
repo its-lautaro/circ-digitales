@@ -12,6 +12,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+/************************************************************************/
+/* Modelo de la fecha y hora. Si bien el año es mostrado con dos digitos,
+internamente se almacena el año completo para poder realizar los
+calculos para años bisiestos de manera precisa*/
+/************************************************************************/
 typedef struct
 {
 	unsigned long year;

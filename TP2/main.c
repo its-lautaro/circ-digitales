@@ -1,7 +1,8 @@
 /*
  * TP2.c
+ * Reloj con fecha y hora que utiliza un display LCD de 2 líneas, un teclado matricial 4x4 y el Atmega328p.
+ * La implementación fue realizada con una maquina de estado finito, temporizada con Timer1.
  *
- * Created: 12/5/2022 14:00:39
  * Author : Adrian Barral, Lautaro La Vecchia
  */ 
 
@@ -35,7 +36,7 @@ int main(void)
 	}
 }
 
-// interrupción por igualdad de comparación en TIMER1 cada 100ms
+//Rutina de servicio para el timer que se activa "On Compare Match", definido en el timer a 100ms
 ISR(TIMER1_COMPA_vect)
 {
 	static uint8_t count=0;

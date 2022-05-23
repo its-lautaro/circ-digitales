@@ -1,8 +1,11 @@
 /*
  * MEF.c
  *
+ * Maquina de estado finito para modelar el funcionamiento del reloj. La MEF lee el teclado y permite modificar todos los campos de la fecha y hora.
+ * Tiene en cuenta años bisiestos.
+ 
  * Created: 21/5/2022 13:21:49
- *  Author: Lautaro
+ * Author: Adrian Barral, La Vecchia Lautaro
  */ 
 
 #include "MEF.h"
@@ -17,6 +20,10 @@ bool blink=false;
 
 fecha modificada;
 
+/************************************************************************/
+/*Inicializa la mef inicializando el display y el teclado 4x4. Setea el
+estado inicial*/
+/************************************************************************/
 void MEFinit(){
 	LCDinit();
 	LCDclr();
@@ -25,6 +32,12 @@ void MEFinit(){
 	estado=MOSTRAR;
 }
 
+/************************************************************************/
+/* La actualizacion de la MEF consiste en leer las entradas (el teclado 4x4)
+y en funcion de los estados realizar la transicion correspondiente.
+Se trata de una maquina de Mealy.
+                                                                    */
+/************************************************************************/
 void MEFupdate(){
 	switch (estado){
 		case MOSTRAR: count=10;
