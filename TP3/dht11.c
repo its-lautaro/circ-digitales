@@ -12,11 +12,15 @@
 * * * 8bit check sum. * * *
 */
 
+#define F_CPU 16000000UL
+#define DHT11_PIN PINC0
+
 #include "dht11.h"
 #include "utils.h"
-#define F_CPU 16000000UL
 #include <util/delay.h>
 #include <avr/io.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 uint8_t data[5];
 /*************************************************************************************************************************************************
@@ -52,7 +56,7 @@ uint8_t DHT11_read_byte(){
     uint8_t data = 0;  
     for(int i=0;i<8;i++){        
         while(~(PINC || ~(1<<DHT11_PIN))){}; //dht low
-        _delay_ms(30); //dht holds high 28us for 0
+        _delay_us(30); //dht holds high 28us for 0
         if(PINC && 1<<DHT11_PIN){  //dht high
             data = ((data<<1) | 1); 
         }
@@ -65,24 +69,26 @@ uint8_t DHT11_read_byte(){
 }
 
 uint8_t DHT11_read_data(float* hum, float* temp){
-    uint8_t buf[8];
+    char buf[8];
     uint8_t checksum = 0;
     DHT11_start();
     DHT11_response();
-    data[0] = DHT11_read_byte();   //humedad int
-    data[1] = DHT11_read_byte();   //humedad dec
-    data[2] = DHT11_read_byte();   //temp int
-    data[3] = DHT11_read_byte();   //temp dec
-    data[4] = DHT11_read_byte();   //checksum
+    data[0] = (char) DHT11_read_byte();   //humedad int
+    data[1] = (char) DHT11_read_byte();   //humedad dec
+    data[2] = (char) DHT11_read_byte();   //temp int
+    data[3] = (char) DHT11_read_byte();   //temp dec
+    data[4] = (char) DHT11_read_byte();   //checksum
     checksum = data[0] + data[1] + data[2] + data[3];
     
     //end listening
     DDRC |= 1<<DHT11_PIN;
     PORTC |= 1<<DHT11_PIN;
     
-    if (result == data[4]){
-        //construir resultado  
-        
+    if (checksum == data[4]){
+        sprintf(buf, "%2d.%1d",data[0],data[1]);
+        *hum = atof(buf);
+        sprintf(buf, "%2d.%1d",data[2],data[3]);
+        *temp = atof(buf);
         return 1;
     }
     else{
