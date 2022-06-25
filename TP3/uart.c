@@ -1,44 +1,51 @@
-/* UART.c
+/*
+* usart.c
 *
-* Author: lau
-*
+* Created : 15-08-2020 07:24:45 PM
+* Author  : Arnab Kumar Das
+* Website : www.ArnabKumarDas.com
 */
 
-#include "dht11.h"
-#include <avr/interrupt.h>
-void UARTinit(){
-		cli();
-		/* Configuración del USART como UART */
+#define F_CPU 16000000UL // Defining the CPU Frequency
 
-		// USART como UART
-		UCSR0C &=~ (1<<UMSEL00);
-		UCSR0C &=~ (1<<UMSEL01);
+#include <avr/io.h>      // Contains all the I/O Register Macros
+#include <util/delay.h>  // Generates a Blocking Delay
 
-		// Paridad desactivada
-		UCSR0C &=~ (1<<UPM00);
-		UCSR0C &=~ (1<<UPM01);
+#define USART_BAUDRATE 9600 // Desired Baud Rate
+#define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
-		// Stops = 1
-		UCSR0C &=~ (1<<USBS0);
+#define ASYNCHRONOUS (0<<UMSEL00) // USART Mode Selection
 
-		// Datos de 8 bits
-		UCSR0C |=  (1<<UCSZ00);
-		UCSR0C |=  (1<<UCSZ01);
-		UCSR0B &=~ (1<<UCSZ02);
-		
-		// Calculo del baudrate
-		UCSR0A |= (1<<U2X0);
-		UBRR0 = (F_CPU/8/9600) - 1;
+#define DISABLED    (0<<UPM00)
+#define EVEN_PARITY (2<<UPM00)
+#define ODD_PARITY  (3<<UPM00)
+#define PARITY_MODE  DISABLED // USART Parity Bit Selection
 
-		UCSR0B |= (1<<TXEN0);
-		UCSR0B |= (1<<RXEN0);
+#define ONE_BIT (0<<USBS0)
+#define TWO_BIT (1<<USBS0)
+#define STOP_BIT ONE_BIT      // USART Stop Bit Selection
 
-		UCSR0B |= (1<<RXCIE0);
+#define FIVE_BIT  (0<<UCSZ00)
+#define SIX_BIT   (1<<UCSZ00)
+#define SEVEN_BIT (2<<UCSZ00)
+#define EIGHT_BIT (3<<UCSZ00)
+#define DATA_BIT   EIGHT_BIT  // USART Data Bit Selection
 
-		sei();
+void UARTinit()
+{
+	// Set Baud Rate
+	UBRR0H = BAUD_PRESCALER >> 8;
+	UBRR0L = BAUD_PRESCALER;
+	
+	// Set Frame Format
+	UCSR0C = ASYNCHRONOUS | PARITY_MODE | STOP_BIT | DATA_BIT;
+	
+	// Enable Receiver and Transmitter
+	UCSR0B = (1<<RXEN0) | (1<<TXEN0);
 }
 
-void UARTsendString(char* str){
-    while(!(UCSR0A &(1<<UDRE0))){}; //esperar que el buffer este listo para transmitir
-	UDR0 = 0b00010000;
+void UART_TransmitPolling(uint8_t DataByte)
+{
+	while (( UCSR0A & (1<<UDRE0)) == 0) {}; // Do nothing until UDR is ready
+	UDR0 = DataByte;
 }

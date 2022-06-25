@@ -1,24 +1,15 @@
-/*
- * TP3.c
- *
- * Created: 23/6/2022 21:17:17
- * Author : USUARIO
- */ 
 
-#include <avr/io.h>
 
+#include <stdio.h>
 #include "dht11.h"
 #include "uart.h"
 
-
-
-
-int main(void){
-  char prueba[5]="hola\n";
-  UARTinit();
-  UARTsendString(prueba);
-  while (1){
-	  UARTsendString(prueba);
-  }
+int main(){
+	 UARTinit();
+	 
+	 while (1){
+		 UART_TransmitPolling('H');
+		 _delay_ms(50);
+	 }
+	 return 0;
 }
-
