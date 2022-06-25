@@ -17,10 +17,7 @@
 
 #include "dht11.h"
 #include "utils.h"
-#include <util/delay.h>
-#include <avr/io.h>
-#include <stdio.h>
-#include <stdlib.h>
+
 
 uint8_t data[5];
 /*************************************************************************************************************************************************
@@ -68,8 +65,7 @@ uint8_t DHT11_read_byte(){
     return data;
 }
 
-uint8_t DHT11_read_data(float* hum, float* temp){
-    char buf[8];
+uint8_t DHT11_read_data(char* hum, char* temp){
     uint8_t checksum = 0;
     DHT11_start();
     DHT11_response();
@@ -85,10 +81,8 @@ uint8_t DHT11_read_data(float* hum, float* temp){
     PORTC |= 1<<DHT11_PIN;
     
     if (checksum == data[4]){
-        sprintf(buf, "%2d.%1d",data[0],data[1]);
-        *hum = atof(buf);
-        sprintf(buf, "%2d.%1d",data[2],data[3]);
-        *temp = atof(buf);
+        sprintf(hum, "%d.%1d",data[0],data[1]);
+        sprintf(temp, "%d.%1d",data[2],data[3]);
         return 1;
     }
     else{

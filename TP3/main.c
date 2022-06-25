@@ -7,12 +7,18 @@
 
 #include <avr/io.h>
 
+#include "dht11.h"
+#include "uart.h"
 
-int main(void)
-{
-    /* Replace with your application code */
-    while (1) 
-    {
-    }
+
+
+
+int main(void){
+  char prueba[5]="hola\n";
+  UARTinit();
+  UARTsendString(prueba);
+  while (1){
+	  UARTsendString(prueba);
+  }
 }
 
