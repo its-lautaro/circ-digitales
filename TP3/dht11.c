@@ -29,28 +29,17 @@ Without the start signal from MCU, DHT11 will not give the response signal to MC
 Once data is collected, DHT11 will change to the lowpower-consumption mode until it receives a start signal from MCU again. 
 *************************************************************************************************************************************************/
 void DHT11_start(){
-    //DDRC |= 1<<DHT11_PIN; //output
-    //PORTC &= ~(1<<DHT11_PIN); //start signal
-    //_delay_ms(19);
-    //PORTC |= 1<<DHT11_PIN; //pull up and wait for response
-	//DDRC &= ~(1<<DHT11_PIN); //input
-    //while(PINC && (1<<DHT11_PIN)){}; //dht high
-		
-	DDRC |= (1<<DHT11_PIN);
-	PORTC &= ~(1<<DHT11_PIN);	/* set to low pin */
-	_delay_ms(20);			/* wait for 20ms */
-	PORTC |= (1<<DHT11_PIN);	/* set to high pin */	
+	DDRC |= (1<<DHT11_PIN); //output
+	PORTC &= ~(1<<DHT11_PIN);	//dht low
+	_delay_ms(20);			//hold 20ms
+	PORTC |= (1<<DHT11_PIN);	//dht high
 }
 
 void DHT11_response(){
-    //while(PINC && (1<<DHT11_PIN)){}; //wait for dht low
-    //while(~(PINC || ~(1<<DHT11_PIN))){}; //dht low
-    //while(PINC && 1<<DHT11_PIN){}; //dht high
-		
-	DDRC &= ~(1<<DHT11_PIN);
-	while(PINC & (1<<DHT11_PIN));
-	while((PINC & (1<<DHT11_PIN))==0);
-	while(PINC & (1<<DHT11_PIN));	
+	DDRC &= ~(1<<DHT11_PIN); //input
+	while(PINC & (1<<DHT11_PIN)); //wait for dht low
+	while((PINC & (1<<DHT11_PIN))==0); //dht low
+	while(PINC & (1<<DHT11_PIN)); //dht high
 }
 
 /*************************************************************************************************************************************************
@@ -62,15 +51,15 @@ and the length of the following high-voltage-level signal determines whether dat
 uint8_t DHT11_read_byte(){
     uint8_t data = 0;  
     for(int i=0;i<8;i++){        
-        while((PINC & (1<<DHT11_PIN)) == 0);  /* check received bit 0 or 1 */
-        _delay_us(30); //dht holds high 28us for 0
-        if(PINC & (1<<DHT11_PIN)){  //dht high
+        while((PINC & (1<<DHT11_PIN)) == 0);  //dht holds 0 before sending data
+        _delay_us(30);
+        if(PINC & (1<<DHT11_PIN)){  //if dht high lasted >30ms it's a 1
             data = ((data<<1) | 1); 
         }
         else{
             data = (data<<1);  
         }
-        while(PINC & (1<<DHT11_PIN));
+        while(PINC & (1<<DHT11_PIN)); //wait for dht low (next bit signal)
     }
     return data;
 }
@@ -79,10 +68,10 @@ uint8_t DHT11_read_data(char* hum, char* temp){
     uint8_t checksum = 0;
     DHT11_start();
     DHT11_response();
-    data[0] = DHT11_read_byte();   //humedad int
-    data[1] = DHT11_read_byte();   //humedad dec
-    data[2] = DHT11_read_byte();   //temp int
-    data[3] = DHT11_read_byte();   //temp dec
+    data[0] = DHT11_read_byte();   //humedad high byte
+    data[1] = DHT11_read_byte();   //humedad low byte
+    data[2] = DHT11_read_byte();   //temp high
+    data[3] = DHT11_read_byte();   //temp low
     data[4] = DHT11_read_byte();   //checksum
     checksum = data[0] + data[1] + data[2] + data[3];
     
