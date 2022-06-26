@@ -49,3 +49,11 @@ void UART_TransmitPolling(uint8_t DataByte)
 	while (( UCSR0A & (1<<UDRE0)) == 0) {}; // Do nothing until UDR is ready
 	UDR0 = DataByte;
 }
+
+void UART_TransmitString(char *msg)
+{
+	uint8_t i = 0;
+	for(i=0; i<strlen(msg); i++) {
+		UART_TransmitPolling(msg[i]);
+	}
+}
