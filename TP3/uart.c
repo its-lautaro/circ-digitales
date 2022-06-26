@@ -107,7 +107,15 @@ char *UART_GetComando()
 void UART_On()
 {
 	DHT11_read_data(hum, temp);
-	mensaje = "HOLA \r";
+
+	char msj[50];
+	strcat(msj,hum);
+	strcat(msj,"\r");
+	strcat(msj,temp);
+	strcat(msj,"\r");
+	
+	mensaje=msj;
+
 	SerialPort_TX_Interrupt_Enable();
 }
 
