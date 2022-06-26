@@ -6,10 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utils.h"
 
-uint8_t DHT11_read_data(char*, char*);
-uint8_t DHT11_read_byte();
-void DHT11_response();
-void DHT11_start();
+uint8_t DHT11_read_data(char *, char *);
+char *DHT11_getMessage();
 
 #endif
