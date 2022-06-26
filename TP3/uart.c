@@ -12,6 +12,8 @@
 #include <util/delay.h> // Generates a Blocking Delay
 #include <string.h>
 #include "serialPort.h"
+#include "dht11.h"
+
 #define USART_BAUDRATE 9600 // Desired Baud Rate
 #define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
@@ -36,6 +38,8 @@ static volatile uint8_t comando_flag = 0;
 static volatile uint8_t bienvenida_condicion = 1;
 static char bienvenida[] = "Bienvenido \r ON: para encender, OFF para apagar, RST para reiniciar \r";
 static char invalido[] = "Comando invalido \r";
+static char hum[5];
+static char temp[5];
 static char *mensaje;
 
 static char buffer[20];
@@ -102,8 +106,9 @@ char *UART_GetComando()
 
 void UART_On()
 {
-	DDRB = (1 << PB1);
-	SerialPort_RX_Interrupt_Enable();
+	DHT11_read_data(hum, temp);
+	mensaje = "HOLA \r";
+	SerialPort_TX_Interrupt_Enable();
 }
 
 // Apago el generador, configurando como entrada el PINB1 (OC1A)
@@ -111,7 +116,6 @@ void UART_On()
 
 void UART_Off()
 {
-	DDRB = (0 << PB1);
 	SerialPort_RX_Interrupt_Enable();
 }
 

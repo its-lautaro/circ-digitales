@@ -29,6 +29,7 @@ void SerialPort_TX_Interrupt_Disable(void);
 // Inicializacion de Receptor
 void SerialPort_RX_Enable(void);
 void SerialPort_RX_Interrupt_Enable(void);
+void SerialPort_RX_Interrupt_Disable(void);
 
 // Transmision
 void SerialPort_Wait_For_TX_Buffer_Free(void); // Pooling - Bloqueante hasta que termine de transmitir.

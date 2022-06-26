@@ -14,8 +14,6 @@ int main(void)
 
 	UARTinit(); // se inicializa la UART
 	// Timer1_Init(); // se inicializa el timer
-	char hum[5];
-	char temp[5];
 
 	sei(); // habilito las interrupciones
 	while (1)
