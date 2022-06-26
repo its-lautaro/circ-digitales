@@ -7,17 +7,16 @@
 int main()
 {
 	UARTinit();
-
-	char *hum = "";
-	char *temp = "";
-
+	char hum [5];
+	char temp [5];
+	
 	while (1)
 	{
-		uint8_t response = DHT11_read_data(hum, temp);
+		DHT11_read_data(hum,temp);
 		UART_TransmitString(hum);
-		UART_TransmitString("\n");
+		UART_TransmitString("\r");
 		UART_TransmitString(temp);
-		_delay_ms(50);
+		UART_TransmitString("\r");
 	}
 	return 0;
 }

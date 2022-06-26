@@ -10,7 +10,7 @@
 
 #include <avr/io.h>      // Contains all the I/O Register Macros
 #include <util/delay.h>  // Generates a Blocking Delay
-
+#include <string.h> 
 #define USART_BAUDRATE 9600 // Desired Baud Rate
 #define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
