@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="0">
-  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffffab0000000d000000d606000004040000</PLACEMENT>
+  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffffab0000000d000000d606000004040000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
   <PWI>
    <POPUP w="800" x="217" flags="00000002" y="150" h="200" pid="0" iid="-1">
     <PROPERTIES>
-     <ITEM name="Message Column Width">663</ITEM>
+     <ITEM name="Message Column Width">542</ITEM>
      <ITEM name="ShowGrid">No</ITEM>
      <ITEM name="Source Column Width">100</ITEM>
      <ITEM name="Time Column Width">120</ITEM>
@@ -32,10 +32,10 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="695" x="227" flags="00000000" y="158" h="453" pid="0" iid="4">
+   <POPUP w="695" x="349" flags="00008001" y="512" h="453" pid="0" iid="4">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="450" x="972" flags="00000022" y="488" h="250" pid="0" iid="3">
+   <POPUP w="450" x="1155" flags="00000023" y="387" h="250" pid="0" iid="3">
     <PROPERTIES>
      <ITEM name="AutoEcho">0</ITEM>
      <ITEM name="HexMode">0</ITEM>
@@ -104,7 +104,7 @@
      <ITEM name="TopLineAddress">00000020</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="600" x="217" flags="0000002a" y="150" h="400" pid="1" iid="1">
+   <POPUP w="600" x="58" flags="0000002b" y="151" h="400" pid="1" iid="1">
     <PROPERTIES>
      <ITEM name="CaseSensitive">No</ITEM>
      <ITEM name="DISPADDRS">Yes</ITEM>
