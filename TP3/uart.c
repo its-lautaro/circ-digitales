@@ -1,18 +1,4 @@
-/*
- * usart.c
- *
- * Created : 15-08-2020 07:24:45 PM
- * Author  : Arnab Kumar Das
- * Website : www.ArnabKumarDas.com
- */
-
-#define F_CPU 16000000UL // Defining the CPU Frequency
-
-#include <avr/io.h>		// Contains all the I/O Register Macros
-#include <util/delay.h> // Generates a Blocking Delay
-#include <string.h>
-#include "serialPort.h"
-#include "dht11.h"
+#include "uart.h"
 
 #define USART_BAUDRATE 9600 // Desired Baud Rate
 #define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
@@ -35,11 +21,9 @@
 #define DATA_BIT EIGHT_BIT // USART Data Bit Selection
 
 static volatile uint8_t comando_flag = 0;
-static volatile uint8_t bienvenida_condicion = 1;
 static char bienvenida[] = "Bienvenido \r ON: para encender, OFF para apagar, RST para reiniciar \r";
 static char invalido[] = "Comando invalido \r";
-static char hum[5];
-static char temp[5];
+
 static char *mensaje;
 
 static char buffer[20];
@@ -62,21 +46,9 @@ void UARTinit()
 	SerialPort_RX_Interrupt_Enable();
 }
 
-void UART_TransmitPolling(uint8_t DataByte)
+void UART_setMensaje(char *msg)
 {
-	while ((UCSR0A & (1 << UDRE0)) == 0)
-	{
-	}; // Do nothing until UDR is ready
-	UDR0 = DataByte;
-}
-
-void UART_TransmitString(char *msg)
-{
-	uint8_t i = 0;
-	for (i = 0; i < strlen(msg); i++)
-	{
-		UART_TransmitPolling(msg[i]);
-	}
+	mensaje = msg;
 }
 
 // retorno el valor del flag de comandos
@@ -101,22 +73,12 @@ char *UART_GetComando()
 	return buffer;
 }
 
-// Seteo la frecuencia con el valor recibido por parametro
-// y habilito las interrupciones para recepcion para que el serial port pueda recibir los mensajes del sensor
+// Habilito las interrupciones para recepcion para que el serial port pueda recibir los mensajes del sensor
 
 void UART_On()
 {
-	DHT11_read_data(hum, temp);
-
-	char msj[50];
-	strcat(msj,hum);
-	strcat(msj,"\r");
-	strcat(msj,temp);
-	strcat(msj,"\r");
-	
-	mensaje=msj;
-
-	SerialPort_TX_Interrupt_Enable();
+	TIMER_clearCount();
+	TIMER_Enable();
 }
 
 // Apago el generador, configurando como entrada el PINB1 (OC1A)
@@ -124,6 +86,7 @@ void UART_On()
 
 void UART_Off()
 {
+	TIMER_Disable();
 	SerialPort_RX_Interrupt_Enable();
 }
 
@@ -135,7 +98,6 @@ void UART_Reset()
 {
 	UART_Off();
 	mensaje = bienvenida;
-	bienvenida_condicion = 1;
 	SerialPort_TX_Interrupt_Enable();
 }
 // Seteo las condiciones para que se imprima el mensaje de error
@@ -144,7 +106,6 @@ void UART_Reset()
 void UART_Print_Error()
 {
 	mensaje = invalido;
-	bienvenida_condicion = 0;
 	SerialPort_TX_Interrupt_Enable();
 }
 

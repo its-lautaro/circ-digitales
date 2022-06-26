@@ -5,16 +5,13 @@
  *  Author: vfperri
  */
 
-#include "SerialPort.h"
+#include "serialPort.h"
 
 #define TX_BUFFER_LENGTH 32
 #define RX_BUFFER_LENGTH 32
 
 volatile static unsigned char TXindice_lectura = 0, TXindice_escritura = 0;
 volatile static unsigned char RXindice_lectura = 0, RXindice_escritura = 0;
-
-static char TX_Buffer[TX_BUFFER_LENGTH];
-static char RX_Buffer[RX_BUFFER_LENGTH];
 
 // Inicializaci�n de Puerto Serie
 void SerialPort_Init(uint8_t config)
@@ -155,108 +152,3 @@ void SerialPort_send_int16_t(int val, unsigned int field_length)
 	}
 }
 //*********
-
-void SerialPort_Write_Char_To_Buffer(char Data)
-{
-	// Write to the buffer *only* if there is space
-	if (TXindice_escritura < TX_BUFFER_LENGTH)
-	{
-		TX_Buffer[TXindice_escritura] = Data;
-		TXindice_escritura++;
-	}
-	else
-	{
-		// Write buffer is full
-		// Error_code = ERROR_UART_FULL_BUFF;
-	}
-}
-
-void SerialPort_Write_String_To_Buffer(char *STR_PTR)
-{
-	unsigned char i = 0;
-	while (STR_PTR[i] != '\0')
-	{
-		SerialPort_Write_Char_To_Buffer(STR_PTR[i]);
-		i++;
-	}
-}
-
-void SerialPort_Send_Char(char dato)
-{
-	SerialPort_Wait_For_TX_Buffer_Free(); // Espero a que el canal de transmisi�n este libre (bloqueante)
-	SerialPort_Send_Data(dato);
-}
-
-void SerialPort_Update(void)
-{
-	static char key;
-
-	if (UCSR0A & (1 << RXC0))
-	{ // Byte recibido. Escribir byte en buffer de entrada
-		if (RXindice_escritura < RX_BUFFER_LENGTH)
-		{
-			RX_Buffer[RXindice_escritura] = UDR0; // Guardar dato en buffer
-			RXindice_escritura++;				  // Inc sin desbordar buffer
-		}
-		// else
-		// Error_code = ERROR_UART_FULL_BUFF;
-	}
-	// Hay byte en el buffer Tx para transmitir?
-	if (TXindice_lectura < TXindice_escritura)
-	{
-		SerialPort_Send_Char(TX_Buffer[TXindice_lectura]);
-		TXindice_lectura++;
-	}
-	else
-	{ // No hay datos disponibles para enviar
-		TXindice_lectura = 0;
-		TXindice_escritura = 0;
-	}
-}
-
-char SerialPort_Get_Char_From_Buffer(char *ch)
-{
-	// Hay nuevo dato en el buffer?
-	if (RXindice_lectura < RXindice_escritura)
-	{
-		*ch = RX_Buffer[RXindice_lectura];
-		RXindice_lectura++;
-		return 1; // Hay nuevo dato
-	}
-	else
-	{
-		RXindice_lectura = 0;
-		RXindice_escritura = 0;
-		return 0; // No Hay
-	}
-}
-
-char SerialPort_Get_String_From_Buffer(char *string)
-{
-	char rxchar = 0;
-
-	do
-	{
-		if (SerialPort_Get_Char_From_Buffer(&rxchar))
-		{
-			*string = rxchar;
-			string++;
-		}
-		else
-		{
-			rxchar = '\n'; // empty string
-		}
-	} while (rxchar != '\n');
-	*string = '\0'; // End of String
-	return 1;
-}
-
-char SerialPort_Receive_data(char *dato)
-{
-	if ((UCSR0A & (1 << RXC0)) == 1)
-	{
-		*dato = UDR0;
-		return 1;
-	}
-	return 0; // no data
-}

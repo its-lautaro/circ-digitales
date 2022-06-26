@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "dht11.h"
 #include "uart.h"
+#include "timer.h"
+#include "serialPort.h"
 #include <avr/interrupt.h>
 void logicaDeAplicacion(char comando[]);
 int comparador(char palabra[]);
@@ -13,23 +15,23 @@ int main(void)
 {
 
 	UARTinit(); // se inicializa la UART
-	// Timer1_Init(); // se inicializa el timer
+	TIMERinit();
 
 	sei(); // habilito las interrupciones
 	while (1)
 	{
-		/*
-		DHT11_read_data(hum, temp);
-		UART_TransmitString(hum);
-		UART_TransmitString("\r");
-		UART_TransmitString(temp);
-		UART_TransmitString("\r");
-		*/
 		if (UART_HayComando()) // chequea comando_flag, 1-> hay comando, 0-> todavia no hay comando
 		{
 			strcpy(comando, UART_GetComando()); // recibo el comando desde la uart y lo copio en el string comando
 			UART_Set_False_Command_Flag();		// pongo el flag comando_flag en 0 porque ya lei del buffer
 			logicaDeAplicacion(comando);		// valido y ejecuto el comando
+		}
+
+		if (TIMER_get_flag_clk())
+		{
+			TIMER_set_flag_clk(0);
+			UART_setMensaje(DHT11_getMessage());
+			SerialPort_TX_Interrupt_Enable();
 		}
 	}
 	return 0;
@@ -40,8 +42,6 @@ int main(void)
 */
 void logicaDeAplicacion(char comando[])
 {
-
-	int nro = atoi(comando); // convierto el string a integer
 
 	int nroComando = comparador(comando);
 
