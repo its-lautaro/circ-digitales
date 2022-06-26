@@ -4,6 +4,6 @@
 
 void UARTinit();
 
-void UARTsendString(char* str);
+void UART_TransmitPolling(uint8_t DataByte);
 
 #endif
