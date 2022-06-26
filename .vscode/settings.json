@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "serialport.h": "c"
+    }
+}
