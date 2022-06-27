@@ -144,7 +144,8 @@ ISR(USART_UDRE_vect) // interrupci�n de transmisi�n
 	static volatile uint8_t i = 0;
 	// Transmito el el caracter en la posicion i del mensaje, si es un fin de linea se termina la transmicion
 	// y se deshabilitan las interrupciones por transmicion y se habilitan las interrupciones por recepcion
-
+	cli();
+	SerialPort_RX_Interrupt_Disable();
 	if (mensaje[i] != '\0')
 	{
 		SerialPort_Send_Data(mensaje[i]);
@@ -154,6 +155,7 @@ ISR(USART_UDRE_vect) // interrupci�n de transmisi�n
 	{
 		i = 0;
 		SerialPort_TX_Interrupt_Disable();
-		SerialPort_RX_Interrupt_Enable(); // Puede recibir para que se le manden mensajes
-	}
+	SerialPort_RX_Interrupt_Enable(); // Puede recibir para que se le manden mensajes
+	sei();
+}
 }

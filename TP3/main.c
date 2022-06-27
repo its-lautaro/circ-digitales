@@ -13,10 +13,9 @@ char comando[10];
 
 int main(void)
 {
-
+	_delay_ms(5000);
 	UARTinit(); // se inicializa la UART
 	TIMERinit();
-
 	sei(); // habilito las interrupciones
 	while (1)
 	{
@@ -32,7 +31,9 @@ int main(void)
 			TIMER_set_flag_clk(0);
 			UART_setMensaje(DHT11_getMessage());
 			SerialPort_TX_Interrupt_Enable();
+			
 		}
+	
 	}
 	return 0;
 }
