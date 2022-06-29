@@ -1,20 +1,9 @@
 /*
  * serialPort.h
- *
- * Created: 07/10/2020 03:02:42 p. m.
- *  Author: vfperri
  */
 
 #ifndef SERIALPORT_H_
 #define SERIALPORT_H_
-
-// ------------------- Includes ----------------------------
-
-// Archivo de cabecera del Microcontrolador
-#include <avr/io.h>
-
-// Interrupciones del Microcontrolador
-#include <avr/interrupt.h>
 
 // -------- Prototipos de funciones Publicas ---------------
 

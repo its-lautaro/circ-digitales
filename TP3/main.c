@@ -1,15 +1,17 @@
+/*
+* main.c
+*/
+#include "utils.h"
 
-
-#include <stdio.h>
 #include "dht11.h"
 #include "uart.h"
 #include "timer.h"
 #include "serialPort.h"
-#include <avr/interrupt.h>
+
 void logicaDeAplicacion(char comando[]);
 int comparador(char palabra[]);
 
-char comando[10];
+char comando[4]; //ON OFF RST
 
 int main(void)
 {
@@ -20,18 +22,22 @@ int main(void)
 	sei(); // habilito las interrupciones
 	while (1)
 	{
-		if (UART_HayComando()) // chequea comando_flag, 1-> hay comando, 0-> todavia no hay comando
+		if (UART_HayComando()) //leo flag UART
 		{
-			strcpy(comando, UART_GetComando()); // recibo el comando desde la uart y lo copio en el string comando
-			UART_Set_False_Command_Flag();		// pongo el flag comando_flag en 0 porque ya lei del buffer
+			cli();
+			strcpy(comando, UART_GetComando()); // recibo y guardo el comando desde la uart
+			UART_Set_False_Command_Flag();		// reseteo flag
 			logicaDeAplicacion(comando);		// valido y ejecuto el comando
+			sei();
 		}
 
-		if (TIMER_get_flag_clk())
+		if (TIMER_get_flag_clk()) //leo flag TIMER
 		{
+			cli();
 			TIMER_set_flag_clk(0);
 			UART_setMensaje(DHT11_getMessage());
 			SerialPort_TX_Interrupt_Enable();
+			sei();
 		}
 	}
 	return 0;

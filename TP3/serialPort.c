@@ -1,10 +1,8 @@
 /*
  * serialPort.c
- *
- * Created: 07/10/2020 03:02:18 p. m.
- *  Author: vfperri
  */
 
+#include "utils.h"
 #include "serialPort.h"
 
 #define TX_BUFFER_LENGTH 32
@@ -32,7 +30,7 @@ void SerialPort_TX_Enable(void)
 	UCSR0B |= (1 << TXEN0);
 }
 
-// Cuando habilito la trasmición de serial port, se habilita la recepción de USART (creo)
+// Cuando habilito la trasmición de serial port, se habilita la recepción de USART
 void SerialPort_TX_Interrupt_Enable(void)
 {
 	UCSR0B |= (1 << UDRIE0);

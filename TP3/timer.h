@@ -8,7 +8,6 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-#include <avr/interrupt.h>
 void TIMERinit(void);
 void TIMER_Enable(void);
 void TIMER_Disable(void);

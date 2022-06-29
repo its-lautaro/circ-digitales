@@ -1,8 +1,7 @@
-/* timer.c
- *
- * Created: 16/5/2022 13:49:27
- *  Author: Lenovo
+/*
+ * timer.c
  */
+#include "utils.h"
 #include "timer.h"
 
 static volatile uint8_t flagClk = 0;

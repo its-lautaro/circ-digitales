@@ -12,16 +12,16 @@
  * * * 8bit check sum. * * *
  */
 
-#define F_CPU 16000000UL
+
 #define DHT11_PIN PINC0
 
+#include "utils.h"
 #include "dht11.h"
 
 static uint8_t data[5];
 static char msj[50];
-static char cleanMsg[] = "";
-static char hum[5];
-static char temp[5];
+static char hum[50];
+static char temp[50];
 /*************************************************************************************************************************************************
 When MCU sends a start signal, DHT11 changes from the low-power-consumption mode to the running-mode, waiting for MCU completing the start signal.
 Once it is completed, DHT11 sends a response signal of 40-bit data that include the relative humidity and temperature information to MCU.
@@ -77,7 +77,7 @@ static uint8_t DHT11_read_byte()
     return data;
 }
 
-uint8_t DHT11_read_data(char *hum, char *temp)
+static uint8_t DHT11_read_data(char *hum, char *temp)
 {
     uint8_t checksum = 0;
     DHT11_start();
@@ -95,8 +95,8 @@ uint8_t DHT11_read_data(char *hum, char *temp)
 
     if (checksum == data[4])
     {
-        sprintf(hum, "%2d.%1d", data[0], data[1]);
-        sprintf(temp, "%2d.%1d", data[2], data[3]);
+        sprintf(hum, "Humedad Relativa: %2d.%1d", data[0], data[1]);
+        sprintf(temp, "Temperatura: %2d.%1d C", data[2], data[3]);
         return 1;
     }
     else
@@ -107,9 +107,8 @@ uint8_t DHT11_read_data(char *hum, char *temp)
 
 char *DHT11_getMessage()
 {
-    strcpy(msj, cleanMsg);
     DHT11_read_data(hum, temp);
-    strcat(msj, hum);
+    strcpy(msj,hum);
     strcat(msj, "\r");
     strcat(msj, temp);
     strcat(msj, "\r");

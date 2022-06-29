@@ -1,28 +1,10 @@
+#include "utils.h"
 #include "uart.h"
 
-#define USART_BAUDRATE 9600 // Desired Baud Rate
-#define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
-
-#define ASYNCHRONOUS (0 << UMSEL00) // USART Mode Selection
-
-#define DISABLED (0 << UPM00)
-#define EVEN_PARITY (2 << UPM00)
-#define ODD_PARITY (3 << UPM00)
-#define PARITY_MODE DISABLED // USART Parity Bit Selection
-
-#define ONE_BIT (0 << USBS0)
-#define TWO_BIT (1 << USBS0)
-#define STOP_BIT ONE_BIT // USART Stop Bit Selection
-
-#define FIVE_BIT (0 << UCSZ00)
-#define SIX_BIT (1 << UCSZ00)
-#define SEVEN_BIT (2 << UCSZ00)
-#define EIGHT_BIT (3 << UCSZ00)
-#define DATA_BIT EIGHT_BIT // USART Data Bit Selection
 
 static volatile uint8_t comando_flag = 0;
-static char bienvenida[] = "Bienvenido \r ON: para encender, OFF para apagar, RST para reiniciar \r";
-static char invalido[] = "Comando invalido \r";
+static char bienvenida[] = "Bienvenido\rON: para encender, OFF para apagar, RST para reiniciar\r";
+static char invalido[] = "Comando invalido\r";
 
 static char *mensaje;
 
@@ -73,21 +55,21 @@ char *UART_GetComando()
 	return buffer;
 }
 
-// Habilito las interrupciones para recepcion para que el serial port pueda recibir los mensajes del sensor
-
+/* Habilito las interrupciones para consultar al sensor*/
 void UART_On()
 {
 	TIMER_clearCount();
 	TIMER_Enable();
 }
 
-// Apago el generador, configurando como entrada el PINB1 (OC1A)
-// y habilito interrupciones por recepcion
 
+/*
+* Deshabilita consultas al sensor
+*/
 void UART_Off()
 {
-	TIMER_Disable();
-	SerialPort_RX_Interrupt_Enable();
+	TIMER_Disable(); //ya no se consultara al dht
+	SerialPort_RX_Interrupt_Enable(); // ?
 }
 
 // Retorno el generador a su estado por defecto
@@ -144,7 +126,7 @@ ISR(USART_UDRE_vect) // interrupci�n de transmisi�n
 	static volatile uint8_t i = 0;
 	// Transmito el el caracter en la posicion i del mensaje, si es un fin de linea se termina la transmicion
 	// y se deshabilitan las interrupciones por transmicion y se habilitan las interrupciones por recepcion
-
+ 
 	if (mensaje[i] != '\0')
 	{
 		SerialPort_Send_Data(mensaje[i]);
