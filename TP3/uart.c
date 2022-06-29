@@ -136,6 +136,7 @@ ISR(USART_UDRE_vect) // interrupci�n de transmisi�n
 	{
 		i = 0;
 		SerialPort_TX_Interrupt_Disable();
-		SerialPort_RX_Interrupt_Enable(); // Puede recibir para que se le manden mensajes
-	}
+	SerialPort_RX_Interrupt_Enable(); // Puede recibir para que se le manden mensajes
+	sei();
+}
 }

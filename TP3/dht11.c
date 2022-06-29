@@ -80,7 +80,8 @@ static uint8_t DHT11_read_byte()
 static uint8_t DHT11_read_data(char *hum, char *temp)
 {
     uint8_t checksum = 0;
-    DHT11_start();
+    cli();
+	DHT11_start();
     DHT11_response();
     data[0] = DHT11_read_byte(); // humedad high byte
     data[1] = DHT11_read_byte(); // humedad low byte
@@ -88,11 +89,10 @@ static uint8_t DHT11_read_data(char *hum, char *temp)
     data[3] = DHT11_read_byte(); // temp low
     data[4] = DHT11_read_byte(); // checksum
     checksum = data[0] + data[1] + data[2] + data[3];
-
     // end listening
     DDRC |= 1 << DHT11_PIN;
     PORTC |= 1 << DHT11_PIN;
-
+	sei();
     if (checksum == data[4])
     {
         sprintf(hum, "Humedad Relativa: %2d.%1d", data[0], data[1]);
@@ -105,7 +105,7 @@ static uint8_t DHT11_read_data(char *hum, char *temp)
     }
 }
 
-char *DHT11_getMessage()
+char* DHT11_getMessage()
 {
     DHT11_read_data(hum, temp);
     strcpy(msj,hum);

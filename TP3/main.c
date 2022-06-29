@@ -15,10 +15,9 @@ char comando[4]; //ON OFF RST
 
 int main(void)
 {
-
+	_delay_ms(5000);
 	UARTinit(); // se inicializa la UART
 	TIMERinit();
-
 	sei(); // habilito las interrupciones
 	while (1)
 	{
@@ -39,6 +38,7 @@ int main(void)
 			SerialPort_TX_Interrupt_Enable();
 			sei();
 		}
+	
 	}
 	return 0;
 }
