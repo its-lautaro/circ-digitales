@@ -120,6 +120,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="cli.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cli.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="dht11.c">
       <SubType>compile</SubType>
     </Compile>
@@ -127,12 +133,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="serialPort.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="serialPort.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="timer.c">
