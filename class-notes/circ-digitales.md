@@ -188,22 +188,195 @@ Para controlar los puertos de entrada salida se utilizan los registros:
 * *while( ADCSRA & (1<<ADIF) ));* **-->** loop_until_bit_is_clear (ADCSRA, ADIF);
   
 # Interrupciones
-a) Explique cuál es la secuencia de pasos que realiza el MCU cuando recibe una señal de pedido de
-interrupción. ¿cómo se retorna a la ejecución normal del programa?
-b) Explique para qué sirve el bit I que se encuentra en el SREG. ¿Cuál es el valor por defecto luego del
-RESET? ¿Cuáles son las instrucciones que permiten modificarlo?
-c) Explique que es un RESET, las distintas maneras por las que puede generarse y la función del registro
-MCU Status Register.
-d) Explique qué es la latencia de una interrupción y cuáles son los valores mínimos que puede tomar medida
-en ciclos de reloj.
-e) Explique qué entiende por interrupciones anidadas. ¿Es posible por defecto?
-f) Investigue sobre la configuración y el uso de los terminales de interrupción Externa (INTx). ¿Cuál es la
-diferencia entre configurar la interrupción por flanco o por nivel?
-g) Interrupciones desde los puertos de Entrada/Salida (PIN Change Interrupts).
- Describa que terminales I/O pueden generar interrupciones por cambio de estado
- Investigue como se configuran estas interrupciones en los puertos de Entrada/Salida
- Describa cuales son los vectores de interrupción asociados y sus prioridades relativas.
- Comente las diferencias más importantes con las interrupciones del punto f).
+La CPU de un microcontrolador ejecuta instrucciones secuencialmente, sin embargo, las aplicaciones requieren del uso de diferentes periféricos (internos o externos) y por lo tanto la CPU debe contar con un mecanismo
+para interactuar con ellos y dar respuesta adecuada a sus demandas.
+
+Los periféricos generalmente requieren la atención de la CPU de manera aleatoria en respuesta a algún evento. Para poder detectar estos eventos, la alternativa mas simple es la consulta o polling, en la que el CPU debe encargarse "manualmente" de preguntar al dispositivo si se produjo un evento que requiera su atencion. Esto es poco eficiente ya que gastamos ciclos de ejecucion del CPU en esperar a que se produzca un evento.
+
+Un enfoque distinto es permitir al dispositivo que avise a la CPU solo cuando requiera su atencion. De esta manera la CPU se independiza del dispositivo y puede utilizar esos ciclos de ejecucion que gastaba esperando en otra tarea mas productiva. Para esto se utilizan las interrupciones.
+
+Una interrupción es la ocurrencia de un evento producido por algún recurso del
+microcontrolador, que ocasiona la suspensión temporal del programa principal.
+La CPU atiende al evento con una función conocida como rutina de servicio a la
+interrupción (ISR, Interrupt Service Routine). Una vez que la CPU concluye con las
+instrucciones de la ISR, continúa con la ejecución del programa principal, regresando
+al punto en donde fue suspendida su ejecución.
+
+## Paso por paso
+El núcleo AVR cuenta con la **unidad de interrupciones**, un módulo que va a determinar
+si se tienen las condiciones para que ocurra una interrupción.
+Son tres las condiciones necesarias para que un recurso produzca una interrupción:
+* El habilitador global de interrupciones (bit I de ```SREG```) debe estar activado
+* El habilitador individual de la interrupción del recurso también debe estar activado
+* En el recurso debe ocurrir el evento esperado.
+
+Cuando el microcontrolador se enciende o reinicia, las interrupciones no están habilitadas,
+su habilitación requiere la puesta en alto del bit I de SREG y de los habilitadores
+individuales de los periféricos incorporados en el microcontrolador.
+
+Al generarse una interrupción, el ```PC``` es almacenado en la pila de datos y a continuacion toma el valor
+de una entrada en el vector de interrupciones (según sea la interrupción). Además de desactivar al bit I para no aceptar más interrupciones y finalizar con la instruccion bajo ejecucion en el momento de la interrupcion.
+
+La ISR debe colocarse en una dirección preestablecida por Hardware, la cual corresponde
+con un vector de interrupciones.
+
+Una rutina de atención a interrupciones es finalizada con la instrucción ```RETI```, con la
+cual el ```PC``` recupera el valor del tope de la pila y pone en alto nuevamente al bit I, para
+que la CPU pueda recibir más interrupciones. Ademas, se limpia la flag que genero la interrupcion inicialmente.
+
+## Vectores de interrupcion
+El grupo de localidades de memoria destinadas a guardar las direcciones de
+las RSI, se llama **“Tabla de Vectores de Interrupción”**
+
+El fabricante reserva direcciones de memoria especificas (llamadas vector) para cada interrupción **con una determinada prioridad dada por el orden que aparecen en la tabla**, en caso que se den varios pedidos de interrupción simultáneamente. El orden (y la prioridad) esta dado por el fabricante.
+
+El fabricante especifica donde disponer de esta tabla, en la mayoría de los uC está al principio de la memoria de programa FLASH o al final.
+
+El mecanismo de vector permite distinguir rápidamente entre múltiples
+pedidos de interrupción y determinar su origen para ejecutar a la RSI que
+corresponda. Para cada fuente de interrupción distinta debe existir **una sola RSI** asociada
+que pueda ejecutarse. El programador diseña la RSI que desea se ejecute en cada caso como si
+fuese una función especial.
+
+## RESET
+La inicialización o reset de un microcontrolador es fundamental para su operación
+adecuada, porque garantiza que sus registros internos van a tener un valor inicial
+conocido. Existen varias causas de RESET:
+
+* **Reset de Encendido (Power-on Reset):** El MCU es inicializado cuando el voltaje
+de la fuente está por abajo del voltaje de umbral de encendido (V<sub>POT</sub>), el cual tiene
+un valor típico de 2.3 V.
+* **Reset Externo:** El MCU es inicializado cuando un nivel bajo está presente en la terminal
+RESET por un tiempo mayor a 1.5 uS, que es la longitud mínima requerida (t<sub>RST</sub>).
+* **Reset por Watchdog:** El MCU es inicializado cuando se ha habilitado al Watchdog
+Timer y éste se ha desbordado.
+* **Reset por reducción de voltaje (Brown out):** Se inicializa al MCU cuando el
+detector de reducción de voltaje está habilitado y el voltaje de la fuente de
+alimentación está por debajo del umbral establecido (V<sub>BOT</sub>). El valor de V<sub>BOT</sub> es
+configurable a 2.7 V ó 4.0 V, y el tiempo mínimo necesario (t<sub>BOD</sub>) para considerar
+una reducción de voltaje es de 2 uS.
+* **Reset por JTAG:** El MCU es inicializado tan pronto como exista un 1 lógico en el
+Registro de Reset del Sistema JTAG.
+
+**NOTA:**  *JTAG hace referencia a una interfaz serial utilizada para la prueba de circuitos integrados y como medio para depurar sistemas empotrados*
+
+### MCU Status Register
+Puesto que hay diferentes causas de reinicio, los AVR incluyen al Registro de Estado
+y Control del MCU (```MCUCSR```) en el cual queda indicada la causa de reset por medio de una bandera. Los bits del registro MCUCSR son:
+
+* Bits 7, 6 y 5: No tienen relación con el reset del sistema, en el ATMega8 no están
+implementados.
+* Bit 4 – JTRF: Bandera de reinicio por JTAG. No está implementada en el ATMega8.
+* Bit 3 – WDRF: Bandera de reinicio por desbordamiento del Watchdog timer
+* Bit 2 – BORF: Bandera de reinicio por reducción de voltaje (Brown out)
+* Bit 1 – EXTRF: Bandera de reinicio desde la terminal de reset
+* Bit 0 – PORF: Bandera de reinicio por encendido
+
+## Latencia de interrupcion
+Es el tiempo que tarda el Controlador de interrupciones en dar respuesta a
+una interrupción, se mide desde que se recibe el pedido hasta que efectivamente se ejecuta la primer instrucción de la RSI correspondiente.
+
+En los AVR la latencia es de 4 ciclos de reloj como mínimo, durante este tiempo, se guarda el PC en la pila, se pone el bit I de ```SREG``` en 0 (desactiva la recepcion de otras interrupciones) y se busca el vector de
+interrupción de mayor prioridad que corresponda.
+
+En el caso en que el micro este en modo SLEEP, la latencia es de 8 ciclos.
+
+El retorno de la interrupción (RETI) tambien lleva 4 ciclos.
+
+## Interrupciones anidadas
+El anidamiento de interrupciones se da cuando una interrupcion puede interrumpir la rutina de atencion de otra interrupcion. Esto no esta permitido por defecto ya que al atender una rutina se desactivan las interrupciones, sin embargo puede permitirse este comportamiento manualmente si dentro de la rutina se vuelven a habilitar. Una interrupcion en curso solo puede ser interrumpida por otra interrupcion de mayor prioridad.
+
+El anidamiento de interrupciones **no es recomendable** ya que imposibilita la creacion de codigo que se ajuste bien a todas las combinaciones de interrupciones, reduciendo la posibilidad de predecir el comportamiento del sistema, es decir, se pierde confiabilidad ya que no se pueden testear todas las condiciones.
+
+## Interrupciones externas
+
+Las interrupciones externas sirven para detectar un estado lógico o un cambio de estado
+en alguna de las terminales de entrada de un microcontrolador, con su uso se evita un
+sondeo continuo en la terminal de interés. Son útiles para monitorear interruptores,
+botones o sensores con salida a relevador.
+
+En el ATMEGA328p hay dos terminales que pueden generar interrupciones de periféricos externos:
+
+* INT0 (PD2)
+* INT1 (PD3)
+
+Estas interrupciones se habilitan con el registro EIMSK – External Interrupt Mask Register. El tipo de activacion es configurable mediante el registro EICRA.
+
+<p style="text-align: center">
+<img src="./img/eimsk.png"/>
+<br/><i>Registro IMSK</i><br/>
+<img src="./img/ext-int.png"/>
+<br/><i>Registro EICRA</i><br/>
+</p>
+
+Las interrupciones externas pueden configurarse para detectar un nivel bajo de voltaje
+o una transición, ya sea por un flanco de subida o de bajada
+
+### Activacion Por Flanco vs. Por Nivel
+Si una interrupción funciona **por nivel** el periférico que la genera *“coloca y mantiene”* el nivel en la línea para que el uC atienda a esa petición. Durante la atención, el uC debería indicar al periférico externo, de algún modo, que ha sido atendido para que éste libere el nivel de la línea.
+* Notar que al no ser una “petición registrada”, si el nivel no está presente cuando las interrupciones están habilitadas, el pedido no será tenido en cuenta.
+* Por otro lado, si el periférico no retira el nivel de la línea, continuará solicitando interrupción
+indefinidamente.
+
+**Por lo tanto**, las interrupciones por nivel **no tienen memoria** y requieren de un aviso al
+periférico para que no se procese la misma interrupción múltiples veces.
+
+Si una interrupción funciona **por flanco** quiere decir que el periférico produce un
+flanco en la línea y este pedido queda registrado en un Flag (Flip Flop) pidiendo
+interrupción. Típicamente el uC borra este flag para indicar que esta interrupción ya
+ha sido atendida sin necesidad de comunicárselo al periférico.
+
+De esta manera, si las interrupciones están deshabilitas al momento de producirse el
+flanco, los pedidos quedan “pendientes” y serán atendidos por prioridad cuando se
+active la máscara de interrupción I.
+
+<p style="text-align: center">
+<img src="./img/nivel.png"/>
+<br/><i>Activacion por Nivel.</i><br/>
+<img src="./img/flanco.png"/>
+<br/><i>Activacion por Flanco. No hay Acknowledge.</i><br/>
+</p>
+
+## Interrupciones por Pin Change (PCINT)
+
+A diferencia de las interrupciones INT0 e INT1 que son capaces de distingar nivel alto, nivel bajo, flanco de subida y flanco de bajada, este tipo de interrupciones se disparan ante cualquier *cambio de nivel* sin distinguir el sentido.
+
+Los interrupciones Pin Change son habilitadas con el registro PCICR, y se habilitan para grupos de pines.
+<img src="./img/pcicr.png"/>
+
+* Bit PCIE0: Cuando esta activado (1) cualquier cambio en los pines PCI7..0 disparara una interrupcion. Los pines se enmascaran desde el registro PCMSK0. El vector de interrupcion asociado es PCINT0_vect.
+* Bit PCIE1: Cuando esta activado (1) cualquier cambio en los pines PCI14..8 disparara una interrupcion. Los pines se enmascaran desde el registro PCMSK1. El vector de interrupcion asociado es PCINT1_vect.
+* Bit PCIE2: Cuando esta activado (1) cualquier cambio en los pines PCI23..16 disparara una interrupcion.  Los pines se enmascaran desde el registro PCMSK2. El vector de interrupcion asociado es PCINT2_vect.
+
+<img src="./img/pcmsk.png"/>
+
+### Prioridades de atencion
+<table>
+<tr>
+    <th>Vector No.</th>
+    <th>Program Address</th>
+    <th>Source</th>
+    <th>Interrupt Definition</th>
+</tr>
+<tr>
+<td>4</td>
+<td>0x0006</td>
+<td>PCINT0</td>
+<td>Pin change interrupt request 0</td>
+</tr>
+
+<td>5</td>
+<td>0x0008</td>
+<td>PCINT1</td>
+<td>Pin change interrupt request 1</td>
+</tr>
+
+<td>6</td>
+<td>0x000A</td>
+<td>PCINT2</td>
+<td>Pin change interrupt request 2</td>
+</tr>
+</table>
 
 # Timer 0
 a) Describa los componentes principales del módulo TIMER0 y explique sus modos de funcionamiento.
