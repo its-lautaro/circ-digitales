@@ -1,65 +1,66 @@
 /*
  * cli.c
  *
- */ 
+ */
 
 #include "uart.h"
 #include "timer.h"
 #include "dht11.h"
 #include "cli.h"
 
-static volatile uint8_t flag = 0;
-static char bienvenida[] = "Bienvenido\rON: para encender, OFF para apagar, RST para reiniciar\r";
-static char invalido[] = "Comando invalido\r";
+static volatile uint8_t commandFlag = 0;
+static char welcome[] = "Bienvenido\rON: para encender, OFF para apagar, RST para reiniciar\r";
+static char invalid[] = "command invalido\r";
 
-void CLIinit(){
-	UART_sendMsg(bienvenida);
-}
-
-
-uint8_t CLI_GetFlag(){
-	return flag;
-};
-
-void CLI_cmd(char comando[])
+static int Get_Command(char command[])
 {
-
-	int nroComando = comparador(comando);
-
-	switch (nroComando) // evaluo si recibi un comando o un numero invalido
-	{
-		case 0: //on
-			flag=1;
-			UART_sendMsg(DHT11_getMessage());
-			TIMER_Enable();
-		break;
-		case 1: //off
-			flag=0;
-			UART_sendMsg("\rOff\r");
-			TIMER_Disable();
-		break; 
-		case 2: //reset
-			UART_sendMsg(bienvenida);		
-		break;
-		case 3: //comando invalido
-			UART_sendMsg(invalido);
-		break;
-	}
-}
-
-int comparador(char comando[])
-{
-	if (!strcmp(comando, "ON"))
+	if (!strcmp(command, "ON"))
 	{
 		return 0; // el comando es on
 	}
-	if (!strcmp(comando, "OFF"))
+	if (!strcmp(command, "OFF"))
 	{
 		return 1; // el comando es off
 	}
-	if (!strcmp(comando, "RST"))
+	if (!strcmp(command, "RST"))
 	{
 		return 2; // el comando es rst
 	}
-	return 3; // comando invalido
+	return 3; // comando invalid
+}
+
+void CLI_Init()
+{
+	UART_SendMsg(welcome);
+}
+
+uint8_t CLI_GetCommandFlag()
+{
+	return commandFlag;
+};
+
+void CLI_cmd(char command[])
+{
+
+	int nroCommand = Get_Command(command);
+
+	switch (nroCommand) // evaluo si recibi un comando o un numero invalido
+	{
+	case 0: // on
+		commandFlag = 1;
+		UART_SendMsg(DHT11_getMessage());
+		TIMER_Enable();
+		break;
+	case 1: // off
+		commandFlag = 0;
+		UART_SendMsg("\rOff\r");
+		TIMER_Disable();
+		break;
+	case 2: // reset
+		UART_SendMsg(welcome);
+		break;
+	case 3: // comando invalid
+		UART_SendMsg(invalid);
+		break;
+	}
 }

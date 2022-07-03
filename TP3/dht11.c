@@ -12,16 +12,15 @@
  * * * 8bit check sum. * * *
  */
 
-
 #define DHT11_PIN PINC0
 
 #include "utils.h"
 #include "dht11.h"
 
 static uint8_t data[5];
-static char msj[50];
-static char hum[50];
-static char temp[50];
+static char msg[50];
+static char humidity[50];
+static char temperature[50];
 /*************************************************************************************************************************************************
 When MCU sends a start signal, DHT11 changes from the low-power-consumption mode to the running-mode, waiting for MCU completing the start signal.
 Once it is completed, DHT11 sends a response signal of 40-bit data that include the relative humidity and temperature information to MCU.
@@ -30,7 +29,7 @@ Without the start signal from MCU, DHT11 will not give the response signal to MC
 
 Once data is collected, DHT11 will change to the lowpower-consumption mode until it receives a start signal from MCU again.
 *************************************************************************************************************************************************/
-static void DHT11_start()
+static void Start()
 {
     DDRC |= (1 << DHT11_PIN);   // output
     PORTC &= ~(1 << DHT11_PIN); // dht low
@@ -38,7 +37,7 @@ static void DHT11_start()
     PORTC |= (1 << DHT11_PIN);  // dht high
 }
 
-static void DHT11_response()
+static void Response()
 {
     DDRC &= ~(1 << DHT11_PIN); // input
     while (PINC & (1 << DHT11_PIN))
@@ -55,7 +54,7 @@ and the length of the following high-voltage-level signal determines whether dat
 * 0 -> 26-28us
 * 1 -> 70us
 **************************************************************************************************************************************************/
-static uint8_t DHT11_read_byte()
+static uint8_t ReadByte()
 {
     uint8_t data = 0;
     for (int i = 0; i < 8; i++)
@@ -77,26 +76,26 @@ static uint8_t DHT11_read_byte()
     return data;
 }
 
-static uint8_t DHT11_read_data(char *hum, char *temp)
+static uint8_t ReadData(char *humidity, char *temperature)
 {
     uint8_t checksum = 0;
     cli();
-	DHT11_start();
-    DHT11_response();
-    data[0] = DHT11_read_byte(); // humedad high byte
-    data[1] = DHT11_read_byte(); // humedad low byte
-    data[2] = DHT11_read_byte(); // temp high
-    data[3] = DHT11_read_byte(); // temp low
-    data[4] = DHT11_read_byte(); // checksum
+    Start();
+    Response();
+    data[0] = ReadByte(); // humidityedad high byte
+    data[1] = ReadByte(); // humidityedad low byte
+    data[2] = ReadByte(); // temperature high
+    data[3] = ReadByte(); // temperature low
+    data[4] = ReadByte(); // checksum
     checksum = data[0] + data[1] + data[2] + data[3];
     // end listening
     DDRC |= 1 << DHT11_PIN;
     PORTC |= 1 << DHT11_PIN;
-	sei();
+    sei();
     if (checksum == data[4])
     {
-        sprintf(hum, "Humedad Relativa: %2d.%1d", data[0], data[1]);
-        sprintf(temp, "Temperatura: %2d.%1d C", data[2], data[3]);
+        sprintf(humidity, "humedad Relativa: %2d.%1d", data[0], data[1]);
+        sprintf(temperature, "temperatura: %2d.%1d C", data[2], data[3]);
         return 1;
     }
     else
@@ -105,12 +104,12 @@ static uint8_t DHT11_read_data(char *hum, char *temp)
     }
 }
 
-char* DHT11_getMessage()
+char *DHT11_getMessage()
 {
-    DHT11_read_data(hum, temp);
-    strcpy(msj,hum);
-    strcat(msj, "\r");
-    strcat(msj, temp);
-    strcat(msj, "\r");
-    return msj;
+    ReadData(humidity, temperature);
+    strcpy(msg, humidity);
+    strcat(msg, "\r");
+    strcat(msg, temperature);
+    strcat(msg, "\r");
+    return msg;
 }
