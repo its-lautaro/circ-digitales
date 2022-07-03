@@ -1,142 +1,118 @@
-#include "utils.h"
 #include "uart.h"
 
-
-static volatile uint8_t comando_flag = 0;
-static char bienvenida[] = "Bienvenido\rON: para encender, OFF para apagar, RST para reiniciar\r";
-static char invalido[] = "Comando invalido\r";
-
-static char *mensaje;
-
-static char buffer[20];
+static char buffer_tx[10];
+static char buffer_rx[10];
+uint8_t cmd_flag=0;
 
 void UARTinit()
 {
-	// Set Baud Rate
+	//Establecer baud rate
 	UBRR0H = BAUD_PRESCALER >> 8;
 	UBRR0L = BAUD_PRESCALER;
 
-	// Set Frame Format
+	//Establecer formato de trama
 	UCSR0C = ASYNCHRONOUS | PARITY_MODE | STOP_BIT | DATA_BIT;
 
-	mensaje = bienvenida;
-
-	// Enable Receiver and Transmitter
+	/*Permitir que la USART sobreescriba la operacion normal en los pines TX y RX*/
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
-	UART_Off(); // apago el generador
-	SerialPort_TX_Interrupt_Enable();
-	SerialPort_RX_Interrupt_Enable();
+	//Activar interrupciones para la recepcion
+	UART_Enable_Rx();
+	UART_Enable_Tx();
 }
-
-void UART_setMensaje(char *msg)
-{
-	mensaje = msg;
-}
-
-// retorno el valor del flag de comandos
-uint8_t UART_HayComando()
-{
-	return comando_flag;
-}
-
-// Deshabilito el flag de comandos
-
-void UART_Set_False_Command_Flag()
-{
-	comando_flag = 0;
-}
-
-// Deshabilito las interrupciones para recepcion
-// y devuelvo el valor del buffer donde se guarda el comando
-
-char *UART_GetComando()
-{
-	SerialPort_RX_Interrupt_Disable();
-	return buffer;
-}
-
-/* Habilito las interrupciones para consultar al sensor*/
-void UART_On()
-{
-	TIMER_clearCount();
-	TIMER_Enable();
-}
-
 
 /*
-* Deshabilita consultas al sensor
+* Control de interrupciones de transmision y recepcion
 */
-void UART_Off()
-{
-	TIMER_Disable(); //ya no se consultara al dht
-	SerialPort_RX_Interrupt_Enable(); // ?
+void UART_Disable_Rx(){
+	UCSR0B &= ~(1 << RXCIE0);
 }
 
-// Retorno el generador a su estado por defecto
-// Apago el generador,
-// seteo las condiciones para que se imprima el mensaje de bienvenida
-// y habilito las interrupciones por transmicion
-void UART_Reset()
-{
-	UART_Off();
-	mensaje = bienvenida;
-	SerialPort_TX_Interrupt_Enable();
-}
-// Seteo las condiciones para que se imprima el mensaje de error
-// habilito interrupciones por transmicion para que se pueda escribir otro comando
-
-void UART_Print_Error()
-{
-	mensaje = invalido;
-	SerialPort_TX_Interrupt_Enable();
+void UART_Enable_Rx(){
+	UCSR0B |= (1 << RXCIE0);
 }
 
-ISR(USART_RX_vect) // interrupci�n de recepci�n
-{
+void UART_Disable_Tx(){
+	UCSR0B &= ~(1 << UDRIE0);
+}
 
+void UART_Enable_Tx(){
+	UCSR0B |= (1 << UDRIE0);
+}
+
+void UART_sendMsg(char *msg)
+{
+	strcpy(buffer_tx ,msg);
+	UART_Enable_Tx();
+}
+
+/*
+* Lee el buffer de la UART
+*/
+char *UART_ReadBuffer()
+{
+	return buffer_rx;
+}
+
+uint8_t UART_GetCmdFlag(){
+	return cmd_flag;
+}
+
+void UART_ClearCmdFlag(){
+	cmd_flag=0;
+}
+
+/*
+* Interrupcion de recepcion
+* Disparada por la UART cuando el buffer esta listo para ser leido
+*/
+ISR(USART_RX_vect)
+{
 	static volatile uint8_t i = 0;
 	unsigned char dato;
 
-	dato = UDR0; // leo dato del buffer de recepcion
+	dato = UDR0;
 
-	// leo datos hasta llegar al enter, en caso de leer el
-	// caracter de borrado se sobreescribe el caracter previo
-
+	/* Detectar fin de linea */
 	if (dato == '\r')
 	{
-		buffer[i] = '\0';
+		buffer_rx[i] = '\0';
 		i = 0;
-		comando_flag = 1;
-		SerialPort_RX_Interrupt_Disable(); // deshabilito las interrupciones ya que tengo una secci�n critica por mis variables compartidas 'buffer' y 'acci�nFlag'
+		cmd_flag=1;
+		UART_Disable_Rx();
 	}
+	/* Detectar borrado de caracter */
 	else
 	{
 		if (dato == '\b')
 			i--;
 		else
 		{
-			buffer[i] = dato;
+			buffer_rx[i] = dato;
 			i++;
 		}
 	}
 }
-
-ISR(USART_UDRE_vect) // interrupci�n de transmisi�n
+/*
+* The data register empty (UDREn) flag indicates whether the transmit buffer is ready to receive new data.
+This bit is set when the transmit buffer is empty, and cleared when the transmit buffer
+contains data to be transmitted that has not yet been moved into the shift register. 
+* Cargo el caracter de mensaje a enviar hasta alcanzar el fin del mensaje
+*/
+ISR(USART_UDRE_vect) 
 {
+	cli();
 	static volatile uint8_t i = 0;
-	// Transmito el el caracter en la posicion i del mensaje, si es un fin de linea se termina la transmicion
-	// y se deshabilitan las interrupciones por transmicion y se habilitan las interrupciones por recepcion
- 
-	if (mensaje[i] != '\0')
+	if (buffer_tx[i] != '\0')
 	{
-		SerialPort_Send_Data(mensaje[i]);
+		UDR0=buffer_tx[i];
 		i++;
 	}
 	else
 	{
 		i = 0;
-		SerialPort_TX_Interrupt_Disable();
-	SerialPort_RX_Interrupt_Enable(); // Puede recibir para que se le manden mensajes
+		//al no escribir el registro udr0 es necesario desactivar 
+		//las interrupciones para evitar que se produzca otra interrupcion
+		UART_Disable_Tx();
+	}
 	sei();
-}
 }

@@ -1,7 +1,6 @@
 /*
  * timer.c
  */
-#include "utils.h"
 #include "timer.h"
 
 static volatile uint8_t flagClk = 0;
@@ -32,14 +31,14 @@ void TIMER_Disable()
 	TIMSK1 &= ~(1 << OCIE1A); // deshabilita interrupci�n
 }
 
-uint8_t TIMER_get_flag_clk()
+uint8_t TIMER_GetClkFlag()
 {
 	return flagClk;
 }
 
-void TIMER_set_flag_clk(uint8_t flag)
+void TIMER_ClearClkFlag()
 {
-	flagClk = flag;
+	flagClk = 0;
 }
 
 void TIMER_clearCount()
@@ -55,6 +54,6 @@ ISR(TIMER1_COMPA_vect)
 	if (count == 10)
 	{
 		count = 0;
-		TIMER_set_flag_clk(1);
+		flagClk=1;
 	}
 }

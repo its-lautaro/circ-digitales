@@ -2,10 +2,6 @@
 
 #define UART_H
 
-#include "serialPort.h"
-#include "dht11.h"
-#include "timer.h"
-
 #define USART_BAUDRATE 9600 // Desired Baud Rate
 #define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
@@ -20,13 +16,16 @@
 #define EIGHT_BIT (3 << UCSZ00)
 #define DATA_BIT EIGHT_BIT // USART Data Bit Selection
 
+#include "utils.h"
+
 void UARTinit();
-uint8_t UART_HayComando();
-void UART_Set_False_Command_Flag();
-char *UART_GetComando();
-void UART_On();
-void UART_Off();
-void UART_Reset();
-void UART_Print_Error();
-void UART_setMensaje(char *);
+void UART_sendMsg(char *msg);
+char *UART_ReadBuffer();
+uint8_t UART_GetCmdFlag();
+void UART_ClearCmdFlag();
+void UART_Disable_Rx();
+void UART_Enable_Rx();
+void UART_Disable_Tx();
+void UART_Enable_Tx();
+
 #endif

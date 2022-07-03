@@ -7,11 +7,11 @@
 
 #ifndef TIMER_H_
 #define TIMER_H_
-
+#include "utils.h"
 void TIMERinit(void);
 void TIMER_Enable(void);
 void TIMER_Disable(void);
-uint8_t TIMER_get_flag_clk(void);
-void TIMER_set_flag_clk(uint8_t);
+uint8_t TIMER_GetClkFlag(void);
+void TIMER_ClearClkFlag();
 void TIMER_clearCount();
 #endif /* TIMER_H_ */
