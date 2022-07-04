@@ -11,7 +11,7 @@ Utiliza el timer 1 de 16bits para lograr interrupciones cada 100ms
 Debe contar hasta 25.000 con un prescaler de 64 para este fin,
 logrando interrupciones precisas de 100ms;
 ************************************************************************/
-void TIMERinit()
+void TIMER_init()
 {
 	// Configura el timer1 en modo CTC con prescaler 64
 	TCCR1A = 0;
@@ -41,7 +41,7 @@ void TIMER_ClearClkFlag()
 	flagClk = 0;
 }
 
-void TIMER_clearCount()
+void TIMER_ClearCount()
 {
 	count = 0;
 }
@@ -54,6 +54,6 @@ ISR(TIMER1_COMPA_vect)
 	if (count == 10)
 	{
 		count = 0;
-		flagClk=1;
+		flagClk = 1;
 	}
 }

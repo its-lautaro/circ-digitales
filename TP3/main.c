@@ -1,6 +1,6 @@
 /*
-* main.c
-*/
+ * main.c
+ */
 #include "utils.h"
 
 #include "dht11.h"
@@ -10,27 +10,26 @@
 
 int main(void)
 {
-	UARTinit();
-	TIMERinit();
-	CLIinit();
-	
+	UART_Init();
+	TIMER_init();
+	CLI_Init();
+
 	sei();
-	
+
 	while (1)
 	{
-		if (UART_GetCmdFlag()) //Recibo un comando
+		if (UART_GetCmdFlag()) // Recibo un comando
 		{
 			UART_ClearCmdFlag();
 			CLI_cmd(UART_ReadBuffer());
 			UART_Enable_Rx();
 		}
 
-		if ( CLI_GetFlag() && TIMER_GetClkFlag() )
+		if (CLI_GetCommandFlag() && TIMER_GetClkFlag())
 		{
 			TIMER_ClearClkFlag();
-			UART_sendMsg(DHT11_getMessage());
+			UART_SendMsg(DHT11_getMessage());
 		}
-	
 	}
 	return 0;
 }
