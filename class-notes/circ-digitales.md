@@ -59,16 +59,26 @@
   - [8.3. Implementación en C](#83-implementación-en-c)
     - [8.3.1. Usando switch-case](#831-usando-switch-case)
     - [8.3.2. Usando punteros a función](#832-usando-punteros-a-función)
-- [9. Timer 2. RTC. Watchdog Timer.](#9-timer-2-rtc-watchdog-timer)
-- [10. Planificacion de tareas](#10-planificacion-de-tareas)
-- [11. Timer 1 Input Capture. Output Compare.](#11-timer-1-input-capture-output-compare)
-- [12. Generacion y distribucion de reloj](#12-generacion-y-distribucion-de-reloj)
-- [13. Timer 1. Input Capture. Output Compare](#13-timer-1-input-capture-output-compare)
-- [14. USART](#14-usart)
-- [15. Arquitectura Background/Foreground](#15-arquitectura-backgroundforeground)
-- [16. Drivers. Modelo Productor/Consumidor.](#16-drivers-modelo-productorconsumidor)
-- [17. Protocolo SPI. I2C](#17-protocolo-spi-i2c)
-- [18. PWM](#18-pwm)
+- [9. Timer 2. RTC](#9-timer-2-rtc)
+- [10. Watchdog Timer](#10-watchdog-timer)
+- [11. Planificación y Ejecución de Tareas en Sistemas Embebidos](#11-planificación-y-ejecución-de-tareas-en-sistemas-embebidos)
+  - [11.1. Super-Loop o Round Robin Cíclico](#111-super-loop-o-round-robin-cíclico)
+  - [11.2. Foreground/Background o Event-Driven](#112-foregroundbackground-o-event-driven)
+  - [11.3. Time-triggered (disparadas por tiempo)](#113-time-triggered-disparadas-por-tiempo)
+  - [11.4. Resumen](#114-resumen)
+- [12. RTOS (Real Time Operative System)](#12-rtos-real-time-operative-system)
+  - [12.1. Scheduler](#121-scheduler)
+  - [12.2. Modelo de tarea](#122-modelo-de-tarea)
+  - [12.3. Componentes de un RTOS simple](#123-componentes-de-un-rtos-simple)
+- [13. Timer 1](#13-timer-1)
+  - [13.1. Input Capture](#131-input-capture)
+  - [13.2. Output Compare](#132-output-compare)
+- [14. Generacion y distribucion de reloj](#14-generacion-y-distribucion-de-reloj)
+- [15. USART](#15-usart)
+- [16. Arquitectura Background/Foreground](#16-arquitectura-backgroundforeground)
+- [17. Drivers. Modelo Productor/Consumidor.](#17-drivers-modelo-productorconsumidor)
+- [18. Protocolo SPI. I2C](#18-protocolo-spi-i2c)
+- [19. PWM](#19-pwm)
 
 # 2. Lenguaje C
 ## 2.1. Modificadores de acceso
@@ -752,35 +762,201 @@ void fS1(void){
 
 ```
 
-# 9. Timer 2. RTC. Watchdog Timer.
+# 9. Timer 2. RTC
+La única diferencia entre el Timer0 y el Timer2 es la siguiente:
 
-# 10. Planificacion de tareas
-a) Explique en qué consiste un esquema de planificación cooperativo con interrupción periódica de timer.
-b) Determine el periodo de la interrupción para la planificación de tres tareas periódicas x(), y(), z() con
-períodos 10, 25 y 50ms respectivamente. ¿Qué condiciones tiene que asumir para que el funcionamiento del
-sistema esté garantizado y sea confiable?
-c) Explique mediante pseudocódigo como implementar el planificador y despachador de las tareas y muestre
-con un diagrama temporal un ejemplo de la ejecución de las mismas.
-d) En el caso de que haya superposición de tareas en el mismo tick de sistema, explique cómo puede hacerse
-la planificación del inciso b) para que no haya superposición en la ejecución de x(), y(), z().
-e) Explique qué entiende por modularización de software y qué ventajas tiene.
-f) Explique la manera de modularizar archivos en C a partir del concepto de clases tomado de la P.O.O.
-g) Explique cómo se emplea el modificador static con las funciones, variables y constantes para
-modularizar un programa en C.
-h) Explique que son las funciones privadas y las funciones públicas de un módulo, de un ejemplo de
-implementación de cada una
+* El Timer0 puede ser alimentado por <mark>una señal de reloj externa</mark> a traves del <mark>pin T0</mark>.
 
-# 11. Timer 1 Input Capture. Output Compare.
+* El Timer2 puede ser alimentado una señal de reloj externa <mark>asíncrona</mark> a traves de los pines <mark>TOSC1 y TOSC2</mark>. Esto quiere decir que puede ser alimentado por un <mark>cristal oscilador</mark> completamente diferente e independiente al de la CPU, de hasta 32kHZ
 
-# 12. Generacion y distribucion de reloj
-a) Explique cuáles son las posibles fuentes de reloj y sus rangos de frecuencia para que funcione el MCU.
-b) Explique cómo se distribuyen internamente las señales de reloj para la CPU y los distintos periféricos
-según las diferentes opciones (diagrama en bloques de la distribución interna de las señales de reloj).
-c) Investigue sobre cómo utilizar la biblioteca de funciones de bajo consumo (sleep.h).
-d) Explique cuál es la configuración del reloj del sistema dispuesta desde fábrica y que tolerancia tiene la
-frecuencia del mismo
+Una de las cosas que permite el modo asíncrono del Timer2 es la implementación de un **Real-Time-Clock**, que puede contar segundos, minutos, horas, días, meses, indistintamente de lo que este haciendo la CPU o el Oscilador principal. Esto permite que la CPU pueda entrar en modo Sleep mientras que el Timer2 continua contando y solo despierta a la CPU ante un evento de Overflow para incrementar el contador necesario
 
-# 13. Timer 1. Input Capture. Output Compare
+<table>
+  <tr>
+    <th>Timer0</th>
+    <th>Timer2</th>
+  </tr>
+  <tr>
+    <td><img src="./img/timer0.png"/></td>
+    <td><img src="./img/timer2.png"/></td>
+  </tr>
+</table>
+
+# 10. Watchdog Timer
+El Watchdog timer es un mecanismo de protección ante fallas de software o hardware, básicamente cuenta pulsos de reloj hasta un valor programable y genera una interrupción o un reset cuando alcanza dicho valor; por lo tanto, el software debe reiniciar el contador utilizando la instrucción WDR antes que este alcance la cantidad establecida (o time out). Si por algún motivo el software no reinicia el contador a tiempo se genera una interrupción o un reset.
+
+En modo interrupción puede utilizarse como despertador (wake-up) de un modo de bajo consumo o para limitar el máximo tiempo permitido para una operación dada.
+
+El modo reset se utiliza para reiniciar el sistema ante bloqueos permanentes o código “colgado”
+
+El modo combinado interrupción y reset se utiliza para “guardar el contexto crítico” ante una supuesta falla (safe shutdown). Para configurarlo y activarlo hay que seguir una secuencia segura para evitar activación ocacional.
+
+Este timer se alimenta con un oscilador interno separado de 128kHz. Cuenta con un Prescaler que permite configurar el "*time-out*" a distintos valores (16 ms - 8.0 s)
+
+<p style="text-align:center"><img src="./img/wdt.png"/></p>
+
+# 11. Planificación y Ejecución de Tareas en Sistemas Embebidos
+
+## 11.1. Super-Loop o Round Robin Cíclico
+En este tipo de planificación es dificil temporizar la ejecución ya que las distintas tareas se ejecutaran unicamente después de terminar la previa, que puede tener una duración variable.
+```c
+/*------------------------------------------------------------------*-
+Main.C
+------------------------------------------------------------------
+Architecture of a simple Super Loop application
+-*------------------------------------------------------------------*/
+#include "x.h"
+#include "y.h"
+#include "z.h"
+/*------------------------------------------------------------------*/
+void main(void){
+  X_Init(); // Preparar la tarea X y las condiciones iniciales
+  Y_Init(); // Preparar la tarea Y y las condiciones iniciales
+  Z_Init(); // Preparar la tarea Z y las condiciones iniciales
+  while(1){ // Super Loop
+    X(); // Ejecutar la tarea X.
+    Y(); // Ejecutar la tarea Y
+    Z(); // Ejecutar la tarea Z
+  }
+}
+```
+## 11.2. Foreground/Background o Event-Driven
+Cada interrupción corresponde a un evento asociado a una tarea específica (múltiples interrupciones). La ejecución de las tareas depende de que el evento ocurra.
+
+Las tareas que se ejecutan en el super-loop se denominan tareas de background y se ejecutan en función de los eventos asociados a las interrupciones.
+
+Las ISR para manejar los eventos asincrónicos se denominan tareas en foreground (también se pueden pensar como hilos de ejecución). Estas ISR deben ser de corta duración, generalmente activan flags o cambian variables de estado de las tareas, para determinar qué procesamiento debe hacerse para ese evento.
+
+El comportamiento No es determinístico. La ISR cambia el flag pero la tarea se procesa cuando le toque el turno en el loop y si no hay otras interrupciones pendientes. Podría darse el caso (es probable) de tener interrupciones simultáneas con lo cual alguna deberá “esperar” a ser atendida, según la prioridad.
+
+La modificación de una tarea de background afecta la temporización de las demás (poca flexibilidad y escalabilidad). Se deben usar funciones “no bloqueantes”.
+
+La comunicación entre el lazo principal (Background task) y las ISR (foreground Task) debe realizarse por medio de variables globales y estas variables de comunicación se convierten en Recursos Compartidos.
+
+Si dos o más tareas acceden simultáneamente a un recurso compartido, el código de acceso al mismo se convierte en una sección crítica de código y deben tomarse medidas por ejemplo deshabilitar las interrupciones.
+
+Administrar los modos de bajo consumo en está arquitectura es complejo ya que debe garantizarse que la CPU ha realizado todas las operaciones de Background y foreground antes de entrar en modo sleep
+
+```c
+void main(void) {
+  X_Init();
+  Y_Init();
+  Z_Init();
+  sei(); // Globally enable interrupts
+  while(1) {
+    if (Flag_Z) {
+      Z(); //if event Z ocurred->process event Z
+      Flag_Z =0; }
+    if (Flag_Y) {
+      Y(); // if event Y ocurred->process event Y
+      Flag_Y =0; }
+    if (Flag_X) {
+      X(); // if event X ocurred->process event X
+      Flag_X =0; }
+    }
+}
+```
+
+```c
+/* ------------------------ISR Event X--------------------- */
+ISR ( Event_X ){
+  Flag_X =1; //event X has ocurred
+}
+/* ------------------------ISR Event Y--------------------- */
+ISR ( Event_Y ){
+  Flag_Y =1; //event Y has ocurred
+}
+/* ------------------------ISR Event Z--------------------- */
+ISR ( Event_Z ){
+  Flag_Z =1; //event Z has ocurred
+}
+```
+
+## 11.3. Time-triggered (disparadas por tiempo)
+Estas serán tareas planificadas por una única interrupción periódica de Timer comúnmente llamada RTI (Real Time Interrupt). La RTI es la única “base de tiempo” del sistema para temporizar una o más tareas y el manejo de los eventos asincrónicos de los periféricos se realiza exclusivamente por encuesta (polling) periódica.
+
+Cada vez que ocurre la interrupción es como una marca de tiempo o Tick del sistema, que permite planificar que tarea corresponde ejecutar. Cuando la CPU no tenga que ejecutar tareas (zona IDLE) podemos poner el MCU en bajo consumo (SLEEP) hasta el próximo tick y ahorrar energía.
+
+## 11.4. Resumen
+<table>
+  <tr>
+    <th>Super Loop</th>
+    <th>Background/Foreground</th>
+    <th>Time-Triggered</th>
+  </tr>
+
+  <tr>
+    <td>
+      <ul>
+        <li>Simple</li>
+        <li>Control x polling</li>
+        <li>Sin interrupciones</li>
+        <li>Temporización por retardos bloqueantes</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Las tareas se ejecutan en respuestas a eventos asincrónicos (múltiples interrupciones)</li>
+        <li>Difícil de predecir para todas las circunstancias</li>
+        <li>Problemas de recursos compartidos (secciones críticas)</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Única interrupción RTI</li>
+        <li>Los periféricos se utilizan por polling periódico</li>
+        <li>Cooperativo</li>
+        <li>Más confiable para aplicaciones de tiempo real y críticas porque es predecible</li>
+      </ul>
+    </td>  
+  </tr>
+</table>
+
+# 12. RTOS (Real Time Operative System)
+Un sistema operativo de tiempo real es un sistema operativo que provee respuestas a determinados eventos con un “tiempo de respuesta acotado”.
+
+Típicamente, las tareas tienen plazos (deadlines) que son valores de tiempo físico en los cuales se debe completar. Más generalmente, los programas en tiempo real pueden tener todo tipo de restricciones de tiempo, no solo deadlines por ejemplo, puede requerirse que una tarea se ejecute **no antes** de un momento determinado o puede requerirse que se ejecute **no más de una cantidad de tiempo después** de que se ejecute otra tarea, o se le puede solicitar que se ejecute **periódicamente** con un período específico. Las tareas pueden ser dependientes unas de otras y pueden actuar cooperativamente o pueden ser independientes (excepto que todas comparten los recursos del MCU).
+
+En un contexto multitareas donde hay más tareas que CPU o tareas que deben ejecutarse en un tiempo preciso es necesaria la planificación de tareas (**Task scheduling**).
+
+## 12.1. Scheduler
+Un planificador (Scheduler) decide cual es la siguiente tarea a ejecutar en el instante de tiempo que la CPU se libera. El planificador puede ser:
+
+* Estatico: Se decide el orden y tiempo de ejecución en el diseño.
+* Dinámico: Se decide que tarea ejecutar en tiempo de ejecución.
+  
+* Preemptive: Puede tomar la decisión de detener la ejecución de una tarea y comenzar la ejecución de otra, aún cuando la anterior no haya finalizado.
+* Non-preemptive: Permite a las tareas ejecutarse hasta terminar (run to completion) antes de asignar tiempo de CPU a otra tarea.
+
+El planificador puede utilizar la prioridad de una tarea para decidir cuando corresponde su ejecución. Las tareas pueden tener prioridades fijas o pueden alterarse durante la ejecución de programa.
+
+Un **preemptive priority-based scheduler** siempre ejecuta la tarea habilitada de mayor prioridad mientras que un **non-preemptive priority-based** scheduler usa la prioridad para decidir que tarea corresponde ejecutar luego de que la tarea actual finalice su ejecución y nunca interrumpe la ejecución de una tarea por otra.
+
+## 12.2. Modelo de tarea
+
+* Release time: o también tiempo de despacho, es el tiempo a partir del cual la tarea está habilitada para ejecutarse
+* Start time: inicio de la ejecución
+* Preemption time: la tarea fue suspendida para ejecutar otra
+* Resumption time: la tarea fue reanudada
+* Finish time: la tarea finalizó su ejecución
+* Deadline: es la restricción de tiempo en el cual la tarea debe completarse. Muchas veces esta limitación proviene de las restricciones físicas impuestas por la aplicación y su no cumplimiento pude ser considerado una falla (en los llamados *hard rtos*) o una degradación de performance (*soft rtos*)
+* Response time: es el tiempo de respuesta y se mide desde la habilitación de la tarea hasta la finalización de la misma
+* Execution time: es el tiempo que la tarea ha usado la CPU (no tiene en cuenta el tiempo apropiado). Se puede asumir conocido y fijo o con su cota más pesimista WCET (Worst Case Execution time)
+
+<p style="text-align:center"><img src="./img/rtos-task.png"/></p>
+
+## 12.3. Componentes de un RTOS simple
+* Un planificador de tareas (scheduler) que permite decidir que tarea corresponde ejecutar en base a la temporización basado en una RTI.
+* Un despachador de tareas (dispacher) que permita ejecutar las tareas planificadas con distintas prioridades.
+* El RTOS y las tareas de aplicación del usuario son parte del mismo proyecto. **No** es una aplicación independiente, pero sí es un módulo portable.
+
+# 13. Timer 1
+El Timer/Counter Timer1 es una unidad de 16-bit que permite event management, wave generation y **signal timing measurement**
+
+<p style="text-align:center"><img src="./img/timer1.png"/></p>
+
+A diferencia de Timer0 y Timer2, en Timer1 los registros *contador* TCNT1*, *output compare* OCR1A/B e *input capture* ICR1 son todos de **16 bits**
+
 a) Describa el funcionamiento y los registros del módulo Timer1. Realice un diagrama en bloques del mismo.
 b) Explique cuáles son los posibles modos de funcionamiento.
 c) Explique los modos de funcionamiento “Output Compare” de cada canal.
@@ -793,8 +969,20 @@ medida.
 g) El sensor de temperatura MAX6577 convierte la temperatura ambiente en una señal digital cuya frecuencia
 es proporcional a la temperatura en °C. Investigue la hoja de datos de este dispositivo y diga si es posible utilizar
 el Timer1 para medir la temperatura de un ambiente.
+## 13.1. Input Capture
 
-# 14. USART
+## 13.2. Output Compare
+
+# 14. Generacion y distribucion de reloj
+a) Explique cuáles son las posibles fuentes de reloj y sus rangos de frecuencia para que funcione el MCU.
+b) Explique cómo se distribuyen internamente las señales de reloj para la CPU y los distintos periféricos
+según las diferentes opciones (diagrama en bloques de la distribución interna de las señales de reloj).
+c) Investigue sobre cómo utilizar la biblioteca de funciones de bajo consumo (sleep.h).
+d) Explique
+ cuál es la configuración del reloj del sistema dispuesta desde fábrica y que tolerancia tiene la
+frecuencia del mismo
+
+# 15. USART
 a) Describa las características principales de una comunicación serie asincrónica.
 b) Explique cómo funcionan los tres subsistemas principales del módulo UART del Atmega: el generador de
 tasa de transmisión (baud rate), el transmisor y el receptor serie. Explique la funcionalidad de los registros
@@ -805,7 +993,7 @@ la aproximación respecto a los valores ideales.
 d) ¿Cuál es el error máximo respecto al baud rate estándar, que puede aceptarse en una comunicación serie
 asincrónica con formato 8N1 para que la comunicación sea confiable?
 
-# 15. Arquitectura Background/Foreground
+# 16. Arquitectura Background/Foreground
 a) Explique las características más importantes de la arquitectura de software Background / Foreground (eventtriggered).
 b) Investigue sobre cómo realizar una implementación de bajo consumo utilizando este tipo de arquitectura de
 software. Ayuda: descargue el artículo fore_back_MCU.pdf del aula virtual.
@@ -814,9 +1002,9 @@ desventajas.
 d) Realice una implementación en pseudocódigo del modelo productor-consumidor para el Receptor y
 Transmisor del periférico UART
 
-# 16. Drivers. Modelo Productor/Consumidor.
+# 17. Drivers. Modelo Productor/Consumidor.
 
-# 17. Protocolo SPI. I2C
+# 18. Protocolo SPI. I2C
 a) Describa cuales son las características principales de una comunicación serie sincrónica SPI. Muestre como
 interconectar el microcontrolador con varios dispositivos esclavos genéricos.
 b) Explique cómo funcionan el módulo SPI del Atmega. Describa la funcionalidad de los registros
@@ -828,4 +1016,4 @@ para conectar múltiples dispositivos.
 e) Analice la hoja de datos del DS3231 y explique cómo conectarlo a la interfaz TWI (I2C) del microntrolador
 Atmega.
 
-# 18. PWM
+# 19. PWM
