@@ -1,135 +1,133 @@
-# 1. Apuntes de Clase — Circuitos digitales y Microcontrolares (E0305)
+# Apuntes de Clase — Circuitos digitales y Microcontrolares (E0305)
 
-- [1. Apuntes de Clase — Circuitos digitales y Microcontrolares (E0305)](#1-apuntes-de-clase--circuitos-digitales-y-microcontrolares-e0305)
-- [2. Lenguaje C](#2-lenguaje-c)
-  - [2.1. Modificadores de acceso](#21-modificadores-de-acceso)
-    - [2.1.1. Static](#211-static)
-    - [2.1.2. Const](#212-const)
-    - [2.1.3. Volatile](#213-volatile)
-    - [2.1.4. Register](#214-register)
-  - [2.2. Preprocesador](#22-preprocesador)
-    - [2.2.1. Directivas](#221-directivas)
-  - [2.3. Caracteres](#23-caracteres)
-    - [2.3.1. String Handling Functions](#231-string-handling-functions)
-  - [2.4. Alcance de variables](#24-alcance-de-variables)
-  - [2.5. Operadores Logicos](#25-operadores-logicos)
-  - [2.6. Prototipos de funciones](#26-prototipos-de-funciones)
-  - [2.7. Punteros y arreglos](#27-punteros-y-arreglos)
-  - [2.8. Structs](#28-structs)
-  - [2.9. Unions](#29-unions)
-- [3. Programación modular](#3-programación-modular)
-  - [3.1. Comunicación intermodular. Interfaces.](#31-comunicación-intermodular-interfaces)
-  - [3.2. Modularización en C](#32-modularización-en-c)
-  - [3.3. Plantilla para archivos .h](#33-plantilla-para-archivos-h)
-  - [3.4. Plantilla para archivos .c](#34-plantilla-para-archivos-c)
-  - [3.5. Header de proyecto](#35-header-de-proyecto)
-  - [3.6. Header de puertos o placa](#36-header-de-puertos-o-placa)
-  - [3.7. Documentación](#37-documentación)
-    - [3.7.1. Ejemplo](#371-ejemplo)
-  - [3.8. Convención de nombres](#38-convención-de-nombres)
-- [4. Familia de microcontroladores AVR](#4-familia-de-microcontroladores-avr)
-  - [4.1. Comparativa](#41-comparativa)
-  - [4.2. Arquitectura AVR (Atmega328P)](#42-arquitectura-avr-atmega328p)
-    - [4.2.1. CPU](#421-cpu)
-- [5. Programación de Entrada/Salida](#5-programación-de-entradasalida)
-  - [5.1. Funciones de avr libc para evaluar pines](#51-funciones-de-avr-libc-para-evaluar-pines)
-- [6. Interrupciones](#6-interrupciones)
-  - [6.1. Paso por paso](#61-paso-por-paso)
-  - [6.2. Vectores de interrupcion](#62-vectores-de-interrupcion)
-  - [6.3. RESET](#63-reset)
-    - [6.3.1. MCU Status Register](#631-mcu-status-register)
-  - [6.4. Latencia de interrupcion](#64-latencia-de-interrupcion)
-  - [6.5. Interrupciones anidadas](#65-interrupciones-anidadas)
-  - [6.6. Interrupciones externas](#66-interrupciones-externas)
-    - [6.6.1. Activacion Por Flanco vs. Por Nivel](#661-activacion-por-flanco-vs-por-nivel)
-  - [6.7. Interrupciones por Pin Change (PCINT)](#67-interrupciones-por-pin-change-pcint)
-    - [6.7.1. Prioridades de atencion](#671-prioridades-de-atencion)
-- [7. Periféricos Timer](#7-periféricos-timer)
-  - [7.1. Definiciones](#71-definiciones)
-- [8. Timer/Counter 0](#8-timercounter-0)
-  - [8.1. Modos de funcionamiento](#81-modos-de-funcionamiento)
-    - [8.1.1. Normal](#811-normal)
-    - [8.1.2. CTC (Clear Timer on Compare Match)](#812-ctc-clear-timer-on-compare-match)
-    - [8.1.3. PWM](#813-pwm)
-      - [8.1.3.1. Fast PWM](#8131-fast-pwm)
-      - [8.1.3.2. Phase Correct PWM](#8132-phase-correct-pwm)
-  - [8.2. Prescaler](#82-prescaler)
-  - [8.3. Registros para su programación](#83-registros-para-su-programación)
-- [9. MEF](#9-mef)
-  - [9.1. Modelo de Mealy](#91-modelo-de-mealy)
-  - [9.2. Modelo de Moore](#92-modelo-de-moore)
-  - [9.3. Implementación en C](#93-implementación-en-c)
-    - [9.3.1. Usando switch-case](#931-usando-switch-case)
-    - [9.3.2. Usando punteros a función](#932-usando-punteros-a-función)
-- [10. Timer 2. RTC](#10-timer-2-rtc)
-- [11. Watchdog Timer](#11-watchdog-timer)
-- [12. Planificación y Ejecución de Tareas en Sistemas Embebidos](#12-planificación-y-ejecución-de-tareas-en-sistemas-embebidos)
-  - [12.1. Super-Loop o Round Robin Cíclico](#121-super-loop-o-round-robin-cíclico)
-  - [12.2. Foreground/Background o Event-Driven](#122-foregroundbackground-o-event-driven)
-  - [12.3. Time-triggered (disparadas por tiempo)](#123-time-triggered-disparadas-por-tiempo)
-  - [12.4. Resumen](#124-resumen)
-- [13. Drivers. Modelo Productor/Consumidor.](#13-drivers-modelo-productorconsumidor)
-  - [13.1. Estructuras basicas para el intercambio de datos entre tareas](#131-estructuras-basicas-para-el-intercambio-de-datos-entre-tareas)
-  - [13.2. Arquitectura Foreground/Background](#132-arquitectura-foregroundbackground)
-- [14. RTOS (Real Time Operative System)](#14-rtos-real-time-operative-system)
-  - [14.1. Scheduler](#141-scheduler)
-  - [14.2. Modelo de tarea](#142-modelo-de-tarea)
-  - [14.3. Componentes de un RTOS simple](#143-componentes-de-un-rtos-simple)
-- [15. Timer 1](#15-timer-1)
-  - [15.1. Accediendo a registros de 16 bits](#151-accediendo-a-registros-de-16-bits)
-  - [15.2. Registros](#152-registros)
-- [16. Generación de señales con Timer1](#16-generación-de-señales-con-timer1)
-  - [16.1. Registro TCCR1A](#161-registro-tccr1a)
-  - [16.2. Registro TCCR1B](#162-registro-tccr1b)
-  - [16.3. Modo Normal](#163-modo-normal)
-  - [16.4. Modo CTC](#164-modo-ctc)
-    - [16.4.1. Observaciones](#1641-observaciones)
-- [17. Capturación de Entrada con Timer1](#17-capturación-de-entrada-con-timer1)
-  - [17.1. Observaciones](#171-observaciones)
-- [18. Sistema y fuentes de reloj](#18-sistema-y-fuentes-de-reloj)
-  - [18.1. Fuentes](#181-fuentes)
-- [19. Comunicación Serie](#19-comunicación-serie)
-  - [19.1. Definiciones](#191-definiciones)
-- [20. USART](#20-usart)
-  - [20.1. Paso por paso](#201-paso-por-paso)
-  - [20.2. Registros de control](#202-registros-de-control)
-    - [20.2.1. UCSRA](#2021-ucsra)
-    - [20.2.2. UCSRB](#2022-ucsrb)
-    - [20.2.3. UCSRC](#2023-ucsrc)
-      - [20.2.3.1. Frame configuration - Character Size](#20231-frame-configuration---character-size)
-- [21. RS-232](#21-rs-232)
-    - [21.0.1. Formato de trama](#2101-formato-de-trama)
-    - [21.0.2. Control de flujo](#2102-control-de-flujo)
-- [22. SPI (Serial Peripheral Interface)](#22-spi-serial-peripheral-interface)
-  - [22.1. Registros](#221-registros)
-    - [22.1.1. Data Register (SPDR)](#2211-data-register-spdr)
-    - [22.1.2. Status Register (SPCR)](#2212-status-register-spcr)
-    - [22.1.3. Status Register (SPSR)](#2213-status-register-spsr)
-- [23. TWI (2 Wire Interface, I2C)](#23-twi-2-wire-interface-i2c)
-  - [23.1. Terminologia](#231-terminologia)
-  - [23.2. Transferencia y formato de trama](#232-transferencia-y-formato-de-trama)
-    - [23.2.1. Formato de paquete de direcciones](#2321-formato-de-paquete-de-direcciones)
-    - [23.2.2. Formato de paquete de datos](#2322-formato-de-paquete-de-datos)
-    - [23.2.3. Sincronización](#2323-sincronización)
-- [24. Señales PWM (Pulse Width Modulation)](#24-señales-pwm-pulse-width-modulation)
+- [1. Lenguaje C](#1-lenguaje-c)
+  - [1.1. Modificadores de acceso](#11-modificadores-de-acceso)
+    - [1.1.1. Static](#111-static)
+    - [1.1.2. Const](#112-const)
+    - [1.1.3. Volatile](#113-volatile)
+    - [1.1.4. Register](#114-register)
+  - [1.2. Preprocesador](#12-preprocesador)
+    - [1.2.1. Directivas](#121-directivas)
+  - [1.3. Caracteres](#13-caracteres)
+    - [1.3.1. String Handling Functions](#131-string-handling-functions)
+  - [1.4. Alcance de variables](#14-alcance-de-variables)
+  - [1.5. Operadores Logicos](#15-operadores-logicos)
+  - [1.6. Prototipos de funciones](#16-prototipos-de-funciones)
+  - [1.7. Punteros y arreglos](#17-punteros-y-arreglos)
+  - [1.8. Structs](#18-structs)
+  - [1.9. Unions](#19-unions)
+- [2. Programación modular](#2-programación-modular)
+  - [2.1. Comunicación intermodular. Interfaces.](#21-comunicación-intermodular-interfaces)
+  - [2.2. Modularización en C](#22-modularización-en-c)
+  - [2.3. Plantilla para archivos .h](#23-plantilla-para-archivos-h)
+  - [2.4. Plantilla para archivos .c](#24-plantilla-para-archivos-c)
+  - [2.5. Header de proyecto](#25-header-de-proyecto)
+  - [2.6. Header de puertos o placa](#26-header-de-puertos-o-placa)
+  - [2.7. Documentación](#27-documentación)
+    - [2.7.1. Ejemplo](#271-ejemplo)
+  - [2.8. Convención de nombres](#28-convención-de-nombres)
+- [3. Familia de microcontroladores AVR](#3-familia-de-microcontroladores-avr)
+  - [3.1. Comparativa](#31-comparativa)
+  - [3.2. Arquitectura AVR (Atmega328P)](#32-arquitectura-avr-atmega328p)
+    - [3.2.1. CPU](#321-cpu)
+- [4. Programación de Entrada/Salida](#4-programación-de-entradasalida)
+  - [4.1. Funciones de avr libc para evaluar pines](#41-funciones-de-avr-libc-para-evaluar-pines)
+- [5. Interrupciones](#5-interrupciones)
+  - [5.1. Paso por paso](#51-paso-por-paso)
+  - [5.2. Vectores de interrupcion](#52-vectores-de-interrupcion)
+  - [5.3. RESET](#53-reset)
+    - [5.3.1. MCU Status Register](#531-mcu-status-register)
+  - [5.4. Latencia de interrupcion](#54-latencia-de-interrupcion)
+  - [5.5. Interrupciones anidadas](#55-interrupciones-anidadas)
+  - [5.6. Interrupciones externas](#56-interrupciones-externas)
+    - [5.6.1. Activacion Por Flanco vs. Por Nivel](#561-activacion-por-flanco-vs-por-nivel)
+  - [5.7. Interrupciones por Pin Change (PCINT)](#57-interrupciones-por-pin-change-pcint)
+    - [5.7.1. Prioridades de atencion](#571-prioridades-de-atencion)
+- [6. Periféricos Timer](#6-periféricos-timer)
+  - [6.1. Definiciones](#61-definiciones)
+- [7. Timer/Counter 0](#7-timercounter-0)
+  - [7.1. Modos de funcionamiento](#71-modos-de-funcionamiento)
+    - [7.1.1. Normal](#711-normal)
+    - [7.1.2. CTC (Clear Timer on Compare Match)](#712-ctc-clear-timer-on-compare-match)
+    - [7.1.3. PWM](#713-pwm)
+      - [7.1.3.1. Fast PWM](#7131-fast-pwm)
+      - [7.1.3.2. Phase Correct PWM](#7132-phase-correct-pwm)
+  - [7.2. Prescaler](#72-prescaler)
+  - [7.3. Registros para su programación](#73-registros-para-su-programación)
+- [8. MEF](#8-mef)
+  - [8.1. Modelo de Mealy](#81-modelo-de-mealy)
+  - [8.2. Modelo de Moore](#82-modelo-de-moore)
+  - [8.3. Implementación en C](#83-implementación-en-c)
+    - [8.3.1. Usando switch-case](#831-usando-switch-case)
+    - [8.3.2. Usando punteros a función](#832-usando-punteros-a-función)
+- [9. Timer 2. RTC](#9-timer-2-rtc)
+- [10. Watchdog Timer](#10-watchdog-timer)
+- [11. Planificación y Ejecución de Tareas en Sistemas Embebidos](#11-planificación-y-ejecución-de-tareas-en-sistemas-embebidos)
+  - [11.1. Super-Loop o Round Robin Cíclico](#111-super-loop-o-round-robin-cíclico)
+  - [11.2. Foreground/Background o Event-Driven](#112-foregroundbackground-o-event-driven)
+  - [11.3. Time-triggered (disparadas por tiempo)](#113-time-triggered-disparadas-por-tiempo)
+  - [11.4. Resumen](#114-resumen)
+- [12. Drivers. Modelo Productor/Consumidor.](#12-drivers-modelo-productorconsumidor)
+  - [12.1. Estructuras basicas para el intercambio de datos entre tareas](#121-estructuras-basicas-para-el-intercambio-de-datos-entre-tareas)
+  - [12.2. Arquitectura Foreground/Background](#122-arquitectura-foregroundbackground)
+- [13. RTOS (Real Time Operative System)](#13-rtos-real-time-operative-system)
+  - [13.1. Scheduler](#131-scheduler)
+  - [13.2. Modelo de tarea](#132-modelo-de-tarea)
+  - [13.3. Componentes de un RTOS simple](#133-componentes-de-un-rtos-simple)
+- [14. Timer 1](#14-timer-1)
+  - [14.1. Accediendo a registros de 16 bits](#141-accediendo-a-registros-de-16-bits)
+  - [14.2. Registros](#142-registros)
+- [15. Generación de señales con Timer1](#15-generación-de-señales-con-timer1)
+  - [15.1. Registro TCCR1A](#151-registro-tccr1a)
+  - [15.2. Registro TCCR1B](#152-registro-tccr1b)
+  - [15.3. Modo Normal](#153-modo-normal)
+  - [15.4. Modo CTC](#154-modo-ctc)
+    - [15.4.1. Observaciones](#1541-observaciones)
+- [16. Capturación de Entrada con Timer1](#16-capturación-de-entrada-con-timer1)
+  - [16.1. Observaciones](#161-observaciones)
+- [17. Sistema y fuentes de reloj](#17-sistema-y-fuentes-de-reloj)
+  - [17.1. Fuentes](#171-fuentes)
+- [18. Comunicación Serie](#18-comunicación-serie)
+  - [18.1. Definiciones](#181-definiciones)
+- [19. USART](#19-usart)
+  - [19.1. Paso por paso](#191-paso-por-paso)
+  - [19.2. Registros de control](#192-registros-de-control)
+    - [19.2.1. UCSRA](#1921-ucsra)
+    - [19.2.2. UCSRB](#1922-ucsrb)
+    - [19.2.3. UCSRC](#1923-ucsrc)
+      - [19.2.3.1. Frame configuration - Character Size](#19231-frame-configuration---character-size)
+- [20. RS-232](#20-rs-232)
+    - [20.0.1. Formato de trama](#2001-formato-de-trama)
+    - [20.0.2. Control de flujo](#2002-control-de-flujo)
+- [21. SPI (Serial Peripheral Interface)](#21-spi-serial-peripheral-interface)
+  - [21.1. Registros](#211-registros)
+    - [21.1.1. Data Register (SPDR)](#2111-data-register-spdr)
+    - [21.1.2. Status Register (SPCR)](#2112-status-register-spcr)
+    - [21.1.3. Status Register (SPSR)](#2113-status-register-spsr)
+- [22. TWI (2 Wire Interface, I2C)](#22-twi-2-wire-interface-i2c)
+  - [22.1. Terminologia](#221-terminologia)
+  - [22.2. Transferencia y formato de trama](#222-transferencia-y-formato-de-trama)
+    - [22.2.1. Formato de paquete de direcciones](#2221-formato-de-paquete-de-direcciones)
+    - [22.2.2. Formato de paquete de datos](#2222-formato-de-paquete-de-datos)
+    - [22.2.3. Sincronización](#2223-sincronización)
 
-# 2. Lenguaje C
-## 2.1. Modificadores de acceso
-### 2.1.1. Static
+# 1. Lenguaje C
+## 1.1. Modificadores de acceso
+### 1.1.1. Static
 In the C programming language, static is used with global variables and functions to set their scope to the containing file. In local variables, static is used to store the variable in the statically allocated memory instead of the automatically allocated memory. While the language does not dictate the implementation of either type of memory, statically allocated memory is typically reserved in the data segment of the program at compile time, while the automatically allocated memory is normally implemented as a transient call stack.
-### 2.1.2. Const
+### 1.1.2. Const
 The qualifier const can be applied to the declaration of any variable to specify that its value will not be changed (Which depends upon where const variables are stored, we may change the value of const variable by using pointer).
-### 2.1.3. Volatile
+### 1.1.3. Volatile
 The volatile keyword is intended to prevent the compiler from applying any optimizations on objects that can change in ways that cannot be determined by the compiler. Their values can be changed by code outside the scope of current code at any time. The system always reads the current value of a volatile object from the memory location rather than keeping its value in temporary register at the point it is requested, even if a previous instruction asked for a value from the same object.
 **Use cases:**
 * Global variables modified by an interrupt service routine outside the scope
 * Global variables within a multi-threaded application
-### 2.1.4. Register
+### 1.1.4. Register
 Registers are faster than memory to access, so the variables which are most frequently used in a C program can be put in registers using register keyword. The keyword register
 hints to compiler that a given variable can be put in a register. It’s compiler’s choice to put it in a register or not. Generally, compilers themselves do optimizations and put the variables in register.
-## 2.2. Preprocesador
+## 1.2. Preprocesador
 The C preprocessor, often known as cpp, is a macro processor that is used automatically by the C compiler to transform your program before compilation. It is a text substitution tool. Las directivas para el preprocesador comienzan con el simbolo #.
-### 2.2.1. Directivas
+### 1.2.1. Directivas
 * **define**: substitutes a preprocessor macro
 * **include**: inserts a particular header from another file
 * undef: undefines a preprocessor macro
@@ -143,10 +141,10 @@ The C preprocessor, often known as cpp, is a macro processor that is used automa
 * pragma: issues special commands to the compiler, using a standardized method.
 * **typedef**: use to give a type a new name
 
-## 2.3. Caracteres
+## 1.3. Caracteres
 * Character Constant: constante que representa un valor perteneciente al conjunto de caracteres. Se indica entre comillas simples 'a'.
 * Character array: C language does not support strings as a data type, instead they are handled as a one-dimensional array of characters.
-### 2.3.1. String Handling Functions
+### 1.3.1. String Handling Functions
 C supports a large number of string handling functions that can be used to carry out many of the string manipulations. These functions are packaged in the string.h library.
 * strcat(dest,src) concatenates two strings
 * strlen(str) show the length of a string
@@ -154,11 +152,11 @@ C supports a large number of string handling functions that can be used to carry
 * strcpy(dest,src) copies one string into another
 * strcmp(a,b) compares two strings
 
-## 2.4. Alcance de variables
+## 1.4. Alcance de variables
 In C programming language, variables defined within some function are known as **Local Variables** and variables which are defined outside of function block and are accessible
 to entire program are known as **Global Variables**.
 
-## 2.5. Operadores Logicos
+## 1.5. Operadores Logicos
 * & -> binary AND
 * | -> binary OR
 * ^ -> binary XOR
@@ -168,11 +166,11 @@ to entire program are known as **Global Variables**.
 
 **Nota:** La diferencia entre el AND binario (&) y el AND lógico (&&) es que el primero es una operacion que se realiza a nivel de bit.
 
-## 2.6. Prototipos de funciones
+## 1.6. Prototipos de funciones
 A prototype declares the function name, its parameters, and its return type to the rest of the program prior to the function's actual declaration. Many C compilers do not check for parameter matching either in type or count. You can waste an enormous amount of time debugging code in which you are simply passing one too many or too few parameters by
 mistake. **The prototype causes the compiler to check for parameters and flag an error for mismatches on count or type.** Prototypes should be placed at the beginning of your program.
 
-## 2.7. Punteros y arreglos
+## 1.7. Punteros y arreglos
 Every variable is a memory location, and every memory location has its address defined which can be accessed using ampersand (&) operator, which denotes an address in memory.
 ```c
 int main(){
@@ -198,7 +196,7 @@ printf(ip); //imprimir direccion de num
 printf(*ip); //imprimir contenido de num
 ```
 
-## 2.8. Structs
+## 1.8. Structs
 A structure is another *user defined data* type available in C that **allows combining data items of different kinds**. Structures are used to represent a record.
 ```c
 struct Books{
@@ -214,7 +212,7 @@ book.title="titulo";
 book.author=...
 ```
 
-## 2.9. Unions
+## 1.9. Unions
 A union is a special data type available in C that allows to store different data types in the same memory location. You can define a union with many members, but only one member can contain a value at any given time. Unions provide an efficient way of using the same memory location for multiple-purpose. To define a union, you must use the union statement in the same way as you did while defining a structure. The union statement defines a new data type with more than one member for your program.
 ```c
 union Data{
@@ -227,12 +225,12 @@ Now, a variable of Data type can store an integer, a floating-point number, or a
 
 **The memory occupied by a union will be large enough to hold the largest member of the union.**
 
-# 3. Programación modular
+# 2. Programación modular
 Un módulo puede estar formado por un archivo o una colección de archivos que contienen las funciones que realizan en conjunto la tarea especificada. Los módulos pueden ser verificados y mantenidos por separado, además de que pueden ser desarrollados por un equipo de programadores. 
 
 Un módulo bien desarrollado que cumple con una tarea especifica, puede ser separado del resto y puesto en otra aplicación sin problemas. Un módulo puede verse además como una caja negra que presenta una interfaz bien definida (puntos de entrada y puntos de salida) para comunicarse con el resto del mundo.
 
-## 3.1. Comunicación intermodular. Interfaces.
+## 2.1. Comunicación intermodular. Interfaces.
 Las variables globales NO se recomiendan para pasar información de un módulo a otro porque atentan contra la independencia y portabilidad del módulo.
 
 Las interfaces permiten la comunicación entre módulos, determinan la forma de uso de cada uno y garantizan la independencia con el resto del sistema, se implementan mediante los parámetros de entrada de las funciones y los valores de retorno de las mismas.
@@ -243,7 +241,7 @@ Por otro lado, es necesario restringir que módulos acceden al hardware (registr
 
 Un módulo (o varios) que controlan el funcionamiento de un dispositivo de hardware constituye un “device driver” . Este contiene el conjunto de funciones necesarias para utilizar un dispositivo particular y provee al usuario una interfaz de comunicación estándar del tipo “open()”,“close()”, “ctr()”, “read()” y “write()”.
 
-## 3.2. Modularización en C
+## 2.2. Modularización en C
 * En C, un archivo puede asemejarse a una "clase".
 * Las variables pueden encapsularse con el modificador de acceso *static* y proveyendo métodos Set y Get para accederla.
 * Lo mismo aplica para las funciones, recordando que las funciones globales al proyecto deben declarar su prototipo en un .h
@@ -251,7 +249,7 @@ Un módulo (o varios) que controlan el funcionamiento de un dispositivo de hardw
 
 De esta manera un programa completo puede dividirse en un conjunto de archivos que implementan tareas bien definidas, con reglas claras en el control de acceso a los recursos que manejan y con una interfaz de comunicación bien definida con el resto del mundo.
 
-## 3.3. Plantilla para archivos .h
+## 2.3. Plantilla para archivos .h
 ```c
 /*======Evitar inclusión múltiple - begin======*/
 #ifndef _NOMBRE_MODULO_H_
@@ -281,7 +279,7 @@ void UART0_IRQHandler(void);
 #endif /* _NOMBRE_MODULO_H_ */
 ```
 
-## 3.4. Plantilla para archivos .c
+## 2.4. Plantilla para archivos .c
 ```c
 /*======Inclusio de cabecera propia======*/
 #include "nombreModulo.h"
@@ -314,12 +312,12 @@ static void funPrivada(void){
     // ..
 }
 ```
-## 3.5. Header de proyecto
+## 2.5. Header de proyecto
 Un cambio en el hardware o en el pin out de la placa donde corre la aplicación, se modificará solo en este archivo y no debería afectar el resto de los módulos.
-## 3.6. Header de puertos o placa
+## 2.6. Header de puertos o placa
 Permite definir las interfaces de entrada y salida de la aplicación en particular. Por ejemplo, definiciones de los terminales en las placas arduino X.
 
-## 3.7. Documentación
+## 2.7. Documentación
 Los comentarios deben tratar de contener la siguiente información:
 * ¿Que hace el programa, módulo o función?
 * ¿cuales son las entradas y salidas que produce?
@@ -331,7 +329,7 @@ Los comentarios deben tratar de contener la siguiente información:
 * ¿quién es el autor? ¿fecha de creación? ¿logs de modificaciones?
 * ¿licencia?... Entre otros…
 
-### 3.7.1. Ejemplo
+### 2.7.1. Ejemplo
 ```c
 short int SetPoint; /* Especifica la temperatura deseada para el lazo de control de temperatura. Precisión de 16 bits y en un rango de -55 a +125ºC*/
 
@@ -346,7 +344,7 @@ short int SetPoint; /* Especifica la temperatura deseada para el lazo de control
 int FuncionSuma (int, int);
 ```
 
-## 3.8. Convención de nombres
+## 2.8. Convención de nombres
 * Nombres de variables, ctes y funciones deben ser descriptivos no ambiguos.
 * Las variables pueden llevar su tipo como prefijo (pcData, cData, ucData,...)
 * Utilizar el nombre del archivo como parte del nombre de las funciones públicas del mismo (LCD_Init(), LCD_write_String(),...)
@@ -359,8 +357,8 @@ int FuncionSuma (int, int);
   * Funciones privadas: ``ClearTime()``, ``Get_Char()``
   * Funciones globales (públicas): ``TIMER_ClearTime()``, ``KEPAD_Get_Char()``
 
-# 4. Familia de microcontroladores AVR
-## 4.1. Comparativa
+# 3. Familia de microcontroladores AVR
+## 3.1. Comparativa
 <table>
     <tr>
         <th></th>
@@ -414,27 +412,27 @@ int FuncionSuma (int, int);
     </tr>
 </table>
 
-## 4.2. Arquitectura AVR (Atmega328P)
-### 4.2.1. CPU
+## 3.2. Arquitectura AVR (Atmega328P)
+### 3.2.1. CPU
 * RISC: 131 instrucciones de 1 ciclo de reloj (o la mayoría)
 * Hardvard: Memoria de programa y memoria de datos con buses independientes
 * Basada en registros: 32 de 8 bits.
 
 <img src="img/cpu.png" />
 
-# 5. Programación de Entrada/Salida
+# 4. Programación de Entrada/Salida
 Para controlar los puertos de entrada salida se utilizan los registros:
 * DDRn: *Port n Data Direction Register*, define para cada pin su dirección (input/output)
 * * **1 is output, 0 is input**
 * PORTn: *Port n Data Register* registro usado para setear el estado de los pines del *puerto n*
 * PINn: *Port n Input Pin Address*, se utiliza para leer el estado los pines de del *puerto n*, es un registro de solo lectura.
-## 5.1. Funciones de avr libc para evaluar pines
+## 4.1. Funciones de avr libc para evaluar pines
 * *PINC & (1<<PINC1)* **-->** bit_is_set (PINC, PINC1)
 * *!(PINB & (1<<PINB2))* **-->** bit_is_clear (PINB, PINB2)
 * *while( !(ADCSRA & (1<<ADIF)));* **-->** loop_until_bit_is_set (ADCSRA, ADIF);
 * *while( ADCSRA & (1<<ADIF) ));* **-->** loop_until_bit_is_clear (ADCSRA, ADIF);
   
-# 6. Interrupciones
+# 5. Interrupciones
 La CPU de un microcontrolador ejecuta instrucciones secuencialmente, sin embargo, las aplicaciones requieren del uso de diferentes periféricos (internos o externos) y por lo tanto la CPU debe contar con un mecanismo
 para interactuar con ellos y dar respuesta adecuada a sus demandas.
 
@@ -449,7 +447,7 @@ interrupción (ISR, Interrupt Service Routine). Una vez que la CPU concluye con 
 instrucciones de la ISR, continúa con la ejecución del programa principal, regresando
 al punto en donde fue suspendida su ejecución.
 
-## 6.1. Paso por paso
+## 5.1. Paso por paso
 El núcleo AVR cuenta con la **unidad de interrupciones**, un módulo que va a determinar
 si se tienen las condiciones para que ocurra una interrupción.
 Son tres las condiciones necesarias para que un recurso produzca una interrupción:
@@ -471,7 +469,7 @@ Una rutina de atención a interrupciones es finalizada con la instrucción ```RE
 cual el ```PC``` recupera el valor del tope de la pila y pone en alto nuevamente al bit I, para
 que la CPU pueda recibir más interrupciones. Ademas, se limpia la flag que genero la interrupcion inicialmente.
 
-## 6.2. Vectores de interrupcion
+## 5.2. Vectores de interrupcion
 El grupo de localidades de memoria destinadas a guardar las direcciones de
 las RSI, se llama **“Tabla de Vectores de Interrupción”**
 
@@ -485,7 +483,7 @@ corresponda. Para cada fuente de interrupción distinta debe existir **una sola 
 que pueda ejecutarse. El programador diseña la RSI que desea se ejecute en cada caso como si
 fuese una función especial.
 
-## 6.3. RESET
+## 5.3. RESET
 La inicialización o reset de un microcontrolador es fundamental para su operación
 adecuada, porque garantiza que sus registros internos van a tener un valor inicial
 conocido. Existen varias causas de RESET:
@@ -507,7 +505,7 @@ Registro de Reset del Sistema JTAG.
 
 **NOTA:**  *JTAG hace referencia a una interfaz serial utilizada para la prueba de circuitos integrados y como medio para depurar sistemas empotrados*
 
-### 6.3.1. MCU Status Register
+### 5.3.1. MCU Status Register
 Puesto que hay diferentes causas de reinicio, los AVR incluyen al Registro de Estado
 y Control del MCU (```MCUCSR```) en el cual queda indicada la causa de reset por medio de una bandera. Los bits del registro MCUCSR son:
 
@@ -519,7 +517,7 @@ implementados.
 * Bit 1 – EXTRF: Bandera de reinicio desde la terminal de reset
 * Bit 0 – PORF: Bandera de reinicio por encendido
 
-## 6.4. Latencia de interrupcion
+## 5.4. Latencia de interrupcion
 Es el tiempo que tarda el Controlador de interrupciones en dar respuesta a
 una interrupción, se mide desde que se recibe el pedido hasta que efectivamente se ejecuta la primer instrucción de la RSI correspondiente.
 
@@ -530,12 +528,12 @@ En el caso en que el micro este en modo SLEEP, la latencia es de 8 ciclos.
 
 El retorno de la interrupción (RETI) tambien lleva 4 ciclos.
 
-## 6.5. Interrupciones anidadas
+## 5.5. Interrupciones anidadas
 El anidamiento de interrupciones se da cuando una interrupcion puede interrumpir la rutina de atencion de otra interrupcion. Esto no esta permitido por defecto ya que al atender una rutina se desactivan las interrupciones, sin embargo puede permitirse este comportamiento manualmente si dentro de la rutina se vuelven a habilitar. Una interrupcion en curso solo puede ser interrumpida por otra interrupcion de mayor prioridad.
 
 El anidamiento de interrupciones **no es recomendable** ya que imposibilita la creacion de codigo que se ajuste bien a todas las combinaciones de interrupciones, reduciendo la posibilidad de predecir el comportamiento del sistema, es decir, se pierde confiabilidad ya que no se pueden testear todas las condiciones.
 
-## 6.6. Interrupciones externas
+## 5.6. Interrupciones externas
 
 Las interrupciones externas sirven para detectar un estado lógico o un cambio de estado
 en alguna de las terminales de entrada de un microcontrolador, con su uso se evita un
@@ -559,7 +557,7 @@ Estas interrupciones se habilitan con el registro EIMSK – External Interrupt M
 Las interrupciones externas pueden configurarse para detectar un nivel bajo de voltaje
 o una transición, ya sea por un flanco de subida o de bajada
 
-### 6.6.1. Activacion Por Flanco vs. Por Nivel
+### 5.6.1. Activacion Por Flanco vs. Por Nivel
 Si una interrupción funciona **por nivel** el periférico que la genera *“coloca y mantiene”* el nivel en la línea para que el uC atienda a esa petición. Durante la atención, el uC debería indicar al periférico externo, de algún modo, que ha sido atendido para que éste libere el nivel de la línea.
 * Notar que al no ser una “petición registrada”, si el nivel no está presente cuando las interrupciones están habilitadas, el pedido no será tenido en cuenta.
 * Por otro lado, si el periférico no retira el nivel de la línea, continuará solicitando interrupción
@@ -584,7 +582,7 @@ active la máscara de interrupción I.
 <br/><i>Activacion por Flanco. No hay Acknowledge.</i><br/>
 </p>
 
-## 6.7. Interrupciones por Pin Change (PCINT)
+## 5.7. Interrupciones por Pin Change (PCINT)
 
 A diferencia de las interrupciones INT0 e INT1 que son capaces de distingar nivel alto, nivel bajo, flanco de subida y flanco de bajada, este tipo de interrupciones se disparan ante cualquier *cambio de nivel* sin distinguir el sentido.
 
@@ -597,7 +595,7 @@ Los interrupciones Pin Change son habilitadas con el registro PCICR, y se habili
 
 <p style="text-align:center"><img src="./img/pcmsk.png"/></p>
 
-### 6.7.1. Prioridades de atencion
+### 5.7.1. Prioridades de atencion
 <table>
 <tr>
     <th>Vector No.</th>
@@ -625,7 +623,7 @@ Los interrupciones Pin Change son habilitadas con el registro PCICR, y se habili
 </tr>
 </table>
 
-# 7. Periféricos Timer
+# 6. Periféricos Timer
 Una de las características mas destacables de un MCU es la capacidad de realizar tareas temporizadas, para esto cuentan con un periférico TIMER o TEMPORIZADOR.
 
 Algunas de las aplicaciones pueden ser:
@@ -637,7 +635,7 @@ Algunas de las aplicaciones pueden ser:
 * Medición de frecuencia y ancho de pulso
 * Registro y conteo de eventos (COUNTER)
 
-## 7.1. Definiciones
+## 6.1. Definiciones
 
 * El **período $T$** de una señal $x(t)$ es el menor numero entero que satisface $x(t)=x(t+T)$
 * La **frecuencia $f$**  se define como el numero de oscilaciones en el lapso de 1 seg, es decir $f=1/T$
@@ -648,7 +646,7 @@ Algunas de las aplicaciones pueden ser:
 * La **Exactitud**  es cuanto difiere el “valor real” respecto al “valor medido”, depende de la exactitud del oscilador que genera la señal del reloj
 * La **Estabilidad** es un medida de cuan estable es la frecuencia del CLK frente a perturbaciones en la tensión de alimentación, en la temperatura y al envejecimiento de los componentes. Puede dividirse en estabilidad de corto término y estabilidad a largo plazo.
 
-# 8. Timer/Counter 0
+# 7. Timer/Counter 0
 Timer/Counter0 es un modulo Timer/Counter de 8 bits de proposito general, con dos unidades de output-compare independientes, y con soporte para PWM. Permite programar tareas de forma temporizada (event management) y generación de ondas.
 
 <p style="text-align:center"><img src="./img/timer0.png"/></p>
@@ -661,9 +659,9 @@ Timer/Counter0 es un modulo Timer/Counter de 8 bits de proposito general, con do
 *  **OCR0A y OCR0B:** Registros utilizados para comparar todo el tiempo el valor del Timer/Counter. Pueden utilizarse para generar un PWM o una salida de frecuencia variable en los pines de output compare (OC0A y OC0B). El evento de Compare match (TCNT0 == OCR0x) activa la flag de comparación (OCF0A o OCF0B), la cual puede usarse para generar una interrupción temporizada.
 *  **TCCR0A y TCCR0B:** Son los registros de control del timer, permiten configurar el modo de operación (Normal, CTC, Fast PWM, Phase Correct PWM), el valor de TOP (default o OCR0A), dirección de conteo, activación de flag TOV0 (overflow con bottom, max o top) y el *Prescaler*, entre otros.
 
-## 8.1. Modos de funcionamiento
+## 7.1. Modos de funcionamiento
 
-### 8.1.1. Normal
+### 7.1.1. Normal
 El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el valor TOP (o BOTTOM). Cuando se alcanza, se reinicia el valor TCNT0 a BOTTOM (o TOP) y se levanta el flag TOV0 (overflow).
 
 * La frecuencia de overflow puede calcularse como $f_{OVF} = \frac{f_{clkT_0}}{2^8}$
@@ -672,15 +670,17 @@ El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el v
 
 * La resolución de temporización puede calcularse como $T_{clkT_0} = \frac{1}{f_{clkT_0}}$
 
-### 8.1.2. CTC (Clear Timer on Compare Match)
+### 7.1.2. CTC (Clear Timer on Compare Match)
 El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el valor OCR0. Cuando se alcanza, se reinicia el valor TCNT0 a BOTTOM (o OCR0) y se levanta el flag OC0. También puede configurarse para invertir el pulso en el pin OC0 (waveform generation).
 
-### 8.1.3. PWM
-#### 8.1.3.1. Fast PWM
-#### 8.1.3.2. Phase Correct PWM
+### 7.1.3. PWM
+Pulse Width Modulation es una técnica de modulación digital donde la información útil de la señal se encuentra en el ancho del pulso. Esto permite que se pueda obtener una señal analógica a partir de una señal digital, y controlar dispositivos analogicos por medio de salidas digitales.
+
+#### 7.1.3.1. Fast PWM
+#### 7.1.3.2. Phase Correct PWM
 
 
-## 8.2. Prescaler
+## 7.2. Prescaler
 El Atmega328P cuenta con un sistema de preescalado de reloj que se utiliza para dividir la frecuencia del reloj y obtener una menor, permitiendo bajar el consumo de energía cuando el requisito de poder de procesamiento es bajo. Este sistema también puede usarse para suministrar señal de reloj a los distintos dispositivos.
 
 El Timer/Counter puede recibir la señal de clock del reloj del sistema ($f_{CLK\_I/O}$), esto permite la velocidad de operacion más rápida. Alternativamente, puede recibir la señal de clock de una de las 4 alternativas del preescalador. Las frecuencias del preescalador son:
@@ -692,10 +692,10 @@ $$\frac{f_{CLK\_I/O}}{1024}$$
 
 El prescaler funciona independientemente de la lógica de Clock select, y es compartido por el Timer/Counter1 y el Timer/Counter0.
 
-## 8.3. Registros para su programación
+## 7.3. Registros para su programación
 <img src="./img/timer0-reg.png"/>
 
-# 9. MEF
+# 8. MEF
 > Una Máquina de Estados Finitos (MEF) es un modelo abstracto del “comportamiento” del sistema, basado en principio simples.
 
 > Una Máquina de Estados Finitos (MEF) es un modelo matemático (Teoría general de autómatas) usado para describir el comportamiento de un sistemas que puede ser representado por un número finito de estados, un conjunto de entradas y una función de transición que determina el estado siguiente en función del estado actual y de las entradas.
@@ -704,17 +704,17 @@ El modelado de problemas usando MEFs hace más sencilla la comprensión del sist
 
 Un modelo de MEF debe tener las entradas y las reglas bien definidas para cambiar de estado, sus transiciones se pueden especificar mediante un “diagrama de estados” o “tabla de transiciones de estados” y cada transición implica diferentes respuestas o acciones del sistema.
 
-## 9.1. Modelo de Mealy
+## 8.1. Modelo de Mealy
 En el modelo de Mealy, la **salida** depende del **estado actual** y de las **entradas**. Son propensos a este modelo los sistemas donde la salida provoca el cambio de estado. Por ejemplo, en un robot, el movimiento de sus articulaciones produce el cambio de estado (parado-sentado)
 <p style="text-align:center"><img src="./img/mealy.png"/></p>
 
-## 9.2. Modelo de Moore
+## 8.2. Modelo de Moore
 En el modelo de Moore, la **salida** del sistema depende solo del **estado actual**. Puede haber múltiples estados con la misma salida, pero para cada estado el significado es diferente. La salida guarda estrecha relacióon con el estado, por ejemplo un controlador de semáforo.
 <p style="text-align:center"><img src="./img/moore.png"/></p>
 
 **NOTA:** *ambos modelos son intercambiables pero es mejor optar por la forma que representa de manera más natural el problema*
 
-## 9.3. Implementación en C
+## 8.3. Implementación en C
 * Definir conjunto de estados
   * ``enum estados = [STATE0,STATE1,..]``
 * Definir conjunto de salidas
@@ -747,7 +747,7 @@ Ejecutar_MEF(){
     }
 }
 ```
-### 9.3.1. Usando switch-case
+### 8.3.1. Usando switch-case
 En implementaciones con switch, los case de cada estado se evaluarán secuencialmente, equivale a una cadena de if consecutivos de resolución. No tarda lo mismo en ejecutar las actualizaciones según el caso.
 ```c
 typedef enum{S0,S1} state; //definicion y declaracion de variables de estado
@@ -779,7 +779,7 @@ void ActualizarMEF(void){
 }
 ```
 
-### 9.3.2. Usando punteros a función
+### 8.3.2. Usando punteros a función
 En implementaciones con punteros a función o tablas el tiempo de acceso a las funciones es el mismo independientemente del valor de la variable de estado, equivale a un desvío selectivo de la ejecución del programa. En general implementaciones con punteros o tablas de transición permiten uniformidad en el tiempo de acceso, son más compactas, pero ocupan más memoria. 
 
 ```c
@@ -817,7 +817,7 @@ void fS1(void){
 
 ```
 
-# 10. Timer 2. RTC
+# 9. Timer 2. RTC
 La única diferencia entre el Timer0 y el Timer2 es la siguiente:
 
 * El Timer0 puede ser alimentado por <mark>una señal de reloj externa</mark> a traves del <mark>pin T0</mark>.
@@ -826,7 +826,7 @@ La única diferencia entre el Timer0 y el Timer2 es la siguiente:
 
 Una de las cosas que permite el modo asíncrono del Timer2 es la implementación de un **Real-Time-Clock**, que puede contar segundos, minutos, horas, días, meses, indistintamente de lo que este haciendo la CPU o el Oscilador principal. Esto permite que la CPU pueda entrar en modo Sleep mientras que el Timer2 continua contando y solo despierta a la CPU ante un evento de Overflow para incrementar el contador necesario
 
-# 11. Watchdog Timer
+# 10. Watchdog Timer
 El Watchdog timer es un mecanismo de protección ante fallas de software o hardware, básicamente cuenta pulsos de reloj hasta un valor programable y genera una interrupción o un reset cuando alcanza dicho valor; por lo tanto, el software debe reiniciar el contador utilizando la instrucción WDR antes que este alcance la cantidad establecida (o time out). Si por algún motivo el software no reinicia el contador a tiempo se genera una interrupción o un reset.
 
 En modo interrupción puede utilizarse como despertador (wake-up) de un modo de bajo consumo o para limitar el máximo tiempo permitido para una operación dada.
@@ -839,9 +839,9 @@ Este timer se alimenta con un oscilador interno separado de 128kHz. Cuenta con u
 
 <p style="text-align:center"><img src="./img/wdt.png"/></p>
 
-# 12. Planificación y Ejecución de Tareas en Sistemas Embebidos
+# 11. Planificación y Ejecución de Tareas en Sistemas Embebidos
 
-## 12.1. Super-Loop o Round Robin Cíclico
+## 11.1. Super-Loop o Round Robin Cíclico
 En este tipo de planificación es dificil temporizar la ejecución ya que las distintas tareas se ejecutaran unicamente después de terminar la previa, que puede tener una duración variable.
 ```c
 /*------------------------------------------------------------------*-
@@ -864,7 +864,7 @@ void main(void){
   }
 }
 ```
-## 12.2. Foreground/Background o Event-Driven
+## 11.2. Foreground/Background o Event-Driven
 Cada interrupción corresponde a un evento asociado a una tarea específica (múltiples interrupciones). La ejecución de las tareas depende de que el evento ocurra.
 
 Las tareas que se ejecutan en el super-loop se denominan tareas de background y se ejecutan en función de los eventos asociados a las interrupciones.
@@ -916,12 +916,12 @@ ISR ( Event_Z ){
 }
 ```
 
-## 12.3. Time-triggered (disparadas por tiempo)
+## 11.3. Time-triggered (disparadas por tiempo)
 Estas serán tareas planificadas por una única interrupción periódica de Timer comúnmente llamada RTI (Real Time Interrupt). La RTI es la única “base de tiempo” del sistema para temporizar una o más tareas y el manejo de los eventos asincrónicos de los periféricos se realiza exclusivamente por encuesta (polling) periódica.
 
 Cada vez que ocurre la interrupción es como una marca de tiempo o Tick del sistema, que permite planificar que tarea corresponde ejecutar. Cuando la CPU no tenga que ejecutar tareas (zona IDLE) podemos poner el MCU en bajo consumo (SLEEP) hasta el próximo tick y ahorrar energía.
 
-## 12.4. Resumen
+## 11.4. Resumen
 <table>
   <tr>
     <th>Super Loop</th>
@@ -956,21 +956,21 @@ Cada vez que ocurre la interrupción es como una marca de tiempo o Tick del sist
   </tr>
 </table>
 
-# 13. Drivers. Modelo Productor/Consumidor.
+# 12. Drivers. Modelo Productor/Consumidor.
 El modelo productor/consumidor se utiliza cuando diferentes tareas dentro de una aplicación producen y consumen gran cantidad de datos a diferentes velocidades. Una solución se basa en el uso de estructuras FIFO (Buffer globales).
 
 * En el contexto de una arquitectura Background/Foreground una tarea productora puede ser un handler de interrupción y la consumidora una tarea de segundo plano o viceversa.
 
 * En el contexto de la planificación Time-Triggered Cooperativa las tareas que producen y consumen datos a diferentes ritmos se implementan como tareas multi-etapas (no bloqueantes)
 
-## 13.1. Estructuras basicas para el intercambio de datos entre tareas
+## 12.1. Estructuras basicas para el intercambio de datos entre tareas
 
 * Buffer o cola: Estructura de datos de tamaño fijo, residente en RAM, que permite alojar temporalmente un conjunto de datos que poseen un determinado orden de llegada y de salida (por ejemplo FIFO).
 * Buffer circular (cola circular): un solo buffer y dos punteros, uno para leer y otro para escribir (a diferentes tasas), el tamaño es fijo pero los punteros recorren el mismo de manera circular sin distinguir un
 comienzo o un fin del mismo.
 * Buffer Ping Pong: se utiliza cuando los datos son producidos y almacenados en grandes volúmenes para su posterior procesamiento. Un buffer es de solo escritura y el otro de solo lectura, cuando se completa un ciclo de transferencia se intercambian entre si. Ejemplo: lectura de discos, memoria de video, USB.
 
-## 13.2. Arquitectura Foreground/Background
+## 12.2. Arquitectura Foreground/Background
 ```c
 main (void){
   tarea1_Init();
@@ -1001,14 +1001,14 @@ ISR (tarea3){
 }
 ```
 
-# 14. RTOS (Real Time Operative System)
+# 13. RTOS (Real Time Operative System)
 Un sistema operativo de tiempo real es un sistema operativo que provee respuestas a determinados eventos con un “tiempo de respuesta acotado”.
 
 Típicamente, las tareas tienen plazos (deadlines) que son valores de tiempo físico en los cuales se debe completar. Más generalmente, los programas en tiempo real pueden tener todo tipo de restricciones de tiempo, no solo deadlines por ejemplo, puede requerirse que una tarea se ejecute **no antes** de un momento determinado o puede requerirse que se ejecute **no más de una cantidad de tiempo después** de que se ejecute otra tarea, o se le puede solicitar que se ejecute **periódicamente** con un período específico. Las tareas pueden ser dependientes unas de otras y pueden actuar cooperativamente o pueden ser independientes (excepto que todas comparten los recursos del MCU).
 
 En un contexto multitareas donde hay más tareas que CPU o tareas que deben ejecutarse en un tiempo preciso es necesaria la planificación de tareas (**Task scheduling**).
 
-## 14.1. Scheduler
+## 13.1. Scheduler
 Un planificador (Scheduler) decide cual es la siguiente tarea a ejecutar en el instante de tiempo que la CPU se libera. El planificador puede ser:
 
 * Estatico: Se decide el orden y tiempo de ejecución en el diseño.
@@ -1021,7 +1021,7 @@ El planificador puede utilizar la prioridad de una tarea para decidir cuando cor
 
 Un **preemptive priority-based scheduler** siempre ejecuta la tarea habilitada de mayor prioridad mientras que un **non-preemptive priority-based** scheduler usa la prioridad para decidir que tarea corresponde ejecutar luego de que la tarea actual finalice su ejecución y nunca interrumpe la ejecución de una tarea por otra.
 
-## 14.2. Modelo de tarea
+## 13.2. Modelo de tarea
 
 * Release time: o también tiempo de despacho, es el tiempo a partir del cual la tarea está habilitada para ejecutarse
 * Start time: inicio de la ejecución
@@ -1034,19 +1034,19 @@ Un **preemptive priority-based scheduler** siempre ejecuta la tarea habilitada d
 
 <p style="text-align:center"><img src="./img/rtos-task.png"/></p>
 
-## 14.3. Componentes de un RTOS simple
+## 13.3. Componentes de un RTOS simple
 * Un planificador de tareas (scheduler) que permite decidir que tarea corresponde ejecutar en base a la temporización basado en una RTI.
 * Un despachador de tareas (dispacher) que permita ejecutar las tareas planificadas con distintas prioridades.
 * El RTOS y las tareas de aplicación del usuario son parte del mismo proyecto. **No** es una aplicación independiente, pero sí es un módulo portable.
 
-# 15. Timer 1
+# 14. Timer 1
 El Timer/Counter Timer1 es una unidad de 16-bit que permite event management, wave generation y **signal timing measurement**
 
 <p style="text-align:center"><img src="./img/timer1.png"/></p>
 
 A diferencia de Timer0 y Timer2, en Timer1 los registros *contador* TCNT1*, *output compare* OCR1A/B e *input capture* ICR1 son todos de **16 bits**
 
-## 15.1. Accediendo a registros de 16 bits
+## 14.1. Accediendo a registros de 16 bits
 Como el bus de datos del Atmega328P es de 8 bits para poder acceder a registros de 16 bits es necesario hacer dos lecturas y dos escrituras
 
 En el caso de una operación de lectura: Debe leerse primero la parte baja. Al leer la parte baja, la parte alta se almacena en el registro TEMP de 8 bits para la subsecuente lectura del mismo.
@@ -1057,39 +1057,39 @@ Este mecanismo permite la escritura y lectura "sincrónica" del registro de 16 b
 
 <p style="text-align:center"><img src="./img/timer1-core.png"/></p>
 
-## 15.2. Registros
+## 14.2. Registros
 Posee registros similares a los vistos para el Timer0 y Timer2 y adiciona registros para el **capturador de entrada**
 
-# 16. Generación de señales con Timer1
+# 15. Generación de señales con Timer1
 El Timer1 posee 2 canales independientes para la generación de señales
 
 <img src="./img/timer1-wg.png"/>
 
-## 16.1. Registro TCCR1A
+## 15.1. Registro TCCR1A
 <img src="./img/timer1-tccr1a.png"/>
 
-## 16.2. Registro TCCR1B
+## 15.2. Registro TCCR1B
 <img src="./img/timer1-tccr1b.png"/>
 
-## 16.3. Modo Normal
+## 15.3. Modo Normal
 En el modo normal, el contador cuenta hasta TOP (0xFF) e invierte la salida OC1A cuando la cuenta alcanza OCR1A- El periodo de la señal generada es independiente del valor OCR1A
 <img src="./img/timer1-normal-mode.png"/>
 
-## 16.4. Modo CTC
+## 15.4. Modo CTC
 En el modo CTC la salida de OC1A se invierte cuando TCNT1 alcanza el valor OCR1A, lo que permite controlar la frecuencia o el período de la señal.
 
 $f_{OC1A} = \frac{f_{clk\_I/O}}{2*N*(1+OCR1A)}$ donde $N$ es el Prescaler
 
 <img src="./img/timer1-ctc-mode.png"/>
 
-### 16.4.1. Observaciones
+### 15.4.1. Observaciones
 * Para $f_{clk\_I/O}$ y $N$ fijos, y con $OCR1A$ variable de 16 bits se pueden generar 65536 ($2^{16}$) valores diferentes de $T_{OC1A}$ (o $f_{OC1A}$)
 * Para $f_{clk\_I/O}$ y $N$ fijos, y con $OCR1A=0$, el **período mínimo** que se puede generar será $T_{OC1A_Min} = 2*N*1 * T_{clk\_I/O}$
 * Para $f_{clk\_I/O}$ y $N$ fijos, y con $OCR1A=65536$, el **período máximo** que se puede generar será $T_{OC1A_MAX} = 2*N*65536 * T_{clk\_I/O}$
 * Para $f_{clk\_I/O}$ y $N$ fijos se puede calcular la resolución del período como la diferencia entre dos períodos para dos valores de OCR1A diferentes (x e y)
   $$\Delta T_{OC1A} = T_{OC1A_X} - T_{OC1A_Y}= 2 * N * T_{CLK\_I/O} *(OCR1A_X - OCR1A_Y)$$
 
-# 17. Capturación de Entrada con Timer1
+# 16. Capturación de Entrada con Timer1
 La capturación de entrada me permite medir el tiempo entre flancos de una señal desconocida y así conocer su período.
 
 <p style="text-align:center"><img src="./img/timer1-ic.png"/></p>
@@ -1103,12 +1103,12 @@ Luego, para conocer el período de la señal incógnita
 
 $$T_{ICP1} = (ICR1_{t2} - ICR1_{t1}) * N * T_{CLK\_I/O}$$
 
-## 17.1. Observaciones
+## 16.1. Observaciones
 * Minimo período medible $T_{ICP\_MIN} = 1 * N * T_{CLK\_I/O}$
 * Máximo período medible $T_{ICP\_MAX} = 65535 * N * T_{CLK\_I/O}$
 * Resolución $\pm N * T_{CLK\_I/O}$
 
-# 18. Sistema y fuentes de reloj
+# 17. Sistema y fuentes de reloj
 <p style="text-align:center"><img src="./img/clk-dist.png"/></p>
 
 * Reloj de CPU $clk_{CPU}$: El reloj de CPU esta conectados a las partes del sistema encargadas de la operacion del núcleo AVR, los módulos tales como el archivo de los registros de propósito general, el registro de estado y la memoria de datos que contiene el stack pointer. Detener el reloj de CPU prohibe al núcleo realizar operaciones generales y cálculos.
@@ -1117,7 +1117,7 @@ $$T_{ICP1} = (ICR1_{t2} - ICR1_{t1}) * N * T_{CLK\_I/O}$$
 * Reloj de Timer Asíncrono $clk_{ASY}$: El reloj asíncrono permite al Timer/Counter asíncrono ser alimentado por un reloj externo o un cristal externo de hasta 32kHz, permitiendo funcionar al Timer/Counter como RTC cuando el dispositivo esta en estado SLEEP.
 * Reloj ADC $clk_{ADC}$: El convertidor analógico digital es provisto de su propio reloj para poder detener el reloj de CPU y el reloj de I/O a fin de reducir el ruido generado por los circuitos digitales. Esto permite obtener resultados de conversion más precisos.
 
-## 18.1. Fuentes
+## 17.1. Fuentes
 1. Low power crystal oscillator: Conectando un cristal de cuarzo en los pines XTAL1 y XTAL2, input y output del oscilador pueden conseguirse frecuencias del rango 0.4 a 16.0 MHz
 2. Full swing crystal oscillator: Igual a (1) pero con mayor consumo de energía y como resultado menor ruido en la señal de clk.
 3. Low frequency crystal oscillator: Oscilador interno para uso con un cristal de 32.769kHz
@@ -1129,10 +1129,10 @@ $$T_{ICP1} = (ICR1_{t2} - ICR1_{t1}) * N * T_{CLK\_I/O}$$
 
 **Nota:** *el Atmega328P trae seteado de fabrica al oscilador RC interno a 8.0Mhz con un divisor programado para obtener una señal resultante de 1Mhz como <mark>fuente por defecto de clk</mark>*
 
-# 19. Comunicación Serie
+# 18. Comunicación Serie
 En una transmisión serie, los datos se envían en paquetes de varios bits, un bit a la vez, por el mismo canal de comunicación.
 
-## 19.1. Definiciones
+## 18.1. Definiciones
 * Tiempo de bit: tiempo de duración de un bit
 * Tasa de transferencia: el numero de bits por unidad de tiempo, tambien se la denomina baud-rate (simbolos por segundo)
 * Overhead: son bits o bytes que se agregan al dato para hacer más confiable una transmisión (bits de paridad o bytes de checksum)
@@ -1145,7 +1145,7 @@ En una transmisión serie, los datos se envían en paquetes de varios bits, un b
 * Sistema sincrónico: el receptor y el transmisor se deben sincronizar a una tasa de transferencia dada, empleando un reloj común a ambos (orientado a la transferencia de bloques de datos). La ventaja es que se pueden utilizar tasas de transferencia más altas, la desventaja es que requiere un conductor adicional (señal de clk).
 * Sistema asincrónico: TX y RX no están sincronizados por reloj común, si no que la tasa de transferencia se supone conocida y la trama de datos contiene un bit de comienzo y otro de fin para sincronizar el RX y decodificar los datos (orientado a transferencia de caracteres)
 
-# 20. USART
+# 19. USART
 El Transmisor Receptor Serie Sincrono Asincrono Universal (USART) es un dispositivo de comunicación sere altamente flexible incluído en el Atmega328P.
 
 <p style="text-align:center"><img src="./img/usart0.png"/></p>
@@ -1156,14 +1156,14 @@ De su diagrama de bloques podemos analizar 3 partes de manera individual:
 * Receptor: El receptor es la parte más compleja del módulo USART, debido a sus unidades de reloj y de data recovery. La unidad de recovery se utiliza para la recepción asincrónica de información. Adicionalmente a las unidades de recovery, el receptor incluye un comprobador de paridad, lógica de control, un registro de desplazamiento y un buffer de recepción de dos niveles. El receptor soporta los mismos formatos de trama que el transmisor y puede detectar errores de trama, sobrecarga de datos (se recibe un dato nuevo y el anterior aun no fue leido) y errores de paridad.
 * Registros de control compartidos por todas las unidades
 
-## 20.1. Paso por paso
+## 19.1. Paso por paso
 
 * Transmisión: Si el registro UDR está vacío (flag UDRE=1) el usuario puede cargar un dato para transmitir. Este inmediatamente se transfiere al shift register y la transmisión comienza. El usuario puede escribir otro dato en el UDR que quedará a la espera de ser transmitido. Esto constituye un mecanismo de doble Buffer. El flag TXC se activa (TXC=1) cuando el transmisor haya completado la transmisión y tanto el UDR como el shift register estén vacios. Ambos flag se borran automáticamente con la escritura de un dato en el UDR.
 * Recepción: Los datos presentes en el pin de entrada del periférico son muestreados a una tasa 16 veces mayor a la seleccionada de manera de detectar el bit de comienzo y sincronizarse con el centro de los bits de datos. Una vez detectado el bit de comienzo, los datos son muestreados e introducidos al registro de desplazamiento a medida que son decodificados y hasta detectar el bit de parada o STOP. Luego de completar la recepción el contenido del registro de desplazamiento se transfiere al registro de datos UDR y se activa el flag que indica “dato recibido” RXC. Este flag también puede generar una solicitud de interrupción si se habilita RXCIE. Luego un nuevo dato puede ser recibido, mientras el anterior se encuentra almacenado en el UDR. Esto constituye un mecanismo de doble Buffer
 
-## 20.2. Registros de control
+## 19.2. Registros de control
 
-### 20.2.1. UCSRA
+### 19.2.1. UCSRA
 <img src="./img/usart0-ucsra.png"/>
 
 * RXC0 (Bit 7): USART Receive Complete 0. This flag bit is set when there are new data in the receive buffer that are not read yet. It is cleared when the receive buffer is empty. It also can be used to generate a receive complete interrupt.
@@ -1175,7 +1175,7 @@ De su diagrama de bloques podemos analizar 3 partes de manera individual:
 * U2X0 (Bit 1): Double the USART Transmission Speed 0
 * MPCM0 (Bit 0): Multi-processor Communication Mode 0
 
-### 20.2.2. UCSRB
+### 19.2.2. UCSRB
 <img src="./img/usart0-ucsrb.png"/>
 
 * RXCIE0 (Bit 7): Receive Complete Interrupt Enable.
@@ -1187,7 +1187,7 @@ De su diagrama de bloques podemos analizar 3 partes de manera individual:
 * RXB80 (Bit 1): Receive data bit 8. This is the ninth data bit of the received character when using serial frames with nine data bits.
 * TXB80 (Bit 0): Transmit data bit 8. This is the ninth data bit of the transmitted character when using serial frames with nine data bits
 
-### 20.2.3. UCSRC
+### 19.2.3. UCSRC
 <img src="./img/usart0-ucsrc.png"/>
 
 * UMSEL01:00 (Bits 7:6): USART Mode Select. These bits select the operation mode of the USART.
@@ -1206,10 +1206,10 @@ De su diagrama de bloques podemos analizar 3 partes de manera individual:
 * UCSZ01:00 (Bit 2:1): Character Size. These bits combined with the UCSZ02 bit in UCSR0B set the character size in a frame.
 * UCPOL0 (Bit 0): Clock Polarity. This bit is used for synchronous mode
 
-#### 20.2.3.1. Frame configuration - Character Size
+#### 19.2.3.1. Frame configuration - Character Size
 <img src="./img/usart0-csize.png"/>
 
-# 21. RS-232
+# 20. RS-232
 Estándar propuesto por la EIA (Electronics Industry Association) en 1960, para interconectar Data Terminal Equipment y Data Communication Equipment.
 
 Especifica tasas de transferencia no mayor a 20Kbps para distancias de interconexión de 15m y tasas de transferencia hasta 115kbps para distancias más cortas. La interfaz puede operar en modo asincrónico, sincrónico, full-dúplex, half-dúplex o simplex.
@@ -1218,7 +1218,7 @@ Define un 1 lógico (Mark) como una tensión entre -3 y -15V y un 0 lógico (Spa
 
 <p style="text-align:center"><img src="./img/rs-232.png"/></p>
 
-### 21.0.1. Formato de trama
+### 20.0.1. Formato de trama
 
 <img src="./img/rs-232-frame.png"/>
 
@@ -1236,13 +1236,13 @@ Después del bit de paridad (si lo hay) continúan los bits de parada (stop bits
 
 El formato de trama más utilizado es el formato 8N1, con un bit de start, 8 bits de dato y un bit de stop, sin bits de paridad.
 
-### 21.0.2. Control de flujo
+### 20.0.2. Control de flujo
 El control de flujo es indicar al emisor cuando puede transmitir y cuando debe esperar. En RS-232 puede implementarse por software o hardware
 
 * Por software: se envía un caracter (ASCII 19) para indicar al emisor que el buffer de recepción está lleno, y un carácter (ASCII 17) para indicar que puede volver a transmitir
 * Por hardware:  requiere que entre el receptor y el emisor se conecten dos hilos más: RTS y CTS. Cuando el buffer del receptor se llena desactiva la señal CTS, el emisor debe esperar. Cuando vuelva a tener espacio en el buffer, activa nuevamente el CTS para decir que está nuevamente listo.
 
-# 22. SPI (Serial Peripheral Interface)
+# 21. SPI (Serial Peripheral Interface)
 SPI Es una interfaz desarollada por Motorola en 1991, permite comunicación serie full duplex **sincrónica** con dispositivos periféricos u otros MCU y altas tasas de transferencia de hasta 10Mbits/s.
 Utiliza una configuracion Master-Slave donde el master genera y distribuye la señal de reloj, y opcionalmente utiliza una línea de seleción de chip por cada dispositivo esclavo.
 
@@ -1289,11 +1289,11 @@ Se usa single buffer para la transmisión y buffer doble para la recepción. Est
 <tr>
 </table>
 
-## 22.1. Registros
+## 21.1. Registros
 
-### 22.1.1. Data Register (SPDR)
+### 21.1.1. Data Register (SPDR)
 
-### 22.1.2. Status Register (SPCR)
+### 21.1.2. Status Register (SPCR)
 <img src="./img/spi-spcr.png"/>
 
 * SPIE (SPI Interrupt Enable)
@@ -1312,17 +1312,17 @@ Se usa single buffer para la transmisión y buffer doble para la recepción. Est
 </tr>
 </table>
 
-### 22.1.3. Status Register (SPSR)
+### 21.1.3. Status Register (SPSR)
 <img src="./img/spi-spsr.png"/>
 
 * SPIF (SPI Interrupt Flag): Transferencia completa (tx & rx)
 * WCOL (Write Collision): Registro SPDR escrito durante transferencia de datos
 * SPI2X (Double SPI Speed): Duplicar la frecuencia de SCK duplica cuando el SPI esta en modo maestro
 
-# 23. TWI (2 Wire Interface, I2C)
+# 22. TWI (2 Wire Interface, I2C)
 La interfaz TWI es ideal para aplicaciones típicas de microcontroladores. El protocolo TWI permite al diseñador de sistemas interconectar hasta 128 dispositivos diferentes usando solo un bus de dos lineas bi-direccionales, una para reloj (SCL) y otra para datos (SDA). El unico hardware externo necesario para implementar el bus es un único resistor de pull up por cada una de las lineas del bus TWI. Todos los dispositivos conectados al bus tienen direcciones individuales y los mecanismos para resolver la contención en el bus son inherentes al protocolo TWI
 
-## 23.1. Terminologia
+## 22.1. Terminologia
 <img src="./img/twi.png"/>
 
 * Maestro: Inicia y termina la transmision, genera el reloj en la linea SCL
@@ -1330,14 +1330,14 @@ La interfaz TWI es ideal para aplicaciones típicas de microcontroladores. El pr
 * Transmisor: El dispositivo que pone datos en el bus
 * Receptor: El dispositivo que lee datos del bus
 
-## 23.2. Transferencia y formato de trama
+## 22.2. Transferencia y formato de trama
 Cada bit de datos se transmite en el bus TWI acompañado de un pulso de reloj en la linea SCL, el nivel de la línea de datos debe ser estable durante el pulso alto de reloj, excepto al generar las condiciones de START y STOP.
 
 El maestro es el encargado de inciar y terminar las transmisiones de datos. La transmisión se inicia cuando el maestro emite una condición de START en el bus, y se termina cuando emite una de STOP. Entre las condiciones de START  y STOP el bus se considera ocupado y ningun Maestro debe intentar tomar control del bus. Se produce un caso especial cuando se emite una nueva condición de START entre una condición de START y una de STOP. Esto se denomina condición de REPEATED START y se utiliza cuando el maestro desea iniciar una nueva transferencia sin renunciar al control del bus. Luego de un REPEATED START el bus se considera ocupado hasta el siguiente STOP (START y REPEATED START son identicos).
 
 La señal de START y STOP se generan con un flanco de bajada y uno de subida respectivamente, junto con un pulso alto en la linea SCL.
 
-### 23.2.1. Formato de paquete de direcciones
+### 22.2.1. Formato de paquete de direcciones
 Todos los paquetes de direcciones transmitidos en el bus TWI son de 9 bits, constando de 7 bits de direcciones, 1 bit de READ/WRITE (1/0) y 1 bit de acknowledge. Cuando un esclavo reconoce que esta siendo direccionado por el maestro, debe pullear low la linea SDA durante el 9º ciclo de SCL (el ciclo de ACK). Luego el maestro puede transmitir una condición de STOP o REPEATED START para iniciar a transmitir.
 
 **Nota:** *Un paquete de direcciones con directiva de lectura se denomina **SLA+R**, uno con directiva de escritura **SLA+W**.*
@@ -1346,11 +1346,8 @@ El bit más significativo (MSB) se transmite primero. Las direcciones de esclavo
 
 **Nota:** *Todas las direcciones de formato 1111 xxx deberían estar reservadas para futuros propositos*
 
-### 23.2.2. Formato de paquete de datos
+### 22.2.2. Formato de paquete de datos
 Todos los paquetes de datos transmitidos en el bus TWI son de 9 bits, constando de 1 byte de datos y 1 bit de acknowledge. Durante una transferencia de datos, el maestro genera el reloj y las condiciones de START y STOP, mientras que el receptor es responsable del acknowledge de la recepción. El acknowledge (ACK) es emitido por el receptor pulleando la linea SDA a low durante el 9º ciclo de SCL. El MSB de los datos se transmite primero.
 
-### 23.2.3. Sincronización
+### 22.2.3. Sincronización
 El esclavo puede extender el periodo low de la linea SCL pulleando a low la misma, esto es util para si la velocidad de reloj del maestro es demasiado rapida para el esclavo o para obtener tiempo extra de procesamiento. Esta extension del periodo de SCL no afecta al periodo alto de la misma, el cual es determinado por el maestro. Como consecuencia, el esclabo puede reducir la velocidad de transferencia al prolongar el ciclo de trabajo de SCL.
-
-# 24. Señales PWM (Pulse Width Modulation)
-Pulse Width Modulation es una técnica de modulación digital donde la información útil de la señal se encuentra en el ancho del pulso. Esto permite que se pueda obtener una señal analógica a partir de una señal digital, y controlar dispositivos analogicos por medio de salidas digitales.

@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>circ-digitales.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="apuntes-de-clase--circuitos-digitales-y-microcontrolares-e0305">Apuntes de Clase — Circuitos digitales y Microcontrolares (E0305)</h1>
+<ul>
+<li><a href="#1-lenguaje-c">1. Lenguaje C</a>
+<ul>
+<li><a href="#11-modificadores-de-acceso">1.1. Modificadores de acceso</a>
+<ul>
+<li><a href="#111-static">1.1.1. Static</a></li>
+<li><a href="#112-const">1.1.2. Const</a></li>
+<li><a href="#113-volatile">1.1.3. Volatile</a></li>
+<li><a href="#114-register">1.1.4. Register</a></li>
+</ul>
+</li>
+<li><a href="#12-preprocesador">1.2. Preprocesador</a>
+<ul>
+<li><a href="#121-directivas">1.2.1. Directivas</a></li>
+</ul>
+</li>
+<li><a href="#13-caracteres">1.3. Caracteres</a>
+<ul>
+<li><a href="#131-string-handling-functions">1.3.1. String Handling Functions</a></li>
+</ul>
+</li>
+<li><a href="#14-alcance-de-variables">1.4. Alcance de variables</a></li>
+<li><a href="#15-operadores-logicos">1.5. Operadores Logicos</a></li>
+<li><a href="#16-prototipos-de-funciones">1.6. Prototipos de funciones</a></li>
+<li><a href="#17-punteros-y-arreglos">1.7. Punteros y arreglos</a></li>
+<li><a href="#18-structs">1.8. Structs</a></li>
+<li><a href="#19-unions">1.9. Unions</a></li>
+</ul>
+</li>
+<li><a href="#2-programaci%C3%B3n-modular">2. Programación modular</a>
+<ul>
+<li><a href="#21-comunicaci%C3%B3n-intermodular-interfaces">2.1. Comunicación intermodular. Interfaces.</a></li>
+<li><a href="#22-modularizaci%C3%B3n-en-c">2.2. Modularización en C</a></li>
+<li><a href="#23-plantilla-para-archivos-h">2.3. Plantilla para archivos .h</a></li>
+<li><a href="#24-plantilla-para-archivos-c">2.4. Plantilla para archivos .c</a></li>
+<li><a href="#25-header-de-proyecto">2.5. Header de proyecto</a></li>
+<li><a href="#26-header-de-puertos-o-placa">2.6. Header de puertos o placa</a></li>
+<li><a href="#27-documentaci%C3%B3n">2.7. Documentación</a>
+<ul>
+<li><a href="#271-ejemplo">2.7.1. Ejemplo</a></li>
+</ul>
+</li>
+<li><a href="#28-convenci%C3%B3n-de-nombres">2.8. Convención de nombres</a></li>
+</ul>
+</li>
+<li><a href="#3-familia-de-microcontroladores-avr">3. Familia de microcontroladores AVR</a>
+<ul>
+<li><a href="#31-comparativa">3.1. Comparativa</a></li>
+<li><a href="#32-arquitectura-avr-atmega328p">3.2. Arquitectura AVR (Atmega328P)</a>
+<ul>
+<li><a href="#321-cpu">3.2.1. CPU</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-programaci%C3%B3n-de-entradasalida">4. Programación de Entrada/Salida</a>
+<ul>
+<li><a href="#41-funciones-de-avr-libc-para-evaluar-pines">4.1. Funciones de avr libc para evaluar pines</a></li>
+</ul>
+</li>
+<li><a href="#5-interrupciones">5. Interrupciones</a>
+<ul>
+<li><a href="#51-paso-por-paso">5.1. Paso por paso</a></li>
+<li><a href="#52-vectores-de-interrupcion">5.2. Vectores de interrupcion</a></li>
+<li><a href="#53-reset">5.3. RESET</a>
+<ul>
+<li><a href="#531-mcu-status-register">5.3.1. MCU Status Register</a></li>
+</ul>
+</li>
+<li><a href="#54-latencia-de-interrupcion">5.4. Latencia de interrupcion</a></li>
+<li><a href="#55-interrupciones-anidadas">5.5. Interrupciones anidadas</a></li>
+<li><a href="#56-interrupciones-externas">5.6. Interrupciones externas</a>
+<ul>
+<li><a href="#561-activacion-por-flanco-vs-por-nivel">5.6.1. Activacion Por Flanco vs. Por Nivel</a></li>
+</ul>
+</li>
+<li><a href="#57-interrupciones-por-pin-change-pcint">5.7. Interrupciones por Pin Change (PCINT)</a>
+<ul>
+<li><a href="#571-prioridades-de-atencion">5.7.1. Prioridades de atencion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#6-perif%C3%A9ricos-timer">6. Periféricos Timer</a>
+<ul>
+<li><a href="#61-definiciones">6.1. Definiciones</a></li>
+</ul>
+</li>
+<li><a href="#7-timercounter-0">7. Timer/Counter 0</a>
+<ul>
+<li><a href="#71-modos-de-funcionamiento">7.1. Modos de funcionamiento</a>
+<ul>
+<li><a href="#711-normal">7.1.1. Normal</a></li>
+<li><a href="#712-ctc-clear-timer-on-compare-match">7.1.2. CTC (Clear Timer on Compare Match)</a></li>
+<li><a href="#713-pwm">7.1.3. PWM</a>
+<ul>
+<li><a href="#7131-fast-pwm">7.1.3.1. Fast PWM</a></li>
+<li><a href="#7132-phase-correct-pwm">7.1.3.2. Phase Correct PWM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#72-prescaler">7.2. Prescaler</a></li>
+<li><a href="#73-registros-para-su-programaci%C3%B3n">7.3. Registros para su programación</a></li>
+</ul>
+</li>
+<li><a href="#8-mef">8. MEF</a>
+<ul>
+<li><a href="#81-modelo-de-mealy">8.1. Modelo de Mealy</a></li>
+<li><a href="#82-modelo-de-moore">8.2. Modelo de Moore</a></li>
+<li><a href="#83-implementaci%C3%B3n-en-c">8.3. Implementación en C</a>
+<ul>
+<li><a href="#831-usando-switch-case">8.3.1. Usando switch-case</a></li>
+<li><a href="#832-usando-punteros-a-funci%C3%B3n">8.3.2. Usando punteros a función</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#9-timer-2-rtc">9. Timer 2. RTC</a></li>
+<li><a href="#10-watchdog-timer">10. Watchdog Timer</a></li>
+<li><a href="#11-planificaci%C3%B3n-y-ejecuci%C3%B3n-de-tareas-en-sistemas-embebidos">11. Planificación y Ejecución de Tareas en Sistemas Embebidos</a>
+<ul>
+<li><a href="#111-super-loop-o-round-robin-c%C3%ADclico">11.1. Super-Loop o Round Robin Cíclico</a></li>
+<li><a href="#112-foregroundbackground-o-event-driven">11.2. Foreground/Background o Event-Driven</a></li>
+<li><a href="#113-time-triggered-disparadas-por-tiempo">11.3. Time-triggered (disparadas por tiempo)</a></li>
+<li><a href="#114-resumen">11.4. Resumen</a></li>
+</ul>
+</li>
+<li><a href="#12-drivers-modelo-productorconsumidor">12. Drivers. Modelo Productor/Consumidor.</a>
+<ul>
+<li><a href="#121-estructuras-basicas-para-el-intercambio-de-datos-entre-tareas">12.1. Estructuras basicas para el intercambio de datos entre tareas</a></li>
+<li><a href="#122-arquitectura-foregroundbackground">12.2. Arquitectura Foreground/Background</a></li>
+</ul>
+</li>
+<li><a href="#13-rtos-real-time-operative-system">13. RTOS (Real Time Operative System)</a>
+<ul>
+<li><a href="#131-scheduler">13.1. Scheduler</a></li>
+<li><a href="#132-modelo-de-tarea">13.2. Modelo de tarea</a></li>
+<li><a href="#133-componentes-de-un-rtos-simple">13.3. Componentes de un RTOS simple</a></li>
+</ul>
+</li>
+<li><a href="#14-timer-1">14. Timer 1</a>
+<ul>
+<li><a href="#141-accediendo-a-registros-de-16-bits">14.1. Accediendo a registros de 16 bits</a></li>
+<li><a href="#142-registros">14.2. Registros</a></li>
+</ul>
+</li>
+<li><a href="#15-generaci%C3%B3n-de-se%C3%B1ales-con-timer1">15. Generación de señales con Timer1</a>
+<ul>
+<li><a href="#151-registro-tccr1a">15.1. Registro TCCR1A</a></li>
+<li><a href="#152-registro-tccr1b">15.2. Registro TCCR1B</a></li>
+<li><a href="#153-modo-normal">15.3. Modo Normal</a></li>
+<li><a href="#154-modo-ctc">15.4. Modo CTC</a>
+<ul>
+<li><a href="#1541-observaciones">15.4.1. Observaciones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#16-capturaci%C3%B3n-de-entrada-con-timer1">16. Capturación de Entrada con Timer1</a>
+<ul>
+<li><a href="#161-observaciones">16.1. Observaciones</a></li>
+</ul>
+</li>
+<li><a href="#17-sistema-y-fuentes-de-reloj">17. Sistema y fuentes de reloj</a>
+<ul>
+<li><a href="#171-fuentes">17.1. Fuentes</a></li>
+</ul>
+</li>
+<li><a href="#18-comunicaci%C3%B3n-serie">18. Comunicación Serie</a>
+<ul>
+<li><a href="#181-definiciones">18.1. Definiciones</a></li>
+</ul>
+</li>
+<li><a href="#19-usart">19. USART</a>
+<ul>
+<li><a href="#191-paso-por-paso">19.1. Paso por paso</a></li>
+<li><a href="#192-registros-de-control">19.2. Registros de control</a>
+<ul>
+<li><a href="#1921-ucsra">19.2.1. UCSRA</a></li>
+<li><a href="#1922-ucsrb">19.2.2. UCSRB</a></li>
+<li><a href="#1923-ucsrc">19.2.3. UCSRC</a>
+<ul>
+<li><a href="#19231-frame-configuration---character-size">19.2.3.1. Frame configuration - Character Size</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#20-rs-232">20. RS-232</a>
+<ul>
+<li><a href="#2001-formato-de-trama">20.0.1. Formato de trama</a></li>
+<li><a href="#2002-control-de-flujo">20.0.2. Control de flujo</a></li>
+</ul>
+</li>
+<li><a href="#21-spi-serial-peripheral-interface">21. SPI (Serial Peripheral Interface)</a>
+<ul>
+<li><a href="#211-registros">21.1. Registros</a>
+<ul>
+<li><a href="#2111-data-register-spdr">21.1.1. Data Register (SPDR)</a></li>
+<li><a href="#2112-status-register-spcr">21.1.2. Status Register (SPCR)</a></li>
+<li><a href="#2113-status-register-spsr">21.1.3. Status Register (SPSR)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#22-twi-2-wire-interface-i2c">22. TWI (2 Wire Interface, I2C)</a>
+<ul>
+<li><a href="#221-terminologia">22.1. Terminologia</a></li>
+<li><a href="#222-transferencia-y-formato-de-trama">22.2. Transferencia y formato de trama</a>
+<ul>
+<li><a href="#2221-formato-de-paquete-de-direcciones">22.2.1. Formato de paquete de direcciones</a></li>
+<li><a href="#2222-formato-de-paquete-de-datos">22.2.2. Formato de paquete de datos</a></li>
+<li><a href="#2223-sincronizaci%C3%B3n">22.2.3. Sincronización</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="1-lenguaje-c">1. Lenguaje C</h1>
+<h2 id="11-modificadores-de-acceso">1.1. Modificadores de acceso</h2>
+<h3 id="111-static">1.1.1. Static</h3>
+<p>In the C programming language, static is used with global variables and functions to set their scope to the containing file. In local variables, static is used to store the variable in the statically allocated memory instead of the automatically allocated memory. While the language does not dictate the implementation of either type of memory, statically allocated memory is typically reserved in the data segment of the program at compile time, while the automatically allocated memory is normally implemented as a transient call stack.</p>
+<h3 id="112-const">1.1.2. Const</h3>
+<p>The qualifier const can be applied to the declaration of any variable to specify that its value will not be changed (Which depends upon where const variables are stored, we may change the value of const variable by using pointer).</p>
+<h3 id="113-volatile">1.1.3. Volatile</h3>
+<p>The volatile keyword is intended to prevent the compiler from applying any optimizations on objects that can change in ways that cannot be determined by the compiler. Their values can be changed by code outside the scope of current code at any time. The system always reads the current value of a volatile object from the memory location rather than keeping its value in temporary register at the point it is requested, even if a previous instruction asked for a value from the same object.
+<strong>Use cases:</strong></p>
+<ul>
+<li>Global variables modified by an interrupt service routine outside the scope</li>
+<li>Global variables within a multi-threaded application</li>
+</ul>
+<h3 id="114-register">1.1.4. Register</h3>
+<p>Registers are faster than memory to access, so the variables which are most frequently used in a C program can be put in registers using register keyword. The keyword register
+hints to compiler that a given variable can be put in a register. It’s compiler’s choice to put it in a register or not. Generally, compilers themselves do optimizations and put the variables in register.</p>
+<h2 id="12-preprocesador">1.2. Preprocesador</h2>
+<p>The C preprocessor, often known as cpp, is a macro processor that is used automatically by the C compiler to transform your program before compilation. It is a text substitution tool. Las directivas para el preprocesador comienzan con el simbolo #.</p>
+<h3 id="121-directivas">1.2.1. Directivas</h3>
+<ul>
+<li><strong>define</strong>: substitutes a preprocessor macro</li>
+<li><strong>include</strong>: inserts a particular header from another file</li>
+<li>undef: undefines a preprocessor macro</li>
+<li><strong>ifdef</strong>: returns true if the macro is defined</li>
+<li>ifndef: returns true if the macro is <em>not</em> defined</li>
+<li>if: tests if a compile time condition is true</li>
+<li>else: alternative for #if</li>
+<li>elif: else if in one statement</li>
+<li>endif: ends preprocessor conditional</li>
+<li>error: prints error message on stderr</li>
+<li>pragma: issues special commands to the compiler, using a standardized method.</li>
+<li><strong>typedef</strong>: use to give a type a new name</li>
+</ul>
+<h2 id="13-caracteres">1.3. Caracteres</h2>
+<ul>
+<li>Character Constant: constante que representa un valor perteneciente al conjunto de caracteres. Se indica entre comillas simples 'a'.</li>
+<li>Character array: C language does not support strings as a data type, instead they are handled as a one-dimensional array of characters.</li>
+</ul>
+<h3 id="131-string-handling-functions">1.3.1. String Handling Functions</h3>
+<p>C supports a large number of string handling functions that can be used to carry out many of the string manipulations. These functions are packaged in the string.h library.</p>
+<ul>
+<li>strcat(dest,src) concatenates two strings</li>
+<li>strlen(str) show the length of a string</li>
+<li>strrev(str) reverse a string</li>
+<li>strcpy(dest,src) copies one string into another</li>
+<li>strcmp(a,b) compares two strings</li>
+</ul>
+<h2 id="14-alcance-de-variables">1.4. Alcance de variables</h2>
+<p>In C programming language, variables defined within some function are known as <strong>Local Variables</strong> and variables which are defined outside of function block and are accessible
+to entire program are known as <strong>Global Variables</strong>.</p>
+<h2 id="15-operadores-logicos">1.5. Operadores Logicos</h2>
+<ul>
+<li>&amp; -&gt; binary AND</li>
+<li>| -&gt; binary OR</li>
+<li>^ -&gt; binary XOR</li>
+<li>~ -&gt; Complemento 1 (invierte los bits)</li>
+<li>&lt;&lt; -&gt; binary left shift</li>
+<li>&gt;&gt; -&gt; binary right shift</li>
+</ul>
+<p><strong>Nota:</strong> La diferencia entre el AND binario (&amp;) y el AND lógico (&amp;&amp;) es que el primero es una operacion que se realiza a nivel de bit.</p>
+<h2 id="16-prototipos-de-funciones">1.6. Prototipos de funciones</h2>
+<p>A prototype declares the function name, its parameters, and its return type to the rest of the program prior to the function's actual declaration. Many C compilers do not check for parameter matching either in type or count. You can waste an enormous amount of time debugging code in which you are simply passing one too many or too few parameters by
+mistake. <strong>The prototype causes the compiler to check for parameters and flag an error for mismatches on count or type.</strong> Prototypes should be placed at the beginning of your program.</p>
+<h2 id="17-punteros-y-arreglos">1.7. Punteros y arreglos</h2>
+<p>Every variable is a memory location, and every memory location has its address defined which can be accessed using ampersand (&amp;) operator, which denotes an address in memory.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">int</span> var1;
+    <span class="hljs-keyword">int</span> var2[<span class="hljs-number">10</span>];
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"address of var1 %x"</span>,&amp;var1);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"address of var2 %x"</span>,&amp;var2);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<p><strong>A pointer is a variable whose value is the address of another variable.</strong> Like any variable or constant, you must declare a pointer before using it to store any variable address.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> *ip; <span class="hljs-comment">//pointer to an integer</span>
+<span class="hljs-keyword">char</span> str[<span class="hljs-number">10</span>]; <span class="hljs-comment">//pointer to the first element of str array</span>
+
+<span class="hljs-keyword">int</span> num;
+
+ip= &amp;num; <span class="hljs-comment">//puntero a num</span>
+
+<span class="hljs-built_in">printf</span>(ip); <span class="hljs-comment">//imprimir direccion de num</span>
+<span class="hljs-built_in">printf</span>(*ip); <span class="hljs-comment">//imprimir contenido de num</span>
+</div></code></pre>
+<h2 id="18-structs">1.8. Structs</h2>
+<p>A structure is another <em>user defined data</em> type available in C that <strong>allows combining data items of different kinds</strong>. Structures are used to represent a record.</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Books</span>{</span>
+    <span class="hljs-keyword">char</span> title[<span class="hljs-number">50</span>];
+    <span class="hljs-keyword">char</span> author[<span class="hljs-number">50</span>];
+    <span class="hljs-keyword">char</span> subject[<span class="hljs-number">50</span>];
+    <span class="hljs-keyword">int</span> id;
+}
+
+Books book;
+
+book.title=<span class="hljs-string">"titulo"</span>;
+book.author=...
+</div></code></pre>
+<h2 id="19-unions">1.9. Unions</h2>
+<p>A union is a special data type available in C that allows to store different data types in the same memory location. You can define a union with many members, but only one member can contain a value at any given time. Unions provide an efficient way of using the same memory location for multiple-purpose. To define a union, you must use the union statement in the same way as you did while defining a structure. The union statement defines a new data type with more than one member for your program.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">union</span> Data{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> f;
+    <span class="hljs-keyword">char</span> str[<span class="hljs-number">20</span>];
+}data;
+</div></code></pre>
+<p>Now, a variable of Data type can store an integer, a floating-point number, or a string of characters. <strong>It means a single variable, i.e., same memory location, can be used to store multiple types of data</strong>. You can use any built-in or user defined data types inside a union based on your requirement.</p>
+<p><strong>The memory occupied by a union will be large enough to hold the largest member of the union.</strong></p>
+<h1 id="2-programaci%C3%B3n-modular">2. Programación modular</h1>
+<p>Un módulo puede estar formado por un archivo o una colección de archivos que contienen las funciones que realizan en conjunto la tarea especificada. Los módulos pueden ser verificados y mantenidos por separado, además de que pueden ser desarrollados por un equipo de programadores.</p>
+<p>Un módulo bien desarrollado que cumple con una tarea especifica, puede ser separado del resto y puesto en otra aplicación sin problemas. Un módulo puede verse además como una caja negra que presenta una interfaz bien definida (puntos de entrada y puntos de salida) para comunicarse con el resto del mundo.</p>
+<h2 id="21-comunicaci%C3%B3n-intermodular-interfaces">2.1. Comunicación intermodular. Interfaces.</h2>
+<p>Las variables globales NO se recomiendan para pasar información de un módulo a otro porque atentan contra la independencia y portabilidad del módulo.</p>
+<p>Las interfaces permiten la comunicación entre módulos, determinan la forma de uso de cada uno y garantizan la independencia con el resto del sistema, se implementan mediante los parámetros de entrada de las funciones y los valores de retorno de las mismas.</p>
+<p>Ocultar la información que maneja un módulo (por ejemplo los registros del MCU, ciertas variables o funciones) mejora la portabilidad. Este es un concepto básico en la POO (Programación Orientada a Objetos)</p>
+<p>Por otro lado, es necesario restringir que módulos acceden al hardware (registros del MCU por ejemplo) y sincronizar los accesos entre los mismos (Mecanismos de sincronización de tareas). Una forma de conectar los módulos es en forma jerárquica (De mayor abstracción a menor abstracción (más cercano al hardware)).</p>
+<p>Un módulo (o varios) que controlan el funcionamiento de un dispositivo de hardware constituye un “device driver” . Este contiene el conjunto de funciones necesarias para utilizar un dispositivo particular y provee al usuario una interfaz de comunicación estándar del tipo “open()”,“close()”, “ctr()”, “read()” y “write()”.</p>
+<h2 id="22-modularizaci%C3%B3n-en-c">2.2. Modularización en C</h2>
+<ul>
+<li>En C, un archivo puede asemejarse a una &quot;clase&quot;.</li>
+<li>Las variables pueden encapsularse con el modificador de acceso <em>static</em> y proveyendo métodos Set y Get para accederla.</li>
+<li>Lo mismo aplica para las funciones, recordando que las funciones globales al proyecto deben declarar su prototipo en un .h</li>
+<li>Las constantes definidas en .h son globales al proyecto (public constant), las definidas en .c pertenecen al archivo (private constant)</li>
+</ul>
+<p>De esta manera un programa completo puede dividirse en un conjunto de archivos que implementan tareas bien definidas, con reglas claras en el control de acceso a los recursos que manejan y con una interfaz de comunicación bien definida con el resto del mundo.</p>
+<h2 id="23-plantilla-para-archivos-h">2.3. Plantilla para archivos .h</h2>
+<pre class="hljs"><code><div><span class="hljs-comment">/*======Evitar inclusión múltiple - begin======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> _NOMBRE_MODULO_H_</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _NOMBRE_MODULO_H_</span>
+<span class="hljs-comment">/*======Inclusión de dependencias de funciones públicas======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"dependency.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;dependency.h&gt;</span></span>
+<span class="hljs-comment">/*======Para compatibilizar el uso de este módulo desde C++======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-string">"C"</span>{
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+<span class="hljs-comment">/*======Macros de definición de constantes públicas======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PI 3.14</span>
+<span class="hljs-comment">/*======Macros "function-like"======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> sum(x,y) ((x)+(y))</span>
+<span class="hljs-comment">/*======Definiciones de tipos de datos públicos======*/</span>
+<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span> <span class="hljs-params">(*callBackFuncPtr_t)</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *)</span></span>;
+<span class="hljs-comment">/*======Declaración de prototipos (funciones públicas)======*/</span>
+<span class="hljs-function"><span class="hljs-keyword">bool_t</span> <span class="hljs-title">rtcInit</span><span class="hljs-params">(<span class="hljs-keyword">rtc_t</span>* rtc)</span></span>;
+<span class="hljs-comment">/*======Declaración de prototipos (funciones de interrupción públicas)======*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UART0_IRQHandler</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-comment">/*======Para compatibilizar el uso de este módulo desde C++======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus</span>
+}
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+<span class="hljs-comment">/*======Evitar inclusión múltiple - end======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> <span class="hljs-comment">/* _NOMBRE_MODULO_H_ */</span></span>
+</div></code></pre>
+<h2 id="24-plantilla-para-archivos-c">2.4. Plantilla para archivos .c</h2>
+<pre class="hljs"><code><div><span class="hljs-comment">/*======Inclusio de cabecera propia======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"nombreModulo.h"</span></span>
+<span class="hljs-comment">/*======Inclusión de dependencias de funciones privadas======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"dependency.h"</span></span>
+<span class="hljs-comment">/*======Definición de constantes privadas======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MI_CONSTANTE 9</span>
+<span class="hljs-comment">/*======Macros "function-like" privadas======*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> rtcConfig rtcInit</span>
+<span class="hljs-comment">/*======Definición de tipos de datos privados======*/</span>
+<span class="hljs-meta">#typedef void (*FuncPtrPrivado_t)(void *);</span>
+<span class="hljs-comment">/*======Definición de variables globales públicas externas======*/</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">int32_t</span> varGlobalExterna
+<span class="hljs-comment">/*======Definición de variables globales públicas======*/</span>
+<span class="hljs-keyword">int32_t</span> varGlobalPublica=<span class="hljs-number">0</span>;
+<span class="hljs-comment">/*======Definición de variables globales privadas======*/</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int32_t</span> varGlobalPrivada=<span class="hljs-number">0</span>;
+<span class="hljs-comment">/*======Prototipos de funciones privadas======*/</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">funPrivada</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-comment">/*======Implementaciones de funciones públicas======*/</span>
+<span class="hljs-function"><span class="hljs-keyword">bool_t</span> <span class="hljs-title">rtcInit</span><span class="hljs-params">( <span class="hljs-keyword">rtc_t</span>* rtc)</span></span>{
+    <span class="hljs-comment">// ..</span>
+}
+<span class="hljs-comment">/*======Implementaciones de manejadores de interrupciones públicos======*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UART0_IRQHandler</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>{
+    <span class="hljs-comment">// ..</span>
+}
+<span class="hljs-comment">/*======Implementaciones de funciones privadas======*/</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">funPrivada</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>{
+    <span class="hljs-comment">// ..</span>
+}
+</div></code></pre>
+<h2 id="25-header-de-proyecto">2.5. Header de proyecto</h2>
+<p>Un cambio en el hardware o en el pin out de la placa donde corre la aplicación, se modificará solo en este archivo y no debería afectar el resto de los módulos.</p>
+<h2 id="26-header-de-puertos-o-placa">2.6. Header de puertos o placa</h2>
+<p>Permite definir las interfaces de entrada y salida de la aplicación en particular. Por ejemplo, definiciones de los terminales en las placas arduino X.</p>
+<h2 id="27-documentaci%C3%B3n">2.7. Documentación</h2>
+<p>Los comentarios deben tratar de contener la siguiente información:</p>
+<ul>
+<li>¿Que hace el programa, módulo o función?</li>
+<li>¿cuales son las entradas y salidas que produce?</li>
+<li>¿como lo utilizo?,</li>
+<li>¿cuales son las condiciones que producen errores?,</li>
+<li>¿que algoritmo usa?,</li>
+<li>¿como fue verificado?,</li>
+<li>¿como hago cambios en el mismo?</li>
+<li>¿quién es el autor? ¿fecha de creación? ¿logs de modificaciones?</li>
+<li>¿licencia?... Entre otros…</li>
+</ul>
+<h3 id="271-ejemplo">2.7.1. Ejemplo</h3>
+<pre class="hljs"><code><div>short <span class="hljs-keyword">int</span> SetPoint; <span class="hljs-comment">/* Especifica la temperatura deseada para el lazo de control de temperatura. Precisión de 16 bits y en un rango de -55 a +125ºC*/</span>
+
+<span class="hljs-comment">/***********************************************************************
+* Propósito de la función: . . .
+* Parámetros de entrada (tipo, rango y formato) : . . .
+* Parámetros de salida (tipo, rango y formato) : . . .
+* Condiciones de Error de la función (poner ejemplos si hace falta) : . . .
+* Macros y su significado : . . .
+* Otros comentarios: Autor, fecha y log de modificaciones, etc
+***********************************************************************/</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">FuncionSuma</span> <span class="hljs-params">(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>)</span></span>;
+</div></code></pre>
+<h2 id="28-convenci%C3%B3n-de-nombres">2.8. Convención de nombres</h2>
+<ul>
+<li>Nombres de variables, ctes y funciones deben ser descriptivos no ambiguos.</li>
+<li>Las variables pueden llevar su tipo como prefijo (pcData, cData, ucData,...)</li>
+<li>Utilizar el nombre del archivo como parte del nombre de las funciones públicas del mismo (LCD_Init(), LCD_write_String(),...)</li>
+<li>Utilizar mayusculas o minusculas para indicar el alcance del objeto
+<ul>
+<li>Definiciones globales: <code>PORTA</code>, <code>TRUE</code>, <code>NULL</code>, <code>FREQ_CPU</code>, <code>PI</code></li>
+<li>Definiciones locales : <code>Max</code>, <code>Min</code>, <code>BufferTx</code></li>
+<li>Constantes: Variables locales: <code>maxTemp</code>, <code>errorCnt</code></li>
+<li>Variables globales (privadas): <code>MaxTemp</code>, <code>ErrorCnt</code></li>
+<li>Variables globales (públicas): <code>ADC_Channel</code>, <code>LCD_ErrorCnt</code></li>
+<li>Funciones privadas: <code>ClearTime()</code>, <code>Get_Char()</code></li>
+<li>Funciones globales (públicas): <code>TIMER_ClearTime()</code>, <code>KEPAD_Get_Char()</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="3-familia-de-microcontroladores-avr">3. Familia de microcontroladores AVR</h1>
+<h2 id="31-comparativa">3.1. Comparativa</h2>
+<table>
+    <tr>
+        <th></th>
+        <th>Atmega328P</th>
+        <th>Atmega2560</th>
+    </tr>
+    <tr>
+        <td>Perifericos</td>
+        <td>
+            <ul>
+                <li>2 8-bit Timer/Counter w/ Separate Prescaler and Compare Mode</li>
+                <li>1 16-bit Timer/Counter with Separate Prescaler, Compare Mode, and Capture Mode</li>
+                <li>Real Time Counter with Separate Oscillator</li>
+                <li>6 PWM Channels</li>
+                <li>8-channel 10-bit ADC</li>
+                <li>6-channel 10-bit ADC</li>
+                <li>Programmable Serial USART</li>
+                <li>Master/Slave SPI Serial Interface</li>
+                <li>Byte-oriented 2-wire Serial Interface (Philips I2C compatible)</li>
+                <li>Programmable Watchdog Timer with Separate On-chip Oscillator</li>
+                <li>On-chip Analog Comparator</li>
+            </ul>
+        </td>
+         <td>
+            <ul>
+                <li>2 8-bit Timer/Counter w/ Separate Prescaler and Compare Mode</li>
+                <li>4 16-bit Timer/Counter with Separate Prescaler, Compare Mode, and Capture Mode</li>
+                <li>Real Time Counter with Separate Oscillator</li>
+                <li>4 8-bit PWM Channels</li>
+                <li>12 Programmable resolution (2-16 bits) PWM Channels</li>
+                <li>Output Compare Modulator</li>
+                <li>8-channel 10-bit ADC</li>
+                <li>16-channel 10-bit ADC</li>
+                <li>4 Programmable Serial USART</li>
+                <li>Master/Slave SPI Serial Interface</li>
+                <li>Byte-oriented 2-wire Serial Interface (Philips I2C compatible)</li>
+                <li>Programmable Watchdog Timer with Separate On-chip Oscillator</li>
+                <li>On-chip Analog Comparator</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>RAM</td>
+        <td>2K Bytes</td>
+        <td>8K Bytes</td>
+    </tr>
+    <tr>
+        <td>Flash</td>
+        <td>32K Bytes</td>
+        <td>256K Bytes</td>
+    </tr>
+</table>
+<h2 id="32-arquitectura-avr-atmega328p">3.2. Arquitectura AVR (Atmega328P)</h2>
+<h3 id="321-cpu">3.2.1. CPU</h3>
+<ul>
+<li>RISC: 131 instrucciones de 1 ciclo de reloj (o la mayoría)</li>
+<li>Hardvard: Memoria de programa y memoria de datos con buses independientes</li>
+<li>Basada en registros: 32 de 8 bits.</li>
+</ul>
+<img src="img/cpu.png" />
+<h1 id="4-programaci%C3%B3n-de-entradasalida">4. Programación de Entrada/Salida</h1>
+<p>Para controlar los puertos de entrada salida se utilizan los registros:</p>
+<ul>
+<li>DDRn: <em>Port n Data Direction Register</em>, define para cada pin su dirección (input/output)</li>
+<li>
+<ul>
+<li><strong>1 is output, 0 is input</strong></li>
+</ul>
+</li>
+<li>PORTn: <em>Port n Data Register</em> registro usado para setear el estado de los pines del <em>puerto n</em></li>
+<li>PINn: <em>Port n Input Pin Address</em>, se utiliza para leer el estado los pines de del <em>puerto n</em>, es un registro de solo lectura.</li>
+</ul>
+<h2 id="41-funciones-de-avr-libc-para-evaluar-pines">4.1. Funciones de avr libc para evaluar pines</h2>
+<ul>
+<li><em>PINC &amp; (1&lt;&lt;PINC1)</em> <strong>--&gt;</strong> bit_is_set (PINC, PINC1)</li>
+<li><em>!(PINB &amp; (1&lt;&lt;PINB2))</em> <strong>--&gt;</strong> bit_is_clear (PINB, PINB2)</li>
+<li><em>while( !(ADCSRA &amp; (1&lt;&lt;ADIF)));</em> <strong>--&gt;</strong> loop_until_bit_is_set (ADCSRA, ADIF);</li>
+<li><em>while( ADCSRA &amp; (1&lt;&lt;ADIF) ));</em> <strong>--&gt;</strong> loop_until_bit_is_clear (ADCSRA, ADIF);</li>
+</ul>
+<h1 id="5-interrupciones">5. Interrupciones</h1>
+<p>La CPU de un microcontrolador ejecuta instrucciones secuencialmente, sin embargo, las aplicaciones requieren del uso de diferentes periféricos (internos o externos) y por lo tanto la CPU debe contar con un mecanismo
+para interactuar con ellos y dar respuesta adecuada a sus demandas.</p>
+<p>Los periféricos generalmente requieren la atención de la CPU de manera aleatoria en respuesta a algún evento. Para poder detectar estos eventos, la alternativa mas simple es la consulta o polling, en la que el CPU debe encargarse &quot;manualmente&quot; de preguntar al dispositivo si se produjo un evento que requiera su atencion. Esto es poco eficiente ya que gastamos ciclos de ejecucion del CPU en esperar a que se produzca un evento.</p>
+<p>Un enfoque distinto es permitir al dispositivo que avise a la CPU solo cuando requiera su atencion. De esta manera la CPU se independiza del dispositivo y puede utilizar esos ciclos de ejecucion que gastaba esperando en otra tarea mas productiva. Para esto se utilizan las interrupciones.</p>
+<p>Una interrupción es la ocurrencia de un evento producido por algún recurso del
+microcontrolador, que ocasiona la suspensión temporal del programa principal.
+La CPU atiende al evento con una función conocida como rutina de servicio a la
+interrupción (ISR, Interrupt Service Routine). Una vez que la CPU concluye con las
+instrucciones de la ISR, continúa con la ejecución del programa principal, regresando
+al punto en donde fue suspendida su ejecución.</p>
+<h2 id="51-paso-por-paso">5.1. Paso por paso</h2>
+<p>El núcleo AVR cuenta con la <strong>unidad de interrupciones</strong>, un módulo que va a determinar
+si se tienen las condiciones para que ocurra una interrupción.
+Son tres las condiciones necesarias para que un recurso produzca una interrupción:</p>
+<ul>
+<li>El habilitador global de interrupciones (bit I de <code>SREG</code>) debe estar activado</li>
+<li>El habilitador individual de la interrupción del recurso también debe estar activado</li>
+<li>En el recurso debe ocurrir el evento esperado.</li>
+</ul>
+<p>Cuando el microcontrolador se enciende o reinicia, las interrupciones no están habilitadas,
+su habilitación requiere la puesta en alto del bit I de SREG y de los habilitadores
+individuales de los periféricos incorporados en el microcontrolador.</p>
+<p>Al generarse una interrupción, el <code>PC</code> es almacenado en la pila de datos y a continuacion toma el valor
+de una entrada en el vector de interrupciones (según sea la interrupción). Además de desactivar al bit I para no aceptar más interrupciones y finalizar con la instruccion bajo ejecucion en el momento de la interrupcion.</p>
+<p>La ISR debe colocarse en una dirección preestablecida por Hardware, la cual corresponde
+con un vector de interrupciones.</p>
+<p>Una rutina de atención a interrupciones es finalizada con la instrucción <code>RETI</code>, con la
+cual el <code>PC</code> recupera el valor del tope de la pila y pone en alto nuevamente al bit I, para
+que la CPU pueda recibir más interrupciones. Ademas, se limpia la flag que genero la interrupcion inicialmente.</p>
+<h2 id="52-vectores-de-interrupcion">5.2. Vectores de interrupcion</h2>
+<p>El grupo de localidades de memoria destinadas a guardar las direcciones de
+las RSI, se llama <strong>“Tabla de Vectores de Interrupción”</strong></p>
+<p>El fabricante reserva direcciones de memoria especificas (llamadas vector) para cada interrupción <strong>con una determinada prioridad dada por el orden que aparecen en la tabla</strong>, en caso que se den varios pedidos de interrupción simultáneamente. El orden (y la prioridad) esta dado por el fabricante.</p>
+<p>El fabricante especifica donde disponer de esta tabla, en la mayoría de los uC está al principio de la memoria de programa FLASH o al final.</p>
+<p>El mecanismo de vector permite distinguir rápidamente entre múltiples
+pedidos de interrupción y determinar su origen para ejecutar a la RSI que
+corresponda. Para cada fuente de interrupción distinta debe existir <strong>una sola RSI</strong> asociada
+que pueda ejecutarse. El programador diseña la RSI que desea se ejecute en cada caso como si
+fuese una función especial.</p>
+<h2 id="53-reset">5.3. RESET</h2>
+<p>La inicialización o reset de un microcontrolador es fundamental para su operación
+adecuada, porque garantiza que sus registros internos van a tener un valor inicial
+conocido. Existen varias causas de RESET:</p>
+<ul>
+<li><strong>Reset de Encendido (Power-on Reset):</strong> El MCU es inicializado cuando el voltaje
+de la fuente está por abajo del voltaje de umbral de encendido ($V_{POT}$), el cual tiene
+un valor típico de 2.3 V.</li>
+<li><strong>Reset Externo:</strong> El MCU es inicializado cuando un nivel bajo está presente en la terminal
+RESET por un tiempo mayor a 1.5 uS, que es la longitud mínima requerida ($t_{RST}$).</li>
+<li><strong>Reset por Watchdog:</strong> El MCU es inicializado cuando se ha habilitado al Watchdog
+Timer y éste se ha desbordado.</li>
+<li><strong>Reset por reducción de voltaje (Brown out):</strong> Se inicializa al MCU cuando el
+detector de reducción de voltaje está habilitado y el voltaje de la fuente de
+alimentación está por debajo del umbral establecido ($V_{BOT}$). El valor de $V_{BOT}$ es
+configurable a 2.7 V ó 4.0 V, y el tiempo mínimo necesario ($t_{BOD}$) para considerar
+una reducción de voltaje es de 2 uS.</li>
+<li><strong>Reset por JTAG:</strong> El MCU es inicializado tan pronto como exista un 1 lógico en el
+Registro de Reset del Sistema JTAG.</li>
+</ul>
+<p><strong>NOTA:</strong>  <em>JTAG hace referencia a una interfaz serial utilizada para la prueba de circuitos integrados y como medio para depurar sistemas empotrados</em></p>
+<h3 id="531-mcu-status-register">5.3.1. MCU Status Register</h3>
+<p>Puesto que hay diferentes causas de reinicio, los AVR incluyen al Registro de Estado
+y Control del MCU (<code>MCUCSR</code>) en el cual queda indicada la causa de reset por medio de una bandera. Los bits del registro MCUCSR son:</p>
+<ul>
+<li>Bits 7, 6 y 5: No tienen relación con el reset del sistema, en el ATMega8 no están
+implementados.</li>
+<li>Bit 4 – JTRF: Bandera de reinicio por JTAG. No está implementada en el ATMega8.</li>
+<li>Bit 3 – WDRF: Bandera de reinicio por desbordamiento del Watchdog timer</li>
+<li>Bit 2 – BORF: Bandera de reinicio por reducción de voltaje (Brown out)</li>
+<li>Bit 1 – EXTRF: Bandera de reinicio desde la terminal de reset</li>
+<li>Bit 0 – PORF: Bandera de reinicio por encendido</li>
+</ul>
+<h2 id="54-latencia-de-interrupcion">5.4. Latencia de interrupcion</h2>
+<p>Es el tiempo que tarda el Controlador de interrupciones en dar respuesta a
+una interrupción, se mide desde que se recibe el pedido hasta que efectivamente se ejecuta la primer instrucción de la RSI correspondiente.</p>
+<p>En los AVR la latencia es de 4 ciclos de reloj como mínimo, durante este tiempo, se guarda el PC en la pila, se pone el bit I de <code>SREG</code> en 0 (desactiva la recepcion de otras interrupciones) y se busca el vector de
+interrupción de mayor prioridad que corresponda.</p>
+<p>En el caso en que el micro este en modo SLEEP, la latencia es de 8 ciclos.</p>
+<p>El retorno de la interrupción (RETI) tambien lleva 4 ciclos.</p>
+<h2 id="55-interrupciones-anidadas">5.5. Interrupciones anidadas</h2>
+<p>El anidamiento de interrupciones se da cuando una interrupcion puede interrumpir la rutina de atencion de otra interrupcion. Esto no esta permitido por defecto ya que al atender una rutina se desactivan las interrupciones, sin embargo puede permitirse este comportamiento manualmente si dentro de la rutina se vuelven a habilitar. Una interrupcion en curso solo puede ser interrumpida por otra interrupcion de mayor prioridad.</p>
+<p>El anidamiento de interrupciones <strong>no es recomendable</strong> ya que imposibilita la creacion de codigo que se ajuste bien a todas las combinaciones de interrupciones, reduciendo la posibilidad de predecir el comportamiento del sistema, es decir, se pierde confiabilidad ya que no se pueden testear todas las condiciones.</p>
+<h2 id="56-interrupciones-externas">5.6. Interrupciones externas</h2>
+<p>Las interrupciones externas sirven para detectar un estado lógico o un cambio de estado
+en alguna de las terminales de entrada de un microcontrolador, con su uso se evita un
+sondeo continuo en la terminal de interés. Son útiles para monitorear interruptores,
+botones o sensores con salida a relevador.</p>
+<p>En el ATMEGA328p hay dos terminales que pueden generar interrupciones de periféricos externos:</p>
+<ul>
+<li>INT0 (PD2)</li>
+<li>INT1 (PD3)</li>
+</ul>
+<p>Estas interrupciones se habilitan con el registro EIMSK – External Interrupt Mask Register. El tipo de activacion es configurable mediante el registro EICRA.</p>
+<p style="text-align: center">
+<img src="./img/eimsk.png"/>
+<br/><i>Registro IMSK</i><br/>
+<img src="./img/ext-int.png"/>
+<br/><i>Registro EICRA</i><br/>
+</p>
+<p>Las interrupciones externas pueden configurarse para detectar un nivel bajo de voltaje
+o una transición, ya sea por un flanco de subida o de bajada</p>
+<h3 id="561-activacion-por-flanco-vs-por-nivel">5.6.1. Activacion Por Flanco vs. Por Nivel</h3>
+<p>Si una interrupción funciona <strong>por nivel</strong> el periférico que la genera <em>“coloca y mantiene”</em> el nivel en la línea para que el uC atienda a esa petición. Durante la atención, el uC debería indicar al periférico externo, de algún modo, que ha sido atendido para que éste libere el nivel de la línea.</p>
+<ul>
+<li>Notar que al no ser una “petición registrada”, si el nivel no está presente cuando las interrupciones están habilitadas, el pedido no será tenido en cuenta.</li>
+<li>Por otro lado, si el periférico no retira el nivel de la línea, continuará solicitando interrupción
+indefinidamente.</li>
+</ul>
+<p><strong>Por lo tanto</strong>, las interrupciones por nivel <strong>no tienen memoria</strong> y requieren de un aviso al
+periférico para que no se procese la misma interrupción múltiples veces.</p>
+<p>Si una interrupción funciona <strong>por flanco</strong> quiere decir que el periférico produce un
+flanco en la línea y este pedido queda registrado en un Flag (Flip Flop) pidiendo
+interrupción. Típicamente el uC borra este flag para indicar que esta interrupción ya
+ha sido atendida sin necesidad de comunicárselo al periférico.</p>
+<p>De esta manera, si las interrupciones están deshabilitas al momento de producirse el
+flanco, los pedidos quedan “pendientes” y serán atendidos por prioridad cuando se
+active la máscara de interrupción I.</p>
+<p style="text-align: center">
+<img src="./img/nivel.png"/>
+<br/><i>Activacion por Nivel.</i><br/>
+<img src="./img/flanco.png"/>
+<br/><i>Activacion por Flanco. No hay Acknowledge.</i><br/>
+</p>
+<h2 id="57-interrupciones-por-pin-change-pcint">5.7. Interrupciones por Pin Change (PCINT)</h2>
+<p>A diferencia de las interrupciones INT0 e INT1 que son capaces de distingar nivel alto, nivel bajo, flanco de subida y flanco de bajada, este tipo de interrupciones se disparan ante cualquier <em>cambio de nivel</em> sin distinguir el sentido.</p>
+<p>Los interrupciones Pin Change son habilitadas con el registro PCICR, y se habilitan para grupos de pines.<br/></p>
+<p style="text-align:center"><img src="./img/pcicr.png"/></p>
+<ul>
+<li>Bit PCIE0: Cuando esta activado (1) cualquier cambio en los pines PCI7..0 disparara una interrupcion. Los pines se enmascaran desde el registro PCMSK0. El vector de interrupcion asociado es PCINT0_vect.</li>
+<li>Bit PCIE1: Cuando esta activado (1) cualquier cambio en los pines PCI14..8 disparara una interrupcion. Los pines se enmascaran desde el registro PCMSK1. El vector de interrupcion asociado es PCINT1_vect.</li>
+<li>Bit PCIE2: Cuando esta activado (1) cualquier cambio en los pines PCI23..16 disparara una interrupcion.  Los pines se enmascaran desde el registro PCMSK2. El vector de interrupcion asociado es PCINT2_vect.</li>
+</ul>
+<p style="text-align:center"><img src="./img/pcmsk.png"/></p>
+<h3 id="571-prioridades-de-atencion">5.7.1. Prioridades de atencion</h3>
+<table>
+<tr>
+    <th>Vector No.</th>
+    <th>Program Address</th>
+    <th>Source</th>
+    <th>Interrupt Definition</th>
+</tr>
+<tr>
+<td>4</td>
+<td>0x0006</td>
+<td>PCINT0</td>
+<td>Pin change interrupt request 0</td>
+</tr>
+<td>5</td>
+<td>0x0008</td>
+<td>PCINT1</td>
+<td>Pin change interrupt request 1</td>
+</tr>
+<td>6</td>
+<td>0x000A</td>
+<td>PCINT2</td>
+<td>Pin change interrupt request 2</td>
+</tr>
+</table>
+<h1 id="6-perif%C3%A9ricos-timer">6. Periféricos Timer</h1>
+<p>Una de las características mas destacables de un MCU es la capacidad de realizar tareas temporizadas, para esto cuentan con un periférico TIMER o TEMPORIZADOR.</p>
+<p>Algunas de las aplicaciones pueden ser:</p>
+<ul>
+<li>Generación de retardos</li>
+<li>Interrupción periódica de tiempo-real (planificación de tareas)</li>
+<li>Protección Watch-Dog</li>
+<li>Pero además un Timer se puede utilizar para:</li>
+<li>Generación de señales digitales con frecuencia variables o ciclo de trabajo variable (PWM)</li>
+<li>Medición de frecuencia y ancho de pulso</li>
+<li>Registro y conteo de eventos (COUNTER)</li>
+</ul>
+<h2 id="61-definiciones">6.1. Definiciones</h2>
+<ul>
+<li>El <strong>período $T$</strong> de una señal $x(t)$ es el menor numero entero que satisface $x(t)=x(t+T)$</li>
+<li>La <strong>frecuencia $f$</strong>  se define como el numero de oscilaciones en el lapso de 1 seg, es decir $f=1/T$</li>
+<li>El <strong>ciclo de trabajo</strong> de una señal digital es el porcentaje de tiempo en que la misma está activa respecto del periodo total.</li>
+<li>La <strong>Resolución</strong>  es el mínimo período de tiempo medible o contable y es 1 pulso  o período de CLK, dependiendo de la fuente de reloj y prescaler seleccionados</li>
+<li>El <strong>Rango</strong> es el rango de valores (Máx - Mín) que se utiliza para representar la información.</li>
+<li>La <strong>Precisión</strong> es con cuantos bits puedo representar la información. Básicamente es el número del bits del Timer.</li>
+<li>La <strong>Exactitud</strong>  es cuanto difiere el “valor real” respecto al “valor medido”, depende de la exactitud del oscilador que genera la señal del reloj</li>
+<li>La <strong>Estabilidad</strong> es un medida de cuan estable es la frecuencia del CLK frente a perturbaciones en la tensión de alimentación, en la temperatura y al envejecimiento de los componentes. Puede dividirse en estabilidad de corto término y estabilidad a largo plazo.</li>
+</ul>
+<h1 id="7-timercounter-0">7. Timer/Counter 0</h1>
+<p>Timer/Counter0 es un modulo Timer/Counter de 8 bits de proposito general, con dos unidades de output-compare independientes, y con soporte para PWM. Permite programar tareas de forma temporizada (event management) y generación de ondas.</p>
+<p style="text-align:center"><img src="./img/timer0.png"/></p>
+<ul>
+<li><strong>Registro TCNT0:</strong> Registro contador que suma 1 (o resta, segun la direccion de conteo) cada vez que en su entrada hay un flanco de reloj.</li>
+<li><strong>BOTTOM:</strong> El contador alcanza el valor BOTTOM cuando pasa a 0x00</li>
+<li><strong>MAX:</strong> El contador alcanza el valor MAX cuando pasa a 0xFF, 255</li>
+<li><strong>TOP:</strong> Representa el valor más alto de la secuencia de conteo, puede setearse para usar un valor fijo (MAX) o el valor almacenado en el registro <strong>OCR0A</strong>, dependiendo del modo de operación.</li>
+<li><strong>Clock Select:</strong> La señal de reloj que alimenta al Timer puede provenir del <em>Prescaler</em> interno o puede provenir de una señal externa (pin T0). La unidad logica de reloj controla que fuente y que tipo de flanco se utiliza para incrementar o decrementar el valor del Timer/Counter</li>
+<li><strong>OCR0A y OCR0B:</strong> Registros utilizados para comparar todo el tiempo el valor del Timer/Counter. Pueden utilizarse para generar un PWM o una salida de frecuencia variable en los pines de output compare (OC0A y OC0B). El evento de Compare match (TCNT0 == OCR0x) activa la flag de comparación (OCF0A o OCF0B), la cual puede usarse para generar una interrupción temporizada.</li>
+<li><strong>TCCR0A y TCCR0B:</strong> Son los registros de control del timer, permiten configurar el modo de operación (Normal, CTC, Fast PWM, Phase Correct PWM), el valor de TOP (default o OCR0A), dirección de conteo, activación de flag TOV0 (overflow con bottom, max o top) y el <em>Prescaler</em>, entre otros.</li>
+</ul>
+<h2 id="71-modos-de-funcionamiento">7.1. Modos de funcionamiento</h2>
+<h3 id="711-normal">7.1.1. Normal</h3>
+<p>El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el valor TOP (o BOTTOM). Cuando se alcanza, se reinicia el valor TCNT0 a BOTTOM (o TOP) y se levanta el flag TOV0 (overflow).</p>
+<ul>
+<li>
+<p>La frecuencia de overflow puede calcularse como $f_{OVF} = \frac{f_{clkT_0}}{2^8}$</p>
+</li>
+<li>
+<p>El tiempo de overflow puede calcularse como $T_{OVF} = \frac{1}{f_{OVF}}$</p>
+</li>
+<li>
+<p>La resolución de temporización puede calcularse como $T_{clkT_0} = \frac{1}{f_{clkT_0}}$</p>
+</li>
+</ul>
+<h3 id="712-ctc-clear-timer-on-compare-match">7.1.2. CTC (Clear Timer on Compare Match)</h3>
+<p>El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el valor OCR0. Cuando se alcanza, se reinicia el valor TCNT0 a BOTTOM (o OCR0) y se levanta el flag OC0. También puede configurarse para invertir el pulso en el pin OC0 (waveform generation).</p>
+<h3 id="713-pwm">7.1.3. PWM</h3>
+<p>Pulse Width Modulation es una técnica de modulación digital donde la información útil de la señal se encuentra en el ancho del pulso. Esto permite que se pueda obtener una señal analógica a partir de una señal digital, y controlar dispositivos analogicos por medio de salidas digitales.</p>
+<h4 id="7131-fast-pwm">7.1.3.1. Fast PWM</h4>
+<h4 id="7132-phase-correct-pwm">7.1.3.2. Phase Correct PWM</h4>
+<h2 id="72-prescaler">7.2. Prescaler</h2>
+<p>El Atmega328P cuenta con un sistema de preescalado de reloj que se utiliza para dividir la frecuencia del reloj y obtener una menor, permitiendo bajar el consumo de energía cuando el requisito de poder de procesamiento es bajo. Este sistema también puede usarse para suministrar señal de reloj a los distintos dispositivos.</p>
+<p>El Timer/Counter puede recibir la señal de clock del reloj del sistema ($f_{CLK_I/O}$), esto permite la velocidad de operacion más rápida. Alternativamente, puede recibir la señal de clock de una de las 4 alternativas del preescalador. Las frecuencias del preescalador son:</p>
+<p>$$\frac{f_{CLK_I/O}}{8}$$
+$$\frac{f_{CLK_I/O}}{64}$$
+$$\frac{f_{CLK_I/O}}{256}$$
+$$\frac{f_{CLK_I/O}}{1024}$$</p>
+<p>El prescaler funciona independientemente de la lógica de Clock select, y es compartido por el Timer/Counter1 y el Timer/Counter0.</p>
+<h2 id="73-registros-para-su-programaci%C3%B3n">7.3. Registros para su programación</h2>
+<img src="./img/timer0-reg.png"/>
+<h1 id="8-mef">8. MEF</h1>
+<blockquote>
+<p>Una Máquina de Estados Finitos (MEF) es un modelo abstracto del “comportamiento” del sistema, basado en principio simples.</p>
+</blockquote>
+<blockquote>
+<p>Una Máquina de Estados Finitos (MEF) es un modelo matemático (Teoría general de autómatas) usado para describir el comportamiento de un sistemas que puede ser representado por un número finito de estados, un conjunto de entradas y una función de transición que determina el estado siguiente en función del estado actual y de las entradas.</p>
+</blockquote>
+<p>El modelado de problemas usando MEFs hace más sencilla la comprensión del sistema y su funcionamiento. Desde el punto de vista del software es más sencillo de mantener ya que se pueden agregar o quitar estados sin modificar el resto, es más sencillo de depurar, verificar y optimizar.</p>
+<p>Un modelo de MEF debe tener las entradas y las reglas bien definidas para cambiar de estado, sus transiciones se pueden especificar mediante un “diagrama de estados” o “tabla de transiciones de estados” y cada transición implica diferentes respuestas o acciones del sistema.</p>
+<h2 id="81-modelo-de-mealy">8.1. Modelo de Mealy</h2>
+<p>En el modelo de Mealy, la <strong>salida</strong> depende del <strong>estado actual</strong> y de las <strong>entradas</strong>. Son propensos a este modelo los sistemas donde la salida provoca el cambio de estado. Por ejemplo, en un robot, el movimiento de sus articulaciones produce el cambio de estado (parado-sentado)</p>
+<p style="text-align:center"><img src="./img/mealy.png"/></p>
+<h2 id="82-modelo-de-moore">8.2. Modelo de Moore</h2>
+<p>En el modelo de Moore, la <strong>salida</strong> del sistema depende solo del <strong>estado actual</strong>. Puede haber múltiples estados con la misma salida, pero para cada estado el significado es diferente. La salida guarda estrecha relacióon con el estado, por ejemplo un controlador de semáforo.</p>
+<p style="text-align:center"><img src="./img/moore.png"/></p>
+<p><strong>NOTA:</strong> <em>ambos modelos son intercambiables pero es mejor optar por la forma que representa de manera más natural el problema</em></p>
+<h2 id="83-implementaci%C3%B3n-en-c">8.3. Implementación en C</h2>
+<ul>
+<li>Definir conjunto de estados
+<ul>
+<li><code>enum estados = [STATE0,STATE1,..]</code></li>
+</ul>
+</li>
+<li>Definir conjunto de salidas
+<ul>
+<li><code>enum salidas = [OUT0,OUT1,..]</code></li>
+</ul>
+</li>
+<li>Definir conjunto de entradas
+<ul>
+<li><code>enum entradas = [IN0,IN1,..]</code></li>
+</ul>
+</li>
+<li>Definir una función de transición de estados
+<ul>
+<li><code>tabla : [1..n][1..m]</code></li>
+</ul>
+</li>
+<li>Definir procedimiento para establecer el estado inicial</li>
+</ul>
+<pre class="hljs"><code><div>Iniciar_MEF() {
+    estado=STATE0;
+    salida= OUT0;
+}
+</div></code></pre>
+<ul>
+<li>Definir procedimiento para actualizar la MEF</li>
+</ul>
+<pre class="hljs"><code><div>Actualizar_MEF() {
+    Leer(entradas);
+    estado=table[estado][entradas];
+    Actualizar_Salidas(estado,entradas);
+}
+</div></code></pre>
+<ul>
+<li>Definir procedimiento para ejecutar la MEF</li>
+</ul>
+<pre class="hljs"><code><div>Ejecutar_MEF(){
+    Iniciar_MEF();
+    repetir siempre{ <span class="hljs-comment">// &lt;- puede ser temporizada (repetir cada S segundos)</span>
+        Actualizar_MEF();
+    }
+}
+</div></code></pre>
+<h3 id="831-usando-switch-case">8.3.1. Usando switch-case</h3>
+<p>En implementaciones con switch, los case de cada estado se evaluarán secuencialmente, equivale a una cadena de if consecutivos de resolución. No tarda lo mismo en ejecutar las actualizaciones según el caso.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">enum</span>{S0,S1} state; <span class="hljs-comment">//definicion y declaracion de variables de estado</span>
+state estado;
+
+<span class="hljs-keyword">void</span> Iniciar_MEF{ <span class="hljs-comment">//metodo de inicialización</span>
+    estado=S0;
+    Z=<span class="hljs-number">0</span>; <span class="hljs-comment">//salida</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ActualizarMEF</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>{
+    X=leerEntradas();
+    <span class="hljs-keyword">switch</span>(estado){
+        Case S0:
+            <span class="hljs-keyword">if</span>(X==<span class="hljs-number">1</span>){
+                estado=S1; Z=<span class="hljs-number">1</span>;
+            }<span class="hljs-keyword">else</span>{
+                estado=S0; Z=<span class="hljs-number">0</span>;
+            }
+        <span class="hljs-keyword">break</span>;
+        Case S1:
+            <span class="hljs-keyword">if</span>(X==<span class="hljs-number">1</span>){
+                estado=S0; Z=<span class="hljs-number">0</span>;
+            }<span class="hljs-keyword">else</span>{
+                estado=S1; Z=<span class="hljs-number">1</span>;
+            }
+        <span class="hljs-keyword">break</span>;
+    }
+}
+</div></code></pre>
+<h3 id="832-usando-punteros-a-funci%C3%B3n">8.3.2. Usando punteros a función</h3>
+<p>En implementaciones con punteros a función o tablas el tiempo de acceso a las funciones es el mismo independientemente del valor de la variable de estado, equivale a un desvío selectivo de la ejecución del programa. En general implementaciones con punteros o tablas de transición permiten uniformidad en el tiempo de acceso, son más compactas, pero ocupan más memoria.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">enum</span>{S0,S1} state;
+state estado;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fS0</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fS1</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+
+<span class="hljs-keyword">void</span> (*MEF[])(<span class="hljs-keyword">void</span>)={fS0,fS1}; <span class="hljs-comment">//puntero a funciones</span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ActualizarMEF</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>{
+    X=leerEntradas();
+    (*MEF[estado])(); <span class="hljs-comment">//ejecuta la funcion correspondiente</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fS0</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>{
+    <span class="hljs-keyword">if</span>(X==<span class="hljs-number">1</span>){
+        estado=S1; Z=<span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">else</span> {
+        estado=S0; Z=<span class="hljs-number">0</span>;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fS1</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>{
+    <span class="hljs-keyword">if</span>(X==<span class="hljs-number">1</span>){
+        estado=S0; Z=<span class="hljs-number">0</span>;
+    }
+    <span class="hljs-keyword">else</span> {
+        estado=S1; Z=<span class="hljs-number">1</span>;
+    }
+}
+
+</div></code></pre>
+<h1 id="9-timer-2-rtc">9. Timer 2. RTC</h1>
+<p>La única diferencia entre el Timer0 y el Timer2 es la siguiente:</p>
+<ul>
+<li>
+<p>El Timer0 puede ser alimentado por <mark>una señal de reloj externa</mark> a traves del <mark>pin T0</mark>.</p>
+</li>
+<li>
+<p>El Timer2 puede ser alimentado una señal de reloj externa <mark>asíncrona</mark> a traves de los pines <mark>TOSC1 y TOSC2</mark>. Esto quiere decir que puede ser alimentado por un <mark>cristal oscilador</mark> completamente diferente e independiente al de la CPU, de hasta 32kHZ</p>
+</li>
+</ul>
+<p>Una de las cosas que permite el modo asíncrono del Timer2 es la implementación de un <strong>Real-Time-Clock</strong>, que puede contar segundos, minutos, horas, días, meses, indistintamente de lo que este haciendo la CPU o el Oscilador principal. Esto permite que la CPU pueda entrar en modo Sleep mientras que el Timer2 continua contando y solo despierta a la CPU ante un evento de Overflow para incrementar el contador necesario</p>
+<h1 id="10-watchdog-timer">10. Watchdog Timer</h1>
+<p>El Watchdog timer es un mecanismo de protección ante fallas de software o hardware, básicamente cuenta pulsos de reloj hasta un valor programable y genera una interrupción o un reset cuando alcanza dicho valor; por lo tanto, el software debe reiniciar el contador utilizando la instrucción WDR antes que este alcance la cantidad establecida (o time out). Si por algún motivo el software no reinicia el contador a tiempo se genera una interrupción o un reset.</p>
+<p>En modo interrupción puede utilizarse como despertador (wake-up) de un modo de bajo consumo o para limitar el máximo tiempo permitido para una operación dada.</p>
+<p>El modo reset se utiliza para reiniciar el sistema ante bloqueos permanentes o código “colgado”</p>
+<p>El modo combinado interrupción y reset se utiliza para “guardar el contexto crítico” ante una supuesta falla (safe shutdown). Para configurarlo y activarlo hay que seguir una secuencia segura para evitar activación ocacional.</p>
+<p>Este timer se alimenta con un oscilador interno separado de 128kHz. Cuenta con un Prescaler que permite configurar el &quot;<em>time-out</em>&quot; a distintos valores (16 ms - 8.0 s)</p>
+<p style="text-align:center"><img src="./img/wdt.png"/></p>
+<h1 id="11-planificaci%C3%B3n-y-ejecuci%C3%B3n-de-tareas-en-sistemas-embebidos">11. Planificación y Ejecución de Tareas en Sistemas Embebidos</h1>
+<h2 id="111-super-loop-o-round-robin-c%C3%ADclico">11.1. Super-Loop o Round Robin Cíclico</h2>
+<p>En este tipo de planificación es dificil temporizar la ejecución ya que las distintas tareas se ejecutaran unicamente después de terminar la previa, que puede tener una duración variable.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/*------------------------------------------------------------------*-
+Main.C
+------------------------------------------------------------------
+Architecture of a simple Super Loop application
+-*------------------------------------------------------------------*/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"x.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"y.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"z.h"</span></span>
+<span class="hljs-comment">/*------------------------------------------------------------------*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>{
+  X_Init(); <span class="hljs-comment">// Preparar la tarea X y las condiciones iniciales</span>
+  Y_Init(); <span class="hljs-comment">// Preparar la tarea Y y las condiciones iniciales</span>
+  Z_Init(); <span class="hljs-comment">// Preparar la tarea Z y las condiciones iniciales</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>){ <span class="hljs-comment">// Super Loop</span>
+    X(); <span class="hljs-comment">// Ejecutar la tarea X.</span>
+    Y(); <span class="hljs-comment">// Ejecutar la tarea Y</span>
+    Z(); <span class="hljs-comment">// Ejecutar la tarea Z</span>
+  }
+}
+</div></code></pre>
+<h2 id="112-foregroundbackground-o-event-driven">11.2. Foreground/Background o Event-Driven</h2>
+<p>Cada interrupción corresponde a un evento asociado a una tarea específica (múltiples interrupciones). La ejecución de las tareas depende de que el evento ocurra.</p>
+<p>Las tareas que se ejecutan en el super-loop se denominan tareas de background y se ejecutan en función de los eventos asociados a las interrupciones.</p>
+<p>Las ISR para manejar los eventos asincrónicos se denominan tareas en foreground (también se pueden pensar como hilos de ejecución). Estas ISR deben ser de corta duración, generalmente activan flags o cambian variables de estado de las tareas, para determinar qué procesamiento debe hacerse para ese evento.</p>
+<p>El comportamiento No es determinístico. La ISR cambia el flag pero la tarea se procesa cuando le toque el turno en el loop y si no hay otras interrupciones pendientes. Podría darse el caso (es probable) de tener interrupciones simultáneas con lo cual alguna deberá “esperar” a ser atendida, según la prioridad.</p>
+<p>La modificación de una tarea de background afecta la temporización de las demás (poca flexibilidad y escalabilidad). Se deben usar funciones “no bloqueantes”.</p>
+<p>La comunicación entre el lazo principal (Background task) y las ISR (foreground Task) debe realizarse por medio de variables globales y estas variables de comunicación se convierten en Recursos Compartidos.</p>
+<p>Si dos o más tareas acceden simultáneamente a un recurso compartido, el código de acceso al mismo se convierte en una sección crítica de código y deben tomarse medidas por ejemplo deshabilitar las interrupciones.</p>
+<p>Administrar los modos de bajo consumo en está arquitectura es complejo ya que debe garantizarse que la CPU ha realizado todas las operaciones de Background y foreground antes de entrar en modo sleep</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+  X_Init();
+  Y_Init();
+  Z_Init();
+  sei(); <span class="hljs-comment">// Globally enable interrupts</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) {
+    <span class="hljs-keyword">if</span> (Flag_Z) {
+      Z(); <span class="hljs-comment">//if event Z ocurred-&gt;process event Z</span>
+      Flag_Z =<span class="hljs-number">0</span>; }
+    <span class="hljs-keyword">if</span> (Flag_Y) {
+      Y(); <span class="hljs-comment">// if event Y ocurred-&gt;process event Y</span>
+      Flag_Y =<span class="hljs-number">0</span>; }
+    <span class="hljs-keyword">if</span> (Flag_X) {
+      X(); <span class="hljs-comment">// if event X ocurred-&gt;process event X</span>
+      Flag_X =<span class="hljs-number">0</span>; }
+    }
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">/* ------------------------ISR Event X--------------------- */</span>
+ISR ( Event_X ){
+  Flag_X =<span class="hljs-number">1</span>; <span class="hljs-comment">//event X has ocurred</span>
+}
+<span class="hljs-comment">/* ------------------------ISR Event Y--------------------- */</span>
+ISR ( Event_Y ){
+  Flag_Y =<span class="hljs-number">1</span>; <span class="hljs-comment">//event Y has ocurred</span>
+}
+<span class="hljs-comment">/* ------------------------ISR Event Z--------------------- */</span>
+ISR ( Event_Z ){
+  Flag_Z =<span class="hljs-number">1</span>; <span class="hljs-comment">//event Z has ocurred</span>
+}
+</div></code></pre>
+<h2 id="113-time-triggered-disparadas-por-tiempo">11.3. Time-triggered (disparadas por tiempo)</h2>
+<p>Estas serán tareas planificadas por una única interrupción periódica de Timer comúnmente llamada RTI (Real Time Interrupt). La RTI es la única “base de tiempo” del sistema para temporizar una o más tareas y el manejo de los eventos asincrónicos de los periféricos se realiza exclusivamente por encuesta (polling) periódica.</p>
+<p>Cada vez que ocurre la interrupción es como una marca de tiempo o Tick del sistema, que permite planificar que tarea corresponde ejecutar. Cuando la CPU no tenga que ejecutar tareas (zona IDLE) podemos poner el MCU en bajo consumo (SLEEP) hasta el próximo tick y ahorrar energía.</p>
+<h2 id="114-resumen">11.4. Resumen</h2>
+<table>
+  <tr>
+    <th>Super Loop</th>
+    <th>Background/Foreground</th>
+    <th>Time-Triggered</th>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li>Simple</li>
+        <li>Control x polling</li>
+        <li>Sin interrupciones</li>
+        <li>Temporización por retardos bloqueantes</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Las tareas se ejecutan en respuestas a eventos asincrónicos (múltiples interrupciones)</li>
+        <li>Difícil de predecir para todas las circunstancias</li>
+        <li>Problemas de recursos compartidos (secciones críticas)</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Única interrupción RTI</li>
+        <li>Los periféricos se utilizan por polling periódico</li>
+        <li>Cooperativo</li>
+        <li>Más confiable para aplicaciones de tiempo real y críticas porque es predecible</li>
+      </ul>
+    </td>  
+  </tr>
+</table>
+<h1 id="12-drivers-modelo-productorconsumidor">12. Drivers. Modelo Productor/Consumidor.</h1>
+<p>El modelo productor/consumidor se utiliza cuando diferentes tareas dentro de una aplicación producen y consumen gran cantidad de datos a diferentes velocidades. Una solución se basa en el uso de estructuras FIFO (Buffer globales).</p>
+<ul>
+<li>
+<p>En el contexto de una arquitectura Background/Foreground una tarea productora puede ser un handler de interrupción y la consumidora una tarea de segundo plano o viceversa.</p>
+</li>
+<li>
+<p>En el contexto de la planificación Time-Triggered Cooperativa las tareas que producen y consumen datos a diferentes ritmos se implementan como tareas multi-etapas (no bloqueantes)</p>
+</li>
+</ul>
+<h2 id="121-estructuras-basicas-para-el-intercambio-de-datos-entre-tareas">12.1. Estructuras basicas para el intercambio de datos entre tareas</h2>
+<ul>
+<li>Buffer o cola: Estructura de datos de tamaño fijo, residente en RAM, que permite alojar temporalmente un conjunto de datos que poseen un determinado orden de llegada y de salida (por ejemplo FIFO).</li>
+<li>Buffer circular (cola circular): un solo buffer y dos punteros, uno para leer y otro para escribir (a diferentes tasas), el tamaño es fijo pero los punteros recorren el mismo de manera circular sin distinguir un
+comienzo o un fin del mismo.</li>
+<li>Buffer Ping Pong: se utiliza cuando los datos son producidos y almacenados en grandes volúmenes para su posterior procesamiento. Un buffer es de solo escritura y el otro de solo lectura, cuando se completa un ciclo de transferencia se intercambian entre si. Ejemplo: lectura de discos, memoria de video, USB.</li>
+</ul>
+<h2 id="122-arquitectura-foregroundbackground">12.2. Arquitectura Foreground/Background</h2>
+<pre class="hljs"><code><div>main (<span class="hljs-keyword">void</span>){
+  tarea1_Init();
+  tarea2_Init();
+  tarea3_Init();
+
+  sei();
+  
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>){
+    <span class="hljs-keyword">if</span>(evento_tarea1)
+      tarea1();
+    <span class="hljs-keyword">if</span>(evento_tarea2)
+      tarea2();
+    <span class="hljs-keyword">if</span>(evento_tarea3)
+      tarea3();
+  }
+}
+</div></code></pre>
+<pre class="hljs"><code><div>ISR (tarea1){
+  …
+}
+ISR (tarea2){
+  …
+}
+ISR (tarea3){
+  …
+}
+</div></code></pre>
+<h1 id="13-rtos-real-time-operative-system">13. RTOS (Real Time Operative System)</h1>
+<p>Un sistema operativo de tiempo real es un sistema operativo que provee respuestas a determinados eventos con un “tiempo de respuesta acotado”.</p>
+<p>Típicamente, las tareas tienen plazos (deadlines) que son valores de tiempo físico en los cuales se debe completar. Más generalmente, los programas en tiempo real pueden tener todo tipo de restricciones de tiempo, no solo deadlines por ejemplo, puede requerirse que una tarea se ejecute <strong>no antes</strong> de un momento determinado o puede requerirse que se ejecute <strong>no más de una cantidad de tiempo después</strong> de que se ejecute otra tarea, o se le puede solicitar que se ejecute <strong>periódicamente</strong> con un período específico. Las tareas pueden ser dependientes unas de otras y pueden actuar cooperativamente o pueden ser independientes (excepto que todas comparten los recursos del MCU).</p>
+<p>En un contexto multitareas donde hay más tareas que CPU o tareas que deben ejecutarse en un tiempo preciso es necesaria la planificación de tareas (<strong>Task scheduling</strong>).</p>
+<h2 id="131-scheduler">13.1. Scheduler</h2>
+<p>Un planificador (Scheduler) decide cual es la siguiente tarea a ejecutar en el instante de tiempo que la CPU se libera. El planificador puede ser:</p>
+<ul>
+<li>
+<p>Estatico: Se decide el orden y tiempo de ejecución en el diseño.</p>
+</li>
+<li>
+<p>Dinámico: Se decide que tarea ejecutar en tiempo de ejecución.</p>
+</li>
+<li>
+<p>Preemptive: Puede tomar la decisión de detener la ejecución de una tarea y comenzar la ejecución de otra, aún cuando la anterior no haya finalizado.</p>
+</li>
+<li>
+<p>Non-preemptive: Permite a las tareas ejecutarse hasta terminar (run to completion) antes de asignar tiempo de CPU a otra tarea.</p>
+</li>
+</ul>
+<p>El planificador puede utilizar la prioridad de una tarea para decidir cuando corresponde su ejecución. Las tareas pueden tener prioridades fijas o pueden alterarse durante la ejecución de programa.</p>
+<p>Un <strong>preemptive priority-based scheduler</strong> siempre ejecuta la tarea habilitada de mayor prioridad mientras que un <strong>non-preemptive priority-based</strong> scheduler usa la prioridad para decidir que tarea corresponde ejecutar luego de que la tarea actual finalice su ejecución y nunca interrumpe la ejecución de una tarea por otra.</p>
+<h2 id="132-modelo-de-tarea">13.2. Modelo de tarea</h2>
+<ul>
+<li>Release time: o también tiempo de despacho, es el tiempo a partir del cual la tarea está habilitada para ejecutarse</li>
+<li>Start time: inicio de la ejecución</li>
+<li>Preemption time: la tarea fue suspendida para ejecutar otra</li>
+<li>Resumption time: la tarea fue reanudada</li>
+<li>Finish time: la tarea finalizó su ejecución</li>
+<li>Deadline: es la restricción de tiempo en el cual la tarea debe completarse. Muchas veces esta limitación proviene de las restricciones físicas impuestas por la aplicación y su no cumplimiento pude ser considerado una falla (en los llamados <em>hard rtos</em>) o una degradación de performance (<em>soft rtos</em>)</li>
+<li>Response time: es el tiempo de respuesta y se mide desde la habilitación de la tarea hasta la finalización de la misma</li>
+<li>Execution time: es el tiempo que la tarea ha usado la CPU (no tiene en cuenta el tiempo apropiado). Se puede asumir conocido y fijo o con su cota más pesimista WCET (Worst Case Execution time)</li>
+</ul>
+<p style="text-align:center"><img src="./img/rtos-task.png"/></p>
+<h2 id="133-componentes-de-un-rtos-simple">13.3. Componentes de un RTOS simple</h2>
+<ul>
+<li>Un planificador de tareas (scheduler) que permite decidir que tarea corresponde ejecutar en base a la temporización basado en una RTI.</li>
+<li>Un despachador de tareas (dispacher) que permita ejecutar las tareas planificadas con distintas prioridades.</li>
+<li>El RTOS y las tareas de aplicación del usuario son parte del mismo proyecto. <strong>No</strong> es una aplicación independiente, pero sí es un módulo portable.</li>
+</ul>
+<h1 id="14-timer-1">14. Timer 1</h1>
+<p>El Timer/Counter Timer1 es una unidad de 16-bit que permite event management, wave generation y <strong>signal timing measurement</strong></p>
+<p style="text-align:center"><img src="./img/timer1.png"/></p>
+<p>A diferencia de Timer0 y Timer2, en Timer1 los registros <em>contador</em> TCNT1*, <em>output compare</em> OCR1A/B e <em>input capture</em> ICR1 son todos de <strong>16 bits</strong></p>
+<h2 id="141-accediendo-a-registros-de-16-bits">14.1. Accediendo a registros de 16 bits</h2>
+<p>Como el bus de datos del Atmega328P es de 8 bits para poder acceder a registros de 16 bits es necesario hacer dos lecturas y dos escrituras</p>
+<p>En el caso de una operación de lectura: Debe leerse primero la parte baja. Al leer la parte baja, la parte alta se almacena en el registro TEMP de 8 bits para la subsecuente lectura del mismo.</p>
+<p>En el caso de la escritura, el proceso es inverso: Primero escribe en el registro TEMP la parte alta, y luego al escribir la parte baja se copia automaticamente el contenido de TEMP a la parte alta del registro TCNT1.</p>
+<p>Este mecanismo permite la escritura y lectura &quot;sincrónica&quot; del registro de 16 bits mientras el contador sigue funcionando y actualizando el registro.</p>
+<p style="text-align:center"><img src="./img/timer1-core.png"/></p>
+<h2 id="142-registros">14.2. Registros</h2>
+<p>Posee registros similares a los vistos para el Timer0 y Timer2 y adiciona registros para el <strong>capturador de entrada</strong></p>
+<h1 id="15-generaci%C3%B3n-de-se%C3%B1ales-con-timer1">15. Generación de señales con Timer1</h1>
+<p>El Timer1 posee 2 canales independientes para la generación de señales</p>
+<img src="./img/timer1-wg.png"/>
+<h2 id="151-registro-tccr1a">15.1. Registro TCCR1A</h2>
+<img src="./img/timer1-tccr1a.png"/>
+<h2 id="152-registro-tccr1b">15.2. Registro TCCR1B</h2>
+<img src="./img/timer1-tccr1b.png"/>
+<h2 id="153-modo-normal">15.3. Modo Normal</h2>
+<p>En el modo normal, el contador cuenta hasta TOP (0xFF) e invierte la salida OC1A cuando la cuenta alcanza OCR1A- El periodo de la señal generada es independiente del valor OCR1A
+<img src="./img/timer1-normal-mode.png"/></p>
+<h2 id="154-modo-ctc">15.4. Modo CTC</h2>
+<p>En el modo CTC la salida de OC1A se invierte cuando TCNT1 alcanza el valor OCR1A, lo que permite controlar la frecuencia o el período de la señal.</p>
+<p>$f_{OC1A} = \frac{f_{clk_I/O}}{2<em>N</em>(1+OCR1A)}$ donde $N$ es el Prescaler</p>
+<img src="./img/timer1-ctc-mode.png"/>
+<h3 id="1541-observaciones">15.4.1. Observaciones</h3>
+<ul>
+<li>Para $f_{clk_I/O}$ y $N$ fijos, y con $OCR1A$ variable de 16 bits se pueden generar 65536 ($2^{16}$) valores diferentes de $T_{OC1A}$ (o $f_{OC1A}$)</li>
+<li>Para $f_{clk_I/O}$ y $N$ fijos, y con $OCR1A=0$, el <strong>período mínimo</strong> que se puede generar será $T_{OC1A_Min} = 2<em>N</em>1 * T_{clk_I/O}$</li>
+<li>Para $f_{clk_I/O}$ y $N$ fijos, y con $OCR1A=65536$, el <strong>período máximo</strong> que se puede generar será $T_{OC1A_MAX} = 2<em>N</em>65536 * T_{clk_I/O}$</li>
+<li>Para $f_{clk_I/O}$ y $N$ fijos se puede calcular la resolución del período como la diferencia entre dos períodos para dos valores de OCR1A diferentes (x e y)
+$$\Delta T_{OC1A} = T_{OC1A_X} - T_{OC1A_Y}= 2 * N * T_{CLK_I/O} *(OCR1A_X - OCR1A_Y)$$</li>
+</ul>
+<h1 id="16-capturaci%C3%B3n-de-entrada-con-timer1">16. Capturación de Entrada con Timer1</h1>
+<p>La capturación de entrada me permite medir el tiempo entre flancos de una señal desconocida y así conocer su período.</p>
+<p style="text-align:center"><img src="./img/timer1-ic.png"/></p>
+<p>Cuando un cambio en el nivel lógico (un evento) ocurre en el pin de Input Capture (ICP1) y este cambio coincide con la configuración en el detector de flanco, se disparará una captura. Cuando se dispara una captura, el valor del contador de 16 bits (TCNT1) se escribe en el registro ICR1, también de 16 bits. La flag de input capture (ICF1) se activa al mismo tiempo que el valor de TCNT1 se copia al registro ICR1. Si esta habilitada (TICIE1=1), la flag ICF1 genera una interrupción de capturación de entrada (la flag se limpia automaticamente cuando se atiende la interrupción o alternativamente puede ser limpiada por software escribiendo un 1 en su bit location <code>TIFR1 |=(1&lt;&lt;ICF1);</code>).</p>
+<p>El comparador analógico, compara la tensión de AIN1 (PB3) contra AIN0 (PB2) y si es mayor, da una salida &quot;1&quot;.</p>
+<p>Luego, para conocer el período de la señal incógnita</p>
+<p style="text-align:center"><img src="./img/timer1-ic-2.png"/></p>
+<p>$$T_{ICP1} = (ICR1_{t2} - ICR1_{t1}) * N * T_{CLK_I/O}$$</p>
+<h2 id="161-observaciones">16.1. Observaciones</h2>
+<ul>
+<li>Minimo período medible $T_{ICP_MIN} = 1 * N * T_{CLK_I/O}$</li>
+<li>Máximo período medible $T_{ICP_MAX} = 65535 * N * T_{CLK_I/O}$</li>
+<li>Resolución $\pm N * T_{CLK_I/O}$</li>
+</ul>
+<h1 id="17-sistema-y-fuentes-de-reloj">17. Sistema y fuentes de reloj</h1>
+<p style="text-align:center"><img src="./img/clk-dist.png"/></p>
+<ul>
+<li>Reloj de CPU $clk_{CPU}$: El reloj de CPU esta conectados a las partes del sistema encargadas de la operacion del núcleo AVR, los módulos tales como el archivo de los registros de propósito general, el registro de estado y la memoria de datos que contiene el stack pointer. Detener el reloj de CPU prohibe al núcleo realizar operaciones generales y cálculos.</li>
+<li>Reloj de I/O $clk_{I/O}$: El reloj de I/O es usado en general por los modulos I/O tales como Timer/Counters, SPI y USART. El reloj I/O tambiñen es usado por el módulo de interrupciones externas, aunque algunas interrupciones externas son asíncronas por lo que pueden ser detectadas aunque el reloj de I/O esté detenido.</li>
+<li>Reloj de Flash $clk_{FLASH}$: El reloj de flash controla las operaciones de la interfaz flash. Generalmente se activa en simultaneo con el reloj de CPU.</li>
+<li>Reloj de Timer Asíncrono $clk_{ASY}$: El reloj asíncrono permite al Timer/Counter asíncrono ser alimentado por un reloj externo o un cristal externo de hasta 32kHz, permitiendo funcionar al Timer/Counter como RTC cuando el dispositivo esta en estado SLEEP.</li>
+<li>Reloj ADC $clk_{ADC}$: El convertidor analógico digital es provisto de su propio reloj para poder detener el reloj de CPU y el reloj de I/O a fin de reducir el ruido generado por los circuitos digitales. Esto permite obtener resultados de conversion más precisos.</li>
+</ul>
+<h2 id="171-fuentes">17.1. Fuentes</h2>
+<ol>
+<li>Low power crystal oscillator: Conectando un cristal de cuarzo en los pines XTAL1 y XTAL2, input y output del oscilador pueden conseguirse frecuencias del rango 0.4 a 16.0 MHz</li>
+<li>Full swing crystal oscillator: Igual a (1) pero con mayor consumo de energía y como resultado menor ruido en la señal de clk.</li>
+<li>Low frequency crystal oscillator: Oscilador interno para uso con un cristal de 32.769kHz</li>
+<li>Internal 128kHz RC oscillator: Oscilador interno calibrado a 128kHz para una tensión de 3V y una temperatura de 25ºC</li>
+<li>Calibrated internal RC oscillator: Por defecto el oscilador RC interno provee una señal clk aproximada de 8.0Mhz, puede ser calibrado por el usuario pero depende del voltaje y de la temperatura. Con una alimentación de 3V a una temperatura de 25ºC la precisión de la calibración de fábrica es del orden del 2%</li>
+<li>External Clock: Al utilizar un reloj externo este debe conectarse a la terminal XTAL1. El rango de frecuencia soportado es de 0 a 16Mhz</li>
+</ol>
+<p><strong>Nota:</strong> <em>el prescaler permite dividir todas las fuentes de reloj por los factores</em> $2^0$. . . $2^8$</p>
+<p><strong>Nota:</strong> <em>el Atmega328P trae seteado de fabrica al oscilador RC interno a 8.0Mhz con un divisor programado para obtener una señal resultante de 1Mhz como <mark>fuente por defecto de clk</mark></em></p>
+<h1 id="18-comunicaci%C3%B3n-serie">18. Comunicación Serie</h1>
+<p>En una transmisión serie, los datos se envían en paquetes de varios bits, un bit a la vez, por el mismo canal de comunicación.</p>
+<h2 id="181-definiciones">18.1. Definiciones</h2>
+<ul>
+<li>
+<p>Tiempo de bit: tiempo de duración de un bit</p>
+</li>
+<li>
+<p>Tasa de transferencia: el numero de bits por unidad de tiempo, tambien se la denomina baud-rate (simbolos por segundo)</p>
+</li>
+<li>
+<p>Overhead: son bits o bytes que se agregan al dato para hacer más confiable una transmisión (bits de paridad o bytes de checksum)</p>
+</li>
+<li>
+<p>Bandwith o Throughput: es el numero total de bits de información por unidad de tiempo, sin tener en cuenta el overhead</p>
+</li>
+<li>
+<p>Full-Duplex: Transmisión y recepción en ambos sentidos simultáneamente. Requiere de hardware separados y dos canales de comunicación.</p>
+</li>
+<li>
+<p>Half-Duplex: La comunicación es bidireccional por 1 mismo canal, pero no simultáneamente (un problema fundamental de estos sistemas es el manejo de Colisiones)</p>
+</li>
+<li>
+<p>Simplex: La comunicación es en un solo sentido.</p>
+</li>
+<li>
+<p>Sistema sincrónico: el receptor y el transmisor se deben sincronizar a una tasa de transferencia dada, empleando un reloj común a ambos (orientado a la transferencia de bloques de datos). La ventaja es que se pueden utilizar tasas de transferencia más altas, la desventaja es que requiere un conductor adicional (señal de clk).</p>
+</li>
+<li>
+<p>Sistema asincrónico: TX y RX no están sincronizados por reloj común, si no que la tasa de transferencia se supone conocida y la trama de datos contiene un bit de comienzo y otro de fin para sincronizar el RX y decodificar los datos (orientado a transferencia de caracteres)</p>
+</li>
+</ul>
+<h1 id="19-usart">19. USART</h1>
+<p>El Transmisor Receptor Serie Sincrono Asincrono Universal (USART) es un dispositivo de comunicación sere altamente flexible incluído en el Atmega328P.</p>
+<p style="text-align:center"><img src="./img/usart0.png"/></p>
+<p>De su diagrama de bloques podemos analizar 3 partes de manera individual:</p>
+<ul>
+<li>Generador de Clock: La lógica de generacion de reloj consiste de logica de sincronización para el input externo de clock usado para la transmisión síncrona en modo esclavo y el generador de <em>baud rate</em>. El pin XCKn solo es usado por el modo de transferencia síncrona.</li>
+<li>Transmisor: El transmisor consiste de un único buffer de escritura, un registro de desplazamiento serie, un generador de paridad y lógica de control para manejar diferentes formatos de trama serie. El buffer de escritura permite la transferencia continua de datos sin ningun retraso entre tramas.</li>
+<li>Receptor: El receptor es la parte más compleja del módulo USART, debido a sus unidades de reloj y de data recovery. La unidad de recovery se utiliza para la recepción asincrónica de información. Adicionalmente a las unidades de recovery, el receptor incluye un comprobador de paridad, lógica de control, un registro de desplazamiento y un buffer de recepción de dos niveles. El receptor soporta los mismos formatos de trama que el transmisor y puede detectar errores de trama, sobrecarga de datos (se recibe un dato nuevo y el anterior aun no fue leido) y errores de paridad.</li>
+<li>Registros de control compartidos por todas las unidades</li>
+</ul>
+<h2 id="191-paso-por-paso">19.1. Paso por paso</h2>
+<ul>
+<li>Transmisión: Si el registro UDR está vacío (flag UDRE=1) el usuario puede cargar un dato para transmitir. Este inmediatamente se transfiere al shift register y la transmisión comienza. El usuario puede escribir otro dato en el UDR que quedará a la espera de ser transmitido. Esto constituye un mecanismo de doble Buffer. El flag TXC se activa (TXC=1) cuando el transmisor haya completado la transmisión y tanto el UDR como el shift register estén vacios. Ambos flag se borran automáticamente con la escritura de un dato en el UDR.</li>
+<li>Recepción: Los datos presentes en el pin de entrada del periférico son muestreados a una tasa 16 veces mayor a la seleccionada de manera de detectar el bit de comienzo y sincronizarse con el centro de los bits de datos. Una vez detectado el bit de comienzo, los datos son muestreados e introducidos al registro de desplazamiento a medida que son decodificados y hasta detectar el bit de parada o STOP. Luego de completar la recepción el contenido del registro de desplazamiento se transfiere al registro de datos UDR y se activa el flag que indica “dato recibido” RXC. Este flag también puede generar una solicitud de interrupción si se habilita RXCIE. Luego un nuevo dato puede ser recibido, mientras el anterior se encuentra almacenado en el UDR. Esto constituye un mecanismo de doble Buffer</li>
+</ul>
+<h2 id="192-registros-de-control">19.2. Registros de control</h2>
+<h3 id="1921-ucsra">19.2.1. UCSRA</h3>
+<img src="./img/usart0-ucsra.png"/>
+<ul>
+<li>RXC0 (Bit 7): USART Receive Complete 0. This flag bit is set when there are new data in the receive buffer that are not read yet. It is cleared when the receive buffer is empty. It also can be used to generate a receive complete interrupt.</li>
+<li>TXC0 (Bit 6): USART Transmit Complete 0. This flag bit is set when the entire frame in the transmit shift register has been transmitted and there are no new data available in the transmit data buffer register (TXB). It can be cleared by writing a one to its bit location. Also it is automatically cleared when a transmit complete interrupt is executed. It can be used to generate a transmit complete interrupt.</li>
+<li>UDRE0 (Bit 5): USART Data Register Empty 0. This flag is set when the transmit data buffer is empty and it is ready to receive new data. If this bit is cleared you should not write to UDR0 because it overrides your last data. The UDRE0 flag can generate a data register empty interrupt.</li>
+<li>FE0 (Bit 4): Frame Error 0. This bit is set if a frame error has occurred in receiving the next character in the receive buffer. A frame error is detected when the first stop bit of the next character in the receive buffer is zero.</li>
+<li>DOR0 (Bit 3): Data OverRun 0. This bit is set if a data overrun is detected. A data overrun occurs when the receive data buffer and receive shift register are full, and a new start bit is detected.</li>
+<li>PE0 (Bit 2): Parity Error 0. This bit is set if parity checking was enabled (UPM1 = 1) and the next character in the receive buffer had a parity error when received.</li>
+<li>U2X0 (Bit 1): Double the USART Transmission Speed 0</li>
+<li>MPCM0 (Bit 0): Multi-processor Communication Mode 0</li>
+</ul>
+<h3 id="1922-ucsrb">19.2.2. UCSRB</h3>
+<img src="./img/usart0-ucsrb.png"/>
+<ul>
+<li>RXCIE0 (Bit 7): Receive Complete Interrupt Enable.</li>
+<li>TXCIE0 (Bit 6): Transmit Complete Interrupt Enable.</li>
+<li>UDRIE0 (Bit 5): USART Data Register Empty Interrupt Enable.</li>
+<li>RXEN0 (Bit 4): Receive Enable.</li>
+<li>TXEN0 (Bit 3): Transmit Enable.</li>
+<li>UCSZ02 (Bit 2): Character Size. This bit combined with the UCSZ1:0 bits in UCSRC sets the number of data bits (character size) in a frame.</li>
+<li>RXB80 (Bit 1): Receive data bit 8. This is the ninth data bit of the received character when using serial frames with nine data bits.</li>
+<li>TXB80 (Bit 0): Transmit data bit 8. This is the ninth data bit of the transmitted character when using serial frames with nine data bits</li>
+</ul>
+<h3 id="1923-ucsrc">19.2.3. UCSRC</h3>
+<img src="./img/usart0-ucsrc.png"/>
+<ul>
+<li>UMSEL01:00 (Bits 7:6): USART Mode Select. These bits select the operation mode of the USART.
+<ul>
+<li>00 = Asynchronous USART operation</li>
+<li>01 = Synchronous USART operation</li>
+<li>10 = Reserved</li>
+<li>11 = Master SPI (MSPIM)</li>
+</ul>
+</li>
+<li>UPM01:00 (Bit 5:4): Parity Mode. These bits disable or enable and set the type of parity generation and check.
+<ul>
+<li>00 = Disabled</li>
+<li>01 = Reserved</li>
+<li>10 = Even Parity</li>
+<li>11 = Odd Parity</li>
+</ul>
+</li>
+<li>USBS0 (Bit 3): Stop Bit Select. This bits selects the number of stop bits to be transmitted.
+<ul>
+<li>0 = 1 bit</li>
+<li>1 = 2 bits</li>
+</ul>
+</li>
+<li>UCSZ01:00 (Bit 2:1): Character Size. These bits combined with the UCSZ02 bit in UCSR0B set the character size in a frame.</li>
+<li>UCPOL0 (Bit 0): Clock Polarity. This bit is used for synchronous mode</li>
+</ul>
+<h4 id="19231-frame-configuration---character-size">19.2.3.1. Frame configuration - Character Size</h4>
+<img src="./img/usart0-csize.png"/>
+<h1 id="20-rs-232">20. RS-232</h1>
+<p>Estándar propuesto por la EIA (Electronics Industry Association) en 1960, para interconectar Data Terminal Equipment y Data Communication Equipment.</p>
+<p>Especifica tasas de transferencia no mayor a 20Kbps para distancias de interconexión de 15m y tasas de transferencia hasta 115kbps para distancias más cortas. La interfaz puede operar en modo asincrónico, sincrónico, full-dúplex, half-dúplex o simplex.</p>
+<p>Define un 1 lógico (Mark) como una tensión entre -3 y -15V y un 0 lógico (Space) como una tensión entre +3 y +15V. La región (-3,3) no esta definida.</p>
+<p style="text-align:center"><img src="./img/rs-232.png"/></p>
+<h3 id="2001-formato-de-trama">20.0.1. Formato de trama</h3>
+<img src="./img/rs-232-frame.png"/>
+<p>El comienzo de flujo de datos se reconoce porque la señal pasa de “marca” a “espacio”. Esta sincronización entre emisor y receptor generalmente se implementa como el bit de arranque.</p>
+<p>RS-232 NO especifica como representar caracteres (7 u 8 bits es la forma más común, pero podrían
+ser 5, 6 ó 9).</p>
+<p>Tampoco el bit de paridad (que es opcional, depende de la implementación):</p>
+<ul>
+<li>No Parity (sin paridad)</li>
+<li>Even Parity (paridad “par”): el bit de paridad es uno (1) para que haya una cantidad par de unos.</li>
+<li>Odd Parity (paridad “impar”): el bit de paridad es uno (1) para que haya una cantidad impar de unos.</li>
+</ul>
+<p>Después del bit de paridad (si lo hay) continúan los bits de parada (stop bits) que pueden ser 1, 1.5 o 2 dependiendo la implementación.</p>
+<p>El formato de trama más utilizado es el formato 8N1, con un bit de start, 8 bits de dato y un bit de stop, sin bits de paridad.</p>
+<h3 id="2002-control-de-flujo">20.0.2. Control de flujo</h3>
+<p>El control de flujo es indicar al emisor cuando puede transmitir y cuando debe esperar. En RS-232 puede implementarse por software o hardware</p>
+<ul>
+<li>Por software: se envía un caracter (ASCII 19) para indicar al emisor que el buffer de recepción está lleno, y un carácter (ASCII 17) para indicar que puede volver a transmitir</li>
+<li>Por hardware:  requiere que entre el receptor y el emisor se conecten dos hilos más: RTS y CTS. Cuando el buffer del receptor se llena desactiva la señal CTS, el emisor debe esperar. Cuando vuelva a tener espacio en el buffer, activa nuevamente el CTS para decir que está nuevamente listo.</li>
+</ul>
+<h1 id="21-spi-serial-peripheral-interface">21. SPI (Serial Peripheral Interface)</h1>
+<p>SPI Es una interfaz desarollada por Motorola en 1991, permite comunicación serie full duplex <strong>sincrónica</strong> con dispositivos periféricos u otros MCU y altas tasas de transferencia de hasta 10Mbits/s.
+Utiliza una configuracion Master-Slave donde el master genera y distribuye la señal de reloj, y opcionalmente utiliza una línea de seleción de chip por cada dispositivo esclavo.</p>
+<p style="text-align:center"><img src="./img/spi-bd.png"/></p>
+El sistema consiste de dos registros de desplazamiento, y un generador de clock maestro. El SPI master inicia el ciclo de comunicación *pulleando a low* el pin Slave Select (SS) del Slave deseado. Luego, maestro y esclavo se preparan para recibir información en sus respectivos registros de desplazamiento, y el maestro genera los pulsos de reloj necesarios en la linea SCK para intercambiar información. La información siempre es desplazada desde el maestro hacia el esclavo en la linea MOSI, y desde el esclavo hacia el maestro en la linea MISO. Luego de cada paquete de datos, el maestro sincroniza al esclavo *pulleando a high* la linea SS.
+<p><strong>Cuando se configura como maestro</strong>, la SPI no tiene control automatico de la linea SS, esta debe ser manejada por el software antes de que comience la comunicación. Luego de esto, escribir en el registro de datos de la SPI inicia el generador de clock y el hardware desplaza los 8 bits al esclavo. Luego de desplazar 1 byte, el generador de reloj se detiene, seteando la flag de fin de transmisión (SPIF).
+Si el bit de interrupción de la SPI está activado (SPIE) en el registro (SPCR), se genera una interrupción. El maestro puede continuar desplazando el proximo byte escribiendolo en SPDR o indicar el fin de paquete, pulleando high la linea SS. El ultimo byte se mantiene en el buffer del registro para su uso posterior.</p>
+<p><strong>Cuando se configura como esclavo</strong>, la SPI se mantiene &quot;durmiendo&quot; con la linea MISO <em>tri-stated</em>, mientras el pin SS se mantenga high. Mientras MISO está en este estado, el software puede actualizar el contenido del registro de datos de la SPI (SPDR) pero los datos no serán desplazados por pulsos entrantes en el pin SCK hasta que el pin SS sea pulleado a low. Cuando se completa el desplazamiento de un byte, se setea la flag de fin de transmision (SPIF). Si las interrupciones estan habilitadas (seteando el bit SPIE del registro SPCR), se generará una interrupción. El esclavo puede continuar colocando nuevos datos para ser envíados en el registro SPDR antes de leer datos entrantes. El ultimo dato entrante se mantendrá en el buffer del registro para su uso posterior.</p>
+<p>Se usa single buffer para la transmisión y buffer doble para la recepción. Esto significa que los butes para ser transmitidos no puede ser escritos al registro de datos de la SPI antes de que el ciclo de desplazamiento se complete. Sin embargo, cuando se recibe información, el byte recibido debe ser leido del registro de datos de la SPI antes de que se reciba un nuevo byte. De lo contrario, se pierde el primero.</p>
+<table>
+<tr>
+<td><img src="./img/spi-m-s.png"/></td>
+<td><img src="./img/spi.png"/></td>
+</tr>
+</table>
+<table>
+<tr><th>Ventajas</th><th>Desventajas</th></tr>
+<tr>
+  <td>
+    <ul>
+      <li>No está limitado a la transferencia de bloques de 8 bits, ni al orden de transmisión de los bits</li>
+      <li>Libre elección del tamaño de la trama de bits, de su significado y su propósito</li>
+      <li>Permite seleccionar cuatro modos de operación (polaridad-fase)</li>
+      <li>No es necesario arbitraje o mecanismos de respuesta ante fallos</li>
+      <li>Los dispositivos esclavos usan el reloj que envía el maestro, no necesitan por tanto su propio reloj y este puede configurarse según la aplicación.</li>
+      <li>Un dispositivo puede utilizarse para solo transmitir, sólo recibir o ambas cosas a la vez</li>
+      <li>Existen diferentes versiones para aumentar la eficiencia de la transeferencia (Dual SPI, Quad SPI, QPI)</li>
+    </ul>
+  </td>
+  <td>
+    <ul>
+      <li>Requiere más terminales de conexion que TWI</li>
+      <li>El direccionamiento se hace mediante lineas de seleccion de chip</li>
+      <li>No posee control de flujo por hardware</li>
+      <li>No posee mecanismos de reconocimiento (el maestro podria enviar informacion sin que estuviesen conectados los esclavos)</li>
+      <li>No permite más de un maestro conectado al bus</li>
+    </ul>
+  </td>
+<tr>
+</table>
+<h2 id="211-registros">21.1. Registros</h2>
+<h3 id="2111-data-register-spdr">21.1.1. Data Register (SPDR)</h3>
+<h3 id="2112-status-register-spcr">21.1.2. Status Register (SPCR)</h3>
+<img src="./img/spi-spcr.png"/>
+<ul>
+<li>SPIE (SPI Interrupt Enable)</li>
+<li>SPE (SPI Enable)</li>
+<li>DORD (Data Order)</li>
+<li>MSTR (Master)</li>
+<li>CPOL (Clock Polarity)</li>
+<li>CPHA (Clock Phase)</li>
+<li>SPR1,SPR0: SPI Clock Rate</li>
+</ul>
+<table>
+<tr><th>Mode Select</th><th>SCK Frequency</th></tr>
+<tr>
+<td><img src="./img/spi-mode.png"/></td>
+<td><img src="./img/spi-sck.png"/></td>
+</tr>
+</table>
+<h3 id="2113-status-register-spsr">21.1.3. Status Register (SPSR)</h3>
+<img src="./img/spi-spsr.png"/>
+<ul>
+<li>SPIF (SPI Interrupt Flag): Transferencia completa (tx &amp; rx)</li>
+<li>WCOL (Write Collision): Registro SPDR escrito durante transferencia de datos</li>
+<li>SPI2X (Double SPI Speed): Duplicar la frecuencia de SCK duplica cuando el SPI esta en modo maestro</li>
+</ul>
+<h1 id="22-twi-2-wire-interface-i2c">22. TWI (2 Wire Interface, I2C)</h1>
+<p>La interfaz TWI es ideal para aplicaciones típicas de microcontroladores. El protocolo TWI permite al diseñador de sistemas interconectar hasta 128 dispositivos diferentes usando solo un bus de dos lineas bi-direccionales, una para reloj (SCL) y otra para datos (SDA). El unico hardware externo necesario para implementar el bus es un único resistor de pull up por cada una de las lineas del bus TWI. Todos los dispositivos conectados al bus tienen direcciones individuales y los mecanismos para resolver la contención en el bus son inherentes al protocolo TWI</p>
+<h2 id="221-terminologia">22.1. Terminologia</h2>
+<img src="./img/twi.png"/>
+<ul>
+<li>Maestro: Inicia y termina la transmision, genera el reloj en la linea SCL</li>
+<li>Esclavo: El dispositivo dirigido por un maestro</li>
+<li>Transmisor: El dispositivo que pone datos en el bus</li>
+<li>Receptor: El dispositivo que lee datos del bus</li>
+</ul>
+<h2 id="222-transferencia-y-formato-de-trama">22.2. Transferencia y formato de trama</h2>
+<p>Cada bit de datos se transmite en el bus TWI acompañado de un pulso de reloj en la linea SCL, el nivel de la línea de datos debe ser estable durante el pulso alto de reloj, excepto al generar las condiciones de START y STOP.</p>
+<p>El maestro es el encargado de inciar y terminar las transmisiones de datos. La transmisión se inicia cuando el maestro emite una condición de START en el bus, y se termina cuando emite una de STOP. Entre las condiciones de START  y STOP el bus se considera ocupado y ningun Maestro debe intentar tomar control del bus. Se produce un caso especial cuando se emite una nueva condición de START entre una condición de START y una de STOP. Esto se denomina condición de REPEATED START y se utiliza cuando el maestro desea iniciar una nueva transferencia sin renunciar al control del bus. Luego de un REPEATED START el bus se considera ocupado hasta el siguiente STOP (START y REPEATED START son identicos).</p>
+<p>La señal de START y STOP se generan con un flanco de bajada y uno de subida respectivamente, junto con un pulso alto en la linea SCL.</p>
+<h3 id="2221-formato-de-paquete-de-direcciones">22.2.1. Formato de paquete de direcciones</h3>
+<p>Todos los paquetes de direcciones transmitidos en el bus TWI son de 9 bits, constando de 7 bits de direcciones, 1 bit de READ/WRITE (1/0) y 1 bit de acknowledge. Cuando un esclavo reconoce que esta siendo direccionado por el maestro, debe pullear low la linea SDA durante el 9º ciclo de SCL (el ciclo de ACK). Luego el maestro puede transmitir una condición de STOP o REPEATED START para iniciar a transmitir.</p>
+<p><strong>Nota:</strong> <em>Un paquete de direcciones con directiva de lectura se denomina <strong>SLA+R</strong>, uno con directiva de escritura <strong>SLA+W</strong>.</em></p>
+<p>El bit más significativo (MSB) se transmite primero. Las direcciones de esclavo pueden alocarse libremente por el diseñador, pero la direccion 0000 000 está reservada para <em>llamado general</em>. Una llamada general se usa cuando el maestro quiere transmitir el mismo mensaje a varios esclavos del sistema. Las llamadas generales no tienen sentido para lectura ya que se producirian colisiones en el bus.</p>
+<p><strong>Nota:</strong> <em>Todas las direcciones de formato 1111 xxx deberían estar reservadas para futuros propositos</em></p>
+<h3 id="2222-formato-de-paquete-de-datos">22.2.2. Formato de paquete de datos</h3>
+<p>Todos los paquetes de datos transmitidos en el bus TWI son de 9 bits, constando de 1 byte de datos y 1 bit de acknowledge. Durante una transferencia de datos, el maestro genera el reloj y las condiciones de START y STOP, mientras que el receptor es responsable del acknowledge de la recepción. El acknowledge (ACK) es emitido por el receptor pulleando la linea SDA a low durante el 9º ciclo de SCL. El MSB de los datos se transmite primero.</p>
+<h3 id="2223-sincronizaci%C3%B3n">22.2.3. Sincronización</h3>
+<p>El esclavo puede extender el periodo low de la linea SCL pulleando a low la misma, esto es util para si la velocidad de reloj del maestro es demasiado rapida para el esclavo o para obtener tiempo extra de procesamiento. Esta extension del periodo de SCL no afecta al periodo alto de la misma, el cual es determinado por el maestro. Como consecuencia, el esclabo puede reducir la velocidad de transferencia al prolongar el ciclo de trabajo de SCL.</p>
+
+</body>
+</html>
