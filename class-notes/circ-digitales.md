@@ -44,41 +44,74 @@
     - [6.6.1. Activacion Por Flanco vs. Por Nivel](#661-activacion-por-flanco-vs-por-nivel)
   - [6.7. Interrupciones por Pin Change (PCINT)](#67-interrupciones-por-pin-change-pcint)
     - [6.7.1. Prioridades de atencion](#671-prioridades-de-atencion)
-- [7. Timer/Counter 0](#7-timercounter-0)
-  - [7.1. Modos de funcionamiento](#71-modos-de-funcionamiento)
-    - [7.1.1. Normal](#711-normal)
-    - [7.1.2. CTC (Clear Timer on Compare Match)](#712-ctc-clear-timer-on-compare-match)
-    - [7.1.3. PWM](#713-pwm)
-      - [7.1.3.1. Fast PWM](#7131-fast-pwm)
-      - [7.1.3.2. Phase Correct PWM](#7132-phase-correct-pwm)
-  - [7.2. Prescaler](#72-prescaler)
-  - [7.3. Registros para su programación](#73-registros-para-su-programación)
-- [8. MEF](#8-mef)
-  - [8.1. Modelo de Mealy](#81-modelo-de-mealy)
-  - [8.2. Modelo de Moore](#82-modelo-de-moore)
-  - [8.3. Implementación en C](#83-implementación-en-c)
-    - [8.3.1. Usando switch-case](#831-usando-switch-case)
-    - [8.3.2. Usando punteros a función](#832-usando-punteros-a-función)
-- [9. Timer 2. RTC](#9-timer-2-rtc)
-- [10. Watchdog Timer](#10-watchdog-timer)
-- [11. Planificación y Ejecución de Tareas en Sistemas Embebidos](#11-planificación-y-ejecución-de-tareas-en-sistemas-embebidos)
-  - [11.1. Super-Loop o Round Robin Cíclico](#111-super-loop-o-round-robin-cíclico)
-  - [11.2. Foreground/Background o Event-Driven](#112-foregroundbackground-o-event-driven)
-  - [11.3. Time-triggered (disparadas por tiempo)](#113-time-triggered-disparadas-por-tiempo)
-  - [11.4. Resumen](#114-resumen)
-- [12. RTOS (Real Time Operative System)](#12-rtos-real-time-operative-system)
-  - [12.1. Scheduler](#121-scheduler)
-  - [12.2. Modelo de tarea](#122-modelo-de-tarea)
-  - [12.3. Componentes de un RTOS simple](#123-componentes-de-un-rtos-simple)
-- [13. Timer 1](#13-timer-1)
-  - [13.1. Input Capture](#131-input-capture)
-  - [13.2. Output Compare](#132-output-compare)
-- [14. Generacion y distribucion de reloj](#14-generacion-y-distribucion-de-reloj)
-- [15. USART](#15-usart)
-- [16. Arquitectura Background/Foreground](#16-arquitectura-backgroundforeground)
-- [17. Drivers. Modelo Productor/Consumidor.](#17-drivers-modelo-productorconsumidor)
-- [18. Protocolo SPI. I2C](#18-protocolo-spi-i2c)
-- [19. PWM](#19-pwm)
+- [7. Periféricos Timer](#7-periféricos-timer)
+  - [7.1. Definiciones](#71-definiciones)
+- [8. Timer/Counter 0](#8-timercounter-0)
+  - [8.1. Modos de funcionamiento](#81-modos-de-funcionamiento)
+    - [8.1.1. Normal](#811-normal)
+    - [8.1.2. CTC (Clear Timer on Compare Match)](#812-ctc-clear-timer-on-compare-match)
+    - [8.1.3. PWM](#813-pwm)
+      - [8.1.3.1. Fast PWM](#8131-fast-pwm)
+      - [8.1.3.2. Phase Correct PWM](#8132-phase-correct-pwm)
+  - [8.2. Prescaler](#82-prescaler)
+  - [8.3. Registros para su programación](#83-registros-para-su-programación)
+- [9. MEF](#9-mef)
+  - [9.1. Modelo de Mealy](#91-modelo-de-mealy)
+  - [9.2. Modelo de Moore](#92-modelo-de-moore)
+  - [9.3. Implementación en C](#93-implementación-en-c)
+    - [9.3.1. Usando switch-case](#931-usando-switch-case)
+    - [9.3.2. Usando punteros a función](#932-usando-punteros-a-función)
+- [10. Timer 2. RTC](#10-timer-2-rtc)
+- [11. Watchdog Timer](#11-watchdog-timer)
+- [12. Planificación y Ejecución de Tareas en Sistemas Embebidos](#12-planificación-y-ejecución-de-tareas-en-sistemas-embebidos)
+  - [12.1. Super-Loop o Round Robin Cíclico](#121-super-loop-o-round-robin-cíclico)
+  - [12.2. Foreground/Background o Event-Driven](#122-foregroundbackground-o-event-driven)
+  - [12.3. Time-triggered (disparadas por tiempo)](#123-time-triggered-disparadas-por-tiempo)
+  - [12.4. Resumen](#124-resumen)
+- [13. Drivers. Modelo Productor/Consumidor.](#13-drivers-modelo-productorconsumidor)
+  - [13.1. Estructuras basicas para el intercambio de datos entre tareas](#131-estructuras-basicas-para-el-intercambio-de-datos-entre-tareas)
+  - [13.2. Arquitectura Foreground/Background](#132-arquitectura-foregroundbackground)
+- [14. RTOS (Real Time Operative System)](#14-rtos-real-time-operative-system)
+  - [14.1. Scheduler](#141-scheduler)
+  - [14.2. Modelo de tarea](#142-modelo-de-tarea)
+  - [14.3. Componentes de un RTOS simple](#143-componentes-de-un-rtos-simple)
+- [15. Timer 1](#15-timer-1)
+  - [15.1. Accediendo a registros de 16 bits](#151-accediendo-a-registros-de-16-bits)
+  - [15.2. Registros](#152-registros)
+- [16. Generación de señales con Timer1](#16-generación-de-señales-con-timer1)
+  - [16.1. Registro TCCR1A](#161-registro-tccr1a)
+  - [16.2. Registro TCCR1B](#162-registro-tccr1b)
+  - [16.3. Modo Normal](#163-modo-normal)
+  - [16.4. Modo CTC](#164-modo-ctc)
+    - [16.4.1. Observaciones](#1641-observaciones)
+- [17. Capturación de Entrada con Timer1](#17-capturación-de-entrada-con-timer1)
+  - [17.1. Observaciones](#171-observaciones)
+- [18. Sistema y fuentes de reloj](#18-sistema-y-fuentes-de-reloj)
+  - [18.1. Fuentes](#181-fuentes)
+- [19. Comunicación Serie](#19-comunicación-serie)
+  - [19.1. Definiciones](#191-definiciones)
+- [20. USART](#20-usart)
+  - [20.1. Paso por paso](#201-paso-por-paso)
+  - [20.2. Registros de control](#202-registros-de-control)
+    - [20.2.1. UCSRA](#2021-ucsra)
+    - [20.2.2. UCSRB](#2022-ucsrb)
+    - [20.2.3. UCSRC](#2023-ucsrc)
+      - [20.2.3.1. Frame configuration - Character Size](#20231-frame-configuration---character-size)
+- [21. RS-232](#21-rs-232)
+    - [21.0.1. Formato de trama](#2101-formato-de-trama)
+    - [21.0.2. Control de flujo](#2102-control-de-flujo)
+- [22. SPI (Serial Peripheral Interface)](#22-spi-serial-peripheral-interface)
+  - [22.1. Registros](#221-registros)
+    - [22.1.1. Data Register (SPDR)](#2211-data-register-spdr)
+    - [22.1.2. Status Register (SPCR)](#2212-status-register-spcr)
+    - [22.1.3. Status Register (SPSR)](#2213-status-register-spsr)
+- [23. TWI (2 Wire Interface, I2C)](#23-twi-2-wire-interface-i2c)
+  - [23.1. Terminologia](#231-terminologia)
+  - [23.2. Transferencia y formato de trama](#232-transferencia-y-formato-de-trama)
+    - [23.2.1. Formato de paquete de direcciones](#2321-formato-de-paquete-de-direcciones)
+    - [23.2.2. Formato de paquete de datos](#2322-formato-de-paquete-de-datos)
+    - [23.2.3. Sincronización](#2323-sincronización)
+- [24. Señales PWM (Pulse Width Modulation)](#24-señales-pwm-pulse-width-modulation)
 
 # 2. Lenguaje C
 ## 2.1. Modificadores de acceso
@@ -592,7 +625,30 @@ Los interrupciones Pin Change son habilitadas con el registro PCICR, y se habili
 </tr>
 </table>
 
-# 7. Timer/Counter 0
+# 7. Periféricos Timer
+Una de las características mas destacables de un MCU es la capacidad de realizar tareas temporizadas, para esto cuentan con un periférico TIMER o TEMPORIZADOR.
+
+Algunas de las aplicaciones pueden ser:
+* Generación de retardos
+* Interrupción periódica de tiempo-real (planificación de tareas)
+* Protección Watch-Dog
+* Pero además un Timer se puede utilizar para:
+* Generación de señales digitales con frecuencia variables o ciclo de trabajo variable (PWM)
+* Medición de frecuencia y ancho de pulso
+* Registro y conteo de eventos (COUNTER)
+
+## 7.1. Definiciones
+
+* El **período $T$** de una señal $x(t)$ es el menor numero entero que satisface $x(t)=x(t+T)$
+* La **frecuencia $f$**  se define como el numero de oscilaciones en el lapso de 1 seg, es decir $f=1/T$
+* El **ciclo de trabajo** de una señal digital es el porcentaje de tiempo en que la misma está activa respecto del periodo total.
+* La **Resolución**  es el mínimo período de tiempo medible o contable y es 1 pulso  o período de CLK, dependiendo de la fuente de reloj y prescaler seleccionados
+* El **Rango** es el rango de valores (Máx - Mín) que se utiliza para representar la información.
+* La **Precisión** es con cuantos bits puedo representar la información. Básicamente es el número del bits del Timer.
+* La **Exactitud**  es cuanto difiere el “valor real” respecto al “valor medido”, depende de la exactitud del oscilador que genera la señal del reloj
+* La **Estabilidad** es un medida de cuan estable es la frecuencia del CLK frente a perturbaciones en la tensión de alimentación, en la temperatura y al envejecimiento de los componentes. Puede dividirse en estabilidad de corto término y estabilidad a largo plazo.
+
+# 8. Timer/Counter 0
 Timer/Counter0 es un modulo Timer/Counter de 8 bits de proposito general, con dos unidades de output-compare independientes, y con soporte para PWM. Permite programar tareas de forma temporizada (event management) y generación de ondas.
 
 <p style="text-align:center"><img src="./img/timer0.png"/></p>
@@ -605,9 +661,9 @@ Timer/Counter0 es un modulo Timer/Counter de 8 bits de proposito general, con do
 *  **OCR0A y OCR0B:** Registros utilizados para comparar todo el tiempo el valor del Timer/Counter. Pueden utilizarse para generar un PWM o una salida de frecuencia variable en los pines de output compare (OC0A y OC0B). El evento de Compare match (TCNT0 == OCR0x) activa la flag de comparación (OCF0A o OCF0B), la cual puede usarse para generar una interrupción temporizada.
 *  **TCCR0A y TCCR0B:** Son los registros de control del timer, permiten configurar el modo de operación (Normal, CTC, Fast PWM, Phase Correct PWM), el valor de TOP (default o OCR0A), dirección de conteo, activación de flag TOV0 (overflow con bottom, max o top) y el *Prescaler*, entre otros.
 
-## 7.1. Modos de funcionamiento
+## 8.1. Modos de funcionamiento
 
-### 7.1.1. Normal
+### 8.1.1. Normal
 El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el valor TOP (o BOTTOM). Cuando se alcanza, se reinicia el valor TCNT0 a BOTTOM (o TOP) y se levanta el flag TOV0 (overflow).
 
 * La frecuencia de overflow puede calcularse como $f_{OVF} = \frac{f_{clkT_0}}{2^8}$
@@ -616,15 +672,15 @@ El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el v
 
 * La resolución de temporización puede calcularse como $T_{clkT_0} = \frac{1}{f_{clkT_0}}$
 
-### 7.1.2. CTC (Clear Timer on Compare Match)
+### 8.1.2. CTC (Clear Timer on Compare Match)
 El Timer/Counter incrementa (o decrementa) el valor de TCNT0 hasta alcanzar el valor OCR0. Cuando se alcanza, se reinicia el valor TCNT0 a BOTTOM (o OCR0) y se levanta el flag OC0. También puede configurarse para invertir el pulso en el pin OC0 (waveform generation).
 
-### 7.1.3. PWM
-#### 7.1.3.1. Fast PWM
-#### 7.1.3.2. Phase Correct PWM
+### 8.1.3. PWM
+#### 8.1.3.1. Fast PWM
+#### 8.1.3.2. Phase Correct PWM
 
 
-## 7.2. Prescaler
+## 8.2. Prescaler
 El Atmega328P cuenta con un sistema de preescalado de reloj que se utiliza para dividir la frecuencia del reloj y obtener una menor, permitiendo bajar el consumo de energía cuando el requisito de poder de procesamiento es bajo. Este sistema también puede usarse para suministrar señal de reloj a los distintos dispositivos.
 
 El Timer/Counter puede recibir la señal de clock del reloj del sistema ($f_{CLK\_I/O}$), esto permite la velocidad de operacion más rápida. Alternativamente, puede recibir la señal de clock de una de las 4 alternativas del preescalador. Las frecuencias del preescalador son:
@@ -636,11 +692,10 @@ $$\frac{f_{CLK\_I/O}}{1024}$$
 
 El prescaler funciona independientemente de la lógica de Clock select, y es compartido por el Timer/Counter1 y el Timer/Counter0.
 
-## 7.3. Registros para su programación
+## 8.3. Registros para su programación
+<img src="./img/timer0-reg.png"/>
 
-<p style="text-align:center"><img src="./img/timer0-reg.png"/></p>
-
-# 8. MEF
+# 9. MEF
 > Una Máquina de Estados Finitos (MEF) es un modelo abstracto del “comportamiento” del sistema, basado en principio simples.
 
 > Una Máquina de Estados Finitos (MEF) es un modelo matemático (Teoría general de autómatas) usado para describir el comportamiento de un sistemas que puede ser representado por un número finito de estados, un conjunto de entradas y una función de transición que determina el estado siguiente en función del estado actual y de las entradas.
@@ -649,17 +704,17 @@ El modelado de problemas usando MEFs hace más sencilla la comprensión del sist
 
 Un modelo de MEF debe tener las entradas y las reglas bien definidas para cambiar de estado, sus transiciones se pueden especificar mediante un “diagrama de estados” o “tabla de transiciones de estados” y cada transición implica diferentes respuestas o acciones del sistema.
 
-## 8.1. Modelo de Mealy
+## 9.1. Modelo de Mealy
 En el modelo de Mealy, la **salida** depende del **estado actual** y de las **entradas**. Son propensos a este modelo los sistemas donde la salida provoca el cambio de estado. Por ejemplo, en un robot, el movimiento de sus articulaciones produce el cambio de estado (parado-sentado)
 <p style="text-align:center"><img src="./img/mealy.png"/></p>
 
-## 8.2. Modelo de Moore
+## 9.2. Modelo de Moore
 En el modelo de Moore, la **salida** del sistema depende solo del **estado actual**. Puede haber múltiples estados con la misma salida, pero para cada estado el significado es diferente. La salida guarda estrecha relacióon con el estado, por ejemplo un controlador de semáforo.
 <p style="text-align:center"><img src="./img/moore.png"/></p>
 
 **NOTA:** *ambos modelos son intercambiables pero es mejor optar por la forma que representa de manera más natural el problema*
 
-## 8.3. Implementación en C
+## 9.3. Implementación en C
 * Definir conjunto de estados
   * ``enum estados = [STATE0,STATE1,..]``
 * Definir conjunto de salidas
@@ -692,7 +747,7 @@ Ejecutar_MEF(){
     }
 }
 ```
-### 8.3.1. Usando switch-case
+### 9.3.1. Usando switch-case
 En implementaciones con switch, los case de cada estado se evaluarán secuencialmente, equivale a una cadena de if consecutivos de resolución. No tarda lo mismo en ejecutar las actualizaciones según el caso.
 ```c
 typedef enum{S0,S1} state; //definicion y declaracion de variables de estado
@@ -724,7 +779,7 @@ void ActualizarMEF(void){
 }
 ```
 
-### 8.3.2. Usando punteros a función
+### 9.3.2. Usando punteros a función
 En implementaciones con punteros a función o tablas el tiempo de acceso a las funciones es el mismo independientemente del valor de la variable de estado, equivale a un desvío selectivo de la ejecución del programa. En general implementaciones con punteros o tablas de transición permiten uniformidad en el tiempo de acceso, son más compactas, pero ocupan más memoria. 
 
 ```c
@@ -762,7 +817,7 @@ void fS1(void){
 
 ```
 
-# 9. Timer 2. RTC
+# 10. Timer 2. RTC
 La única diferencia entre el Timer0 y el Timer2 es la siguiente:
 
 * El Timer0 puede ser alimentado por <mark>una señal de reloj externa</mark> a traves del <mark>pin T0</mark>.
@@ -771,18 +826,7 @@ La única diferencia entre el Timer0 y el Timer2 es la siguiente:
 
 Una de las cosas que permite el modo asíncrono del Timer2 es la implementación de un **Real-Time-Clock**, que puede contar segundos, minutos, horas, días, meses, indistintamente de lo que este haciendo la CPU o el Oscilador principal. Esto permite que la CPU pueda entrar en modo Sleep mientras que el Timer2 continua contando y solo despierta a la CPU ante un evento de Overflow para incrementar el contador necesario
 
-<table>
-  <tr>
-    <th>Timer0</th>
-    <th>Timer2</th>
-  </tr>
-  <tr>
-    <td><img src="./img/timer0.png"/></td>
-    <td><img src="./img/timer2.png"/></td>
-  </tr>
-</table>
-
-# 10. Watchdog Timer
+# 11. Watchdog Timer
 El Watchdog timer es un mecanismo de protección ante fallas de software o hardware, básicamente cuenta pulsos de reloj hasta un valor programable y genera una interrupción o un reset cuando alcanza dicho valor; por lo tanto, el software debe reiniciar el contador utilizando la instrucción WDR antes que este alcance la cantidad establecida (o time out). Si por algún motivo el software no reinicia el contador a tiempo se genera una interrupción o un reset.
 
 En modo interrupción puede utilizarse como despertador (wake-up) de un modo de bajo consumo o para limitar el máximo tiempo permitido para una operación dada.
@@ -795,9 +839,9 @@ Este timer se alimenta con un oscilador interno separado de 128kHz. Cuenta con u
 
 <p style="text-align:center"><img src="./img/wdt.png"/></p>
 
-# 11. Planificación y Ejecución de Tareas en Sistemas Embebidos
+# 12. Planificación y Ejecución de Tareas en Sistemas Embebidos
 
-## 11.1. Super-Loop o Round Robin Cíclico
+## 12.1. Super-Loop o Round Robin Cíclico
 En este tipo de planificación es dificil temporizar la ejecución ya que las distintas tareas se ejecutaran unicamente después de terminar la previa, que puede tener una duración variable.
 ```c
 /*------------------------------------------------------------------*-
@@ -820,7 +864,7 @@ void main(void){
   }
 }
 ```
-## 11.2. Foreground/Background o Event-Driven
+## 12.2. Foreground/Background o Event-Driven
 Cada interrupción corresponde a un evento asociado a una tarea específica (múltiples interrupciones). La ejecución de las tareas depende de que el evento ocurra.
 
 Las tareas que se ejecutan en el super-loop se denominan tareas de background y se ejecutan en función de los eventos asociados a las interrupciones.
@@ -872,12 +916,12 @@ ISR ( Event_Z ){
 }
 ```
 
-## 11.3. Time-triggered (disparadas por tiempo)
+## 12.3. Time-triggered (disparadas por tiempo)
 Estas serán tareas planificadas por una única interrupción periódica de Timer comúnmente llamada RTI (Real Time Interrupt). La RTI es la única “base de tiempo” del sistema para temporizar una o más tareas y el manejo de los eventos asincrónicos de los periféricos se realiza exclusivamente por encuesta (polling) periódica.
 
 Cada vez que ocurre la interrupción es como una marca de tiempo o Tick del sistema, que permite planificar que tarea corresponde ejecutar. Cuando la CPU no tenga que ejecutar tareas (zona IDLE) podemos poner el MCU en bajo consumo (SLEEP) hasta el próximo tick y ahorrar energía.
 
-## 11.4. Resumen
+## 12.4. Resumen
 <table>
   <tr>
     <th>Super Loop</th>
@@ -912,14 +956,59 @@ Cada vez que ocurre la interrupción es como una marca de tiempo o Tick del sist
   </tr>
 </table>
 
-# 12. RTOS (Real Time Operative System)
+# 13. Drivers. Modelo Productor/Consumidor.
+El modelo productor/consumidor se utiliza cuando diferentes tareas dentro de una aplicación producen y consumen gran cantidad de datos a diferentes velocidades. Una solución se basa en el uso de estructuras FIFO (Buffer globales).
+
+* En el contexto de una arquitectura Background/Foreground una tarea productora puede ser un handler de interrupción y la consumidora una tarea de segundo plano o viceversa.
+
+* En el contexto de la planificación Time-Triggered Cooperativa las tareas que producen y consumen datos a diferentes ritmos se implementan como tareas multi-etapas (no bloqueantes)
+
+## 13.1. Estructuras basicas para el intercambio de datos entre tareas
+
+* Buffer o cola: Estructura de datos de tamaño fijo, residente en RAM, que permite alojar temporalmente un conjunto de datos que poseen un determinado orden de llegada y de salida (por ejemplo FIFO).
+* Buffer circular (cola circular): un solo buffer y dos punteros, uno para leer y otro para escribir (a diferentes tasas), el tamaño es fijo pero los punteros recorren el mismo de manera circular sin distinguir un
+comienzo o un fin del mismo.
+* Buffer Ping Pong: se utiliza cuando los datos son producidos y almacenados en grandes volúmenes para su posterior procesamiento. Un buffer es de solo escritura y el otro de solo lectura, cuando se completa un ciclo de transferencia se intercambian entre si. Ejemplo: lectura de discos, memoria de video, USB.
+
+## 13.2. Arquitectura Foreground/Background
+```c
+main (void){
+  tarea1_Init();
+  tarea2_Init();
+  tarea3_Init();
+
+  sei();
+  
+  while(1){
+    if(evento_tarea1)
+      tarea1();
+    if(evento_tarea2)
+      tarea2();
+    if(evento_tarea3)
+      tarea3();
+  }
+}
+```
+```c
+ISR (tarea1){
+  …
+}
+ISR (tarea2){
+  …
+}
+ISR (tarea3){
+  …
+}
+```
+
+# 14. RTOS (Real Time Operative System)
 Un sistema operativo de tiempo real es un sistema operativo que provee respuestas a determinados eventos con un “tiempo de respuesta acotado”.
 
 Típicamente, las tareas tienen plazos (deadlines) que son valores de tiempo físico en los cuales se debe completar. Más generalmente, los programas en tiempo real pueden tener todo tipo de restricciones de tiempo, no solo deadlines por ejemplo, puede requerirse que una tarea se ejecute **no antes** de un momento determinado o puede requerirse que se ejecute **no más de una cantidad de tiempo después** de que se ejecute otra tarea, o se le puede solicitar que se ejecute **periódicamente** con un período específico. Las tareas pueden ser dependientes unas de otras y pueden actuar cooperativamente o pueden ser independientes (excepto que todas comparten los recursos del MCU).
 
 En un contexto multitareas donde hay más tareas que CPU o tareas que deben ejecutarse en un tiempo preciso es necesaria la planificación de tareas (**Task scheduling**).
 
-## 12.1. Scheduler
+## 14.1. Scheduler
 Un planificador (Scheduler) decide cual es la siguiente tarea a ejecutar en el instante de tiempo que la CPU se libera. El planificador puede ser:
 
 * Estatico: Se decide el orden y tiempo de ejecución en el diseño.
@@ -932,7 +1021,7 @@ El planificador puede utilizar la prioridad de una tarea para decidir cuando cor
 
 Un **preemptive priority-based scheduler** siempre ejecuta la tarea habilitada de mayor prioridad mientras que un **non-preemptive priority-based** scheduler usa la prioridad para decidir que tarea corresponde ejecutar luego de que la tarea actual finalice su ejecución y nunca interrumpe la ejecución de una tarea por otra.
 
-## 12.2. Modelo de tarea
+## 14.2. Modelo de tarea
 
 * Release time: o también tiempo de despacho, es el tiempo a partir del cual la tarea está habilitada para ejecutarse
 * Start time: inicio de la ejecución
@@ -945,75 +1034,323 @@ Un **preemptive priority-based scheduler** siempre ejecuta la tarea habilitada d
 
 <p style="text-align:center"><img src="./img/rtos-task.png"/></p>
 
-## 12.3. Componentes de un RTOS simple
+## 14.3. Componentes de un RTOS simple
 * Un planificador de tareas (scheduler) que permite decidir que tarea corresponde ejecutar en base a la temporización basado en una RTI.
 * Un despachador de tareas (dispacher) que permita ejecutar las tareas planificadas con distintas prioridades.
 * El RTOS y las tareas de aplicación del usuario son parte del mismo proyecto. **No** es una aplicación independiente, pero sí es un módulo portable.
 
-# 13. Timer 1
+# 15. Timer 1
 El Timer/Counter Timer1 es una unidad de 16-bit que permite event management, wave generation y **signal timing measurement**
 
 <p style="text-align:center"><img src="./img/timer1.png"/></p>
 
 A diferencia de Timer0 y Timer2, en Timer1 los registros *contador* TCNT1*, *output compare* OCR1A/B e *input capture* ICR1 son todos de **16 bits**
 
-a) Describa el funcionamiento y los registros del módulo Timer1. Realice un diagrama en bloques del mismo.
-b) Explique cuáles son los posibles modos de funcionamiento.
-c) Explique los modos de funcionamiento “Output Compare” de cada canal.
-d) Describa un método para generar una señal digital de frecuencia o periodo programable. Analice la resolución
-y el rango obtenido en función de los parámetros de configuración.
-e) Explique el funcionamiento del modo “Input Capture”.
-f) ¿Cómo lo utilizaría para medir el ancho de un pulso? ¿Cómo lo utilizaría para medir la frecuencia o período
-de una señal periódica? De un ejemplo de uso. En ambos casos, defina y analice la resolución y el rango de
-medida.
-g) El sensor de temperatura MAX6577 convierte la temperatura ambiente en una señal digital cuya frecuencia
-es proporcional a la temperatura en °C. Investigue la hoja de datos de este dispositivo y diga si es posible utilizar
-el Timer1 para medir la temperatura de un ambiente.
-## 13.1. Input Capture
+## 15.1. Accediendo a registros de 16 bits
+Como el bus de datos del Atmega328P es de 8 bits para poder acceder a registros de 16 bits es necesario hacer dos lecturas y dos escrituras
 
-## 13.2. Output Compare
+En el caso de una operación de lectura: Debe leerse primero la parte baja. Al leer la parte baja, la parte alta se almacena en el registro TEMP de 8 bits para la subsecuente lectura del mismo.
 
-# 14. Generacion y distribucion de reloj
-a) Explique cuáles son las posibles fuentes de reloj y sus rangos de frecuencia para que funcione el MCU.
-b) Explique cómo se distribuyen internamente las señales de reloj para la CPU y los distintos periféricos
-según las diferentes opciones (diagrama en bloques de la distribución interna de las señales de reloj).
-c) Investigue sobre cómo utilizar la biblioteca de funciones de bajo consumo (sleep.h).
-d) Explique
- cuál es la configuración del reloj del sistema dispuesta desde fábrica y que tolerancia tiene la
-frecuencia del mismo
+En el caso de la escritura, el proceso es inverso: Primero escribe en el registro TEMP la parte alta, y luego al escribir la parte baja se copia automaticamente el contenido de TEMP a la parte alta del registro TCNT1.
 
-# 15. USART
-a) Describa las características principales de una comunicación serie asincrónica.
-b) Explique cómo funcionan los tres subsistemas principales del módulo UART del Atmega: el generador de
-tasa de transmisión (baud rate), el transmisor y el receptor serie. Explique la funcionalidad de los registros
-correspondientes.
-c) Si se tiene una frecuencia de CLK = 8MHz, encuentre el valor de configuración para obtener tasas de
-transferencia de 1200, 2400, 4800, 9600, 19200 y 38400 bps. Determine el error resultante (en %) cometido en
-la aproximación respecto a los valores ideales.
-d) ¿Cuál es el error máximo respecto al baud rate estándar, que puede aceptarse en una comunicación serie
-asincrónica con formato 8N1 para que la comunicación sea confiable?
+Este mecanismo permite la escritura y lectura "sincrónica" del registro de 16 bits mientras el contador sigue funcionando y actualizando el registro.
 
-# 16. Arquitectura Background/Foreground
-a) Explique las características más importantes de la arquitectura de software Background / Foreground (eventtriggered).
-b) Investigue sobre cómo realizar una implementación de bajo consumo utilizando este tipo de arquitectura de
-software. Ayuda: descargue el artículo fore_back_MCU.pdf del aula virtual.
-c) Compare la arquitectura Background / Foreground con la utilizada en el TP2. Exponga ventajas y
-desventajas.
-d) Realice una implementación en pseudocódigo del modelo productor-consumidor para el Receptor y
-Transmisor del periférico UART
+<p style="text-align:center"><img src="./img/timer1-core.png"/></p>
 
-# 17. Drivers. Modelo Productor/Consumidor.
+## 15.2. Registros
+Posee registros similares a los vistos para el Timer0 y Timer2 y adiciona registros para el **capturador de entrada**
 
-# 18. Protocolo SPI. I2C
-a) Describa cuales son las características principales de una comunicación serie sincrónica SPI. Muestre como
-interconectar el microcontrolador con varios dispositivos esclavos genéricos.
-b) Explique cómo funcionan el módulo SPI del Atmega. Describa la funcionalidad de los registros
-correspondientes.
-c) Analice la hoja de datos del DS1302 y explique cómo conectarlo, es decir cual terminal del MCU corresponde
-conectar con cual terminal del dispositivo externo.
-d) Explique cuáles son las características principales de una comunicación serie sincrónica I2C y como se utiliza
-para conectar múltiples dispositivos.
-e) Analice la hoja de datos del DS3231 y explique cómo conectarlo a la interfaz TWI (I2C) del microntrolador
-Atmega.
+# 16. Generación de señales con Timer1
+El Timer1 posee 2 canales independientes para la generación de señales
 
-# 19. PWM
+<img src="./img/timer1-wg.png"/>
+
+## 16.1. Registro TCCR1A
+<img src="./img/timer1-tccr1a.png"/>
+
+## 16.2. Registro TCCR1B
+<img src="./img/timer1-tccr1b.png"/>
+
+## 16.3. Modo Normal
+En el modo normal, el contador cuenta hasta TOP (0xFF) e invierte la salida OC1A cuando la cuenta alcanza OCR1A- El periodo de la señal generada es independiente del valor OCR1A
+<img src="./img/timer1-normal-mode.png"/>
+
+## 16.4. Modo CTC
+En el modo CTC la salida de OC1A se invierte cuando TCNT1 alcanza el valor OCR1A, lo que permite controlar la frecuencia o el período de la señal.
+
+$f_{OC1A} = \frac{f_{clk\_I/O}}{2*N*(1+OCR1A)}$ donde $N$ es el Prescaler
+
+<img src="./img/timer1-ctc-mode.png"/>
+
+### 16.4.1. Observaciones
+* Para $f_{clk\_I/O}$ y $N$ fijos, y con $OCR1A$ variable de 16 bits se pueden generar 65536 ($2^{16}$) valores diferentes de $T_{OC1A}$ (o $f_{OC1A}$)
+* Para $f_{clk\_I/O}$ y $N$ fijos, y con $OCR1A=0$, el **período mínimo** que se puede generar será $T_{OC1A_Min} = 2*N*1 * T_{clk\_I/O}$
+* Para $f_{clk\_I/O}$ y $N$ fijos, y con $OCR1A=65536$, el **período máximo** que se puede generar será $T_{OC1A_MAX} = 2*N*65536 * T_{clk\_I/O}$
+* Para $f_{clk\_I/O}$ y $N$ fijos se puede calcular la resolución del período como la diferencia entre dos períodos para dos valores de OCR1A diferentes (x e y)
+  $$\Delta T_{OC1A} = T_{OC1A_X} - T_{OC1A_Y}= 2 * N * T_{CLK\_I/O} *(OCR1A_X - OCR1A_Y)$$
+
+# 17. Capturación de Entrada con Timer1
+La capturación de entrada me permite medir el tiempo entre flancos de una señal desconocida y así conocer su período.
+
+<p style="text-align:center"><img src="./img/timer1-ic.png"/></p>
+
+Cuando un cambio en el nivel lógico (un evento) ocurre en el pin de Input Capture (ICP1) y este cambio coincide con la configuración en el detector de flanco, se disparará una captura. Cuando se dispara una captura, el valor del contador de 16 bits (TCNT1) se escribe en el registro ICR1, también de 16 bits. La flag de input capture (ICF1) se activa al mismo tiempo que el valor de TCNT1 se copia al registro ICR1. Si esta habilitada (TICIE1=1), la flag ICF1 genera una interrupción de capturación de entrada (la flag se limpia automaticamente cuando se atiende la interrupción o alternativamente puede ser limpiada por software escribiendo un 1 en su bit location ``TIFR1 |=(1<<ICF1);``).
+
+El comparador analógico, compara la tensión de AIN1 (PB3) contra AIN0 (PB2) y si es mayor, da una salida "1".
+
+Luego, para conocer el período de la señal incógnita
+<p style="text-align:center"><img src="./img/timer1-ic-2.png"/></p>
+
+$$T_{ICP1} = (ICR1_{t2} - ICR1_{t1}) * N * T_{CLK\_I/O}$$
+
+## 17.1. Observaciones
+* Minimo período medible $T_{ICP\_MIN} = 1 * N * T_{CLK\_I/O}$
+* Máximo período medible $T_{ICP\_MAX} = 65535 * N * T_{CLK\_I/O}$
+* Resolución $\pm N * T_{CLK\_I/O}$
+
+# 18. Sistema y fuentes de reloj
+<p style="text-align:center"><img src="./img/clk-dist.png"/></p>
+
+* Reloj de CPU $clk_{CPU}$: El reloj de CPU esta conectados a las partes del sistema encargadas de la operacion del núcleo AVR, los módulos tales como el archivo de los registros de propósito general, el registro de estado y la memoria de datos que contiene el stack pointer. Detener el reloj de CPU prohibe al núcleo realizar operaciones generales y cálculos.
+* Reloj de I/O $clk_{I/O}$: El reloj de I/O es usado en general por los modulos I/O tales como Timer/Counters, SPI y USART. El reloj I/O tambiñen es usado por el módulo de interrupciones externas, aunque algunas interrupciones externas son asíncronas por lo que pueden ser detectadas aunque el reloj de I/O esté detenido.
+* Reloj de Flash $clk_{FLASH}$: El reloj de flash controla las operaciones de la interfaz flash. Generalmente se activa en simultaneo con el reloj de CPU.
+* Reloj de Timer Asíncrono $clk_{ASY}$: El reloj asíncrono permite al Timer/Counter asíncrono ser alimentado por un reloj externo o un cristal externo de hasta 32kHz, permitiendo funcionar al Timer/Counter como RTC cuando el dispositivo esta en estado SLEEP.
+* Reloj ADC $clk_{ADC}$: El convertidor analógico digital es provisto de su propio reloj para poder detener el reloj de CPU y el reloj de I/O a fin de reducir el ruido generado por los circuitos digitales. Esto permite obtener resultados de conversion más precisos.
+
+## 18.1. Fuentes
+1. Low power crystal oscillator: Conectando un cristal de cuarzo en los pines XTAL1 y XTAL2, input y output del oscilador pueden conseguirse frecuencias del rango 0.4 a 16.0 MHz
+2. Full swing crystal oscillator: Igual a (1) pero con mayor consumo de energía y como resultado menor ruido en la señal de clk.
+3. Low frequency crystal oscillator: Oscilador interno para uso con un cristal de 32.769kHz
+4. Internal 128kHz RC oscillator: Oscilador interno calibrado a 128kHz para una tensión de 3V y una temperatura de 25ºC
+5. Calibrated internal RC oscillator: Por defecto el oscilador RC interno provee una señal clk aproximada de 8.0Mhz, puede ser calibrado por el usuario pero depende del voltaje y de la temperatura. Con una alimentación de 3V a una temperatura de 25ºC la precisión de la calibración de fábrica es del orden del 2%
+6. External Clock: Al utilizar un reloj externo este debe conectarse a la terminal XTAL1. El rango de frecuencia soportado es de 0 a 16Mhz
+
+**Nota:** *el prescaler permite dividir todas las fuentes de reloj por los factores* $2^0$. . . $2^8$
+
+**Nota:** *el Atmega328P trae seteado de fabrica al oscilador RC interno a 8.0Mhz con un divisor programado para obtener una señal resultante de 1Mhz como <mark>fuente por defecto de clk</mark>*
+
+# 19. Comunicación Serie
+En una transmisión serie, los datos se envían en paquetes de varios bits, un bit a la vez, por el mismo canal de comunicación.
+
+## 19.1. Definiciones
+* Tiempo de bit: tiempo de duración de un bit
+* Tasa de transferencia: el numero de bits por unidad de tiempo, tambien se la denomina baud-rate (simbolos por segundo)
+* Overhead: son bits o bytes que se agregan al dato para hacer más confiable una transmisión (bits de paridad o bytes de checksum)
+* Bandwith o Throughput: es el numero total de bits de información por unidad de tiempo, sin tener en cuenta el overhead
+  
+* Full-Duplex: Transmisión y recepción en ambos sentidos simultáneamente. Requiere de hardware separados y dos canales de comunicación.
+* Half-Duplex: La comunicación es bidireccional por 1 mismo canal, pero no simultáneamente (un problema fundamental de estos sistemas es el manejo de Colisiones)
+* Simplex: La comunicación es en un solo sentido.
+  
+* Sistema sincrónico: el receptor y el transmisor se deben sincronizar a una tasa de transferencia dada, empleando un reloj común a ambos (orientado a la transferencia de bloques de datos). La ventaja es que se pueden utilizar tasas de transferencia más altas, la desventaja es que requiere un conductor adicional (señal de clk).
+* Sistema asincrónico: TX y RX no están sincronizados por reloj común, si no que la tasa de transferencia se supone conocida y la trama de datos contiene un bit de comienzo y otro de fin para sincronizar el RX y decodificar los datos (orientado a transferencia de caracteres)
+
+# 20. USART
+El Transmisor Receptor Serie Sincrono Asincrono Universal (USART) es un dispositivo de comunicación sere altamente flexible incluído en el Atmega328P.
+
+<p style="text-align:center"><img src="./img/usart0.png"/></p>
+
+De su diagrama de bloques podemos analizar 3 partes de manera individual:
+* Generador de Clock: La lógica de generacion de reloj consiste de logica de sincronización para el input externo de clock usado para la transmisión síncrona en modo esclavo y el generador de *baud rate*. El pin XCKn solo es usado por el modo de transferencia síncrona.
+* Transmisor: El transmisor consiste de un único buffer de escritura, un registro de desplazamiento serie, un generador de paridad y lógica de control para manejar diferentes formatos de trama serie. El buffer de escritura permite la transferencia continua de datos sin ningun retraso entre tramas.
+* Receptor: El receptor es la parte más compleja del módulo USART, debido a sus unidades de reloj y de data recovery. La unidad de recovery se utiliza para la recepción asincrónica de información. Adicionalmente a las unidades de recovery, el receptor incluye un comprobador de paridad, lógica de control, un registro de desplazamiento y un buffer de recepción de dos niveles. El receptor soporta los mismos formatos de trama que el transmisor y puede detectar errores de trama, sobrecarga de datos (se recibe un dato nuevo y el anterior aun no fue leido) y errores de paridad.
+* Registros de control compartidos por todas las unidades
+
+## 20.1. Paso por paso
+
+* Transmisión: Si el registro UDR está vacío (flag UDRE=1) el usuario puede cargar un dato para transmitir. Este inmediatamente se transfiere al shift register y la transmisión comienza. El usuario puede escribir otro dato en el UDR que quedará a la espera de ser transmitido. Esto constituye un mecanismo de doble Buffer. El flag TXC se activa (TXC=1) cuando el transmisor haya completado la transmisión y tanto el UDR como el shift register estén vacios. Ambos flag se borran automáticamente con la escritura de un dato en el UDR.
+* Recepción: Los datos presentes en el pin de entrada del periférico son muestreados a una tasa 16 veces mayor a la seleccionada de manera de detectar el bit de comienzo y sincronizarse con el centro de los bits de datos. Una vez detectado el bit de comienzo, los datos son muestreados e introducidos al registro de desplazamiento a medida que son decodificados y hasta detectar el bit de parada o STOP. Luego de completar la recepción el contenido del registro de desplazamiento se transfiere al registro de datos UDR y se activa el flag que indica “dato recibido” RXC. Este flag también puede generar una solicitud de interrupción si se habilita RXCIE. Luego un nuevo dato puede ser recibido, mientras el anterior se encuentra almacenado en el UDR. Esto constituye un mecanismo de doble Buffer
+
+## 20.2. Registros de control
+
+### 20.2.1. UCSRA
+<img src="./img/usart0-ucsra.png"/>
+
+* RXC0 (Bit 7): USART Receive Complete 0. This flag bit is set when there are new data in the receive buffer that are not read yet. It is cleared when the receive buffer is empty. It also can be used to generate a receive complete interrupt.
+* TXC0 (Bit 6): USART Transmit Complete 0. This flag bit is set when the entire frame in the transmit shift register has been transmitted and there are no new data available in the transmit data buffer register (TXB). It can be cleared by writing a one to its bit location. Also it is automatically cleared when a transmit complete interrupt is executed. It can be used to generate a transmit complete interrupt.
+* UDRE0 (Bit 5): USART Data Register Empty 0. This flag is set when the transmit data buffer is empty and it is ready to receive new data. If this bit is cleared you should not write to UDR0 because it overrides your last data. The UDRE0 flag can generate a data register empty interrupt.
+* FE0 (Bit 4): Frame Error 0. This bit is set if a frame error has occurred in receiving the next character in the receive buffer. A frame error is detected when the first stop bit of the next character in the receive buffer is zero.
+* DOR0 (Bit 3): Data OverRun 0. This bit is set if a data overrun is detected. A data overrun occurs when the receive data buffer and receive shift register are full, and a new start bit is detected.
+* PE0 (Bit 2): Parity Error 0. This bit is set if parity checking was enabled (UPM1 = 1) and the next character in the receive buffer had a parity error when received.
+* U2X0 (Bit 1): Double the USART Transmission Speed 0
+* MPCM0 (Bit 0): Multi-processor Communication Mode 0
+
+### 20.2.2. UCSRB
+<img src="./img/usart0-ucsrb.png"/>
+
+* RXCIE0 (Bit 7): Receive Complete Interrupt Enable.
+* TXCIE0 (Bit 6): Transmit Complete Interrupt Enable.
+* UDRIE0 (Bit 5): USART Data Register Empty Interrupt Enable.
+* RXEN0 (Bit 4): Receive Enable.
+* TXEN0 (Bit 3): Transmit Enable.
+* UCSZ02 (Bit 2): Character Size. This bit combined with the UCSZ1:0 bits in UCSRC sets the number of data bits (character size) in a frame.
+* RXB80 (Bit 1): Receive data bit 8. This is the ninth data bit of the received character when using serial frames with nine data bits.
+* TXB80 (Bit 0): Transmit data bit 8. This is the ninth data bit of the transmitted character when using serial frames with nine data bits
+
+### 20.2.3. UCSRC
+<img src="./img/usart0-ucsrc.png"/>
+
+* UMSEL01:00 (Bits 7:6): USART Mode Select. These bits select the operation mode of the USART.
+  * 00 = Asynchronous USART operation
+  * 01 = Synchronous USART operation
+  * 10 = Reserved
+  * 11 = Master SPI (MSPIM)
+* UPM01:00 (Bit 5:4): Parity Mode. These bits disable or enable and set the type of parity generation and check.
+  * 00 = Disabled
+  * 01 = Reserved
+  * 10 = Even Parity
+  * 11 = Odd Parity
+* USBS0 (Bit 3): Stop Bit Select. This bits selects the number of stop bits to be transmitted.
+  * 0 = 1 bit
+  * 1 = 2 bits
+* UCSZ01:00 (Bit 2:1): Character Size. These bits combined with the UCSZ02 bit in UCSR0B set the character size in a frame.
+* UCPOL0 (Bit 0): Clock Polarity. This bit is used for synchronous mode
+
+#### 20.2.3.1. Frame configuration - Character Size
+<img src="./img/usart0-csize.png"/>
+
+# 21. RS-232
+Estándar propuesto por la EIA (Electronics Industry Association) en 1960, para interconectar Data Terminal Equipment y Data Communication Equipment.
+
+Especifica tasas de transferencia no mayor a 20Kbps para distancias de interconexión de 15m y tasas de transferencia hasta 115kbps para distancias más cortas. La interfaz puede operar en modo asincrónico, sincrónico, full-dúplex, half-dúplex o simplex.
+
+Define un 1 lógico (Mark) como una tensión entre -3 y -15V y un 0 lógico (Space) como una tensión entre +3 y +15V. La región (-3,3) no esta definida.
+
+<p style="text-align:center"><img src="./img/rs-232.png"/></p>
+
+### 21.0.1. Formato de trama
+
+<img src="./img/rs-232-frame.png"/>
+
+El comienzo de flujo de datos se reconoce porque la señal pasa de “marca” a “espacio”. Esta sincronización entre emisor y receptor generalmente se implementa como el bit de arranque.
+
+RS-232 NO especifica como representar caracteres (7 u 8 bits es la forma más común, pero podrían
+ser 5, 6 ó 9).
+
+Tampoco el bit de paridad (que es opcional, depende de la implementación):
+* No Parity (sin paridad)
+* Even Parity (paridad “par”): el bit de paridad es uno (1) para que haya una cantidad par de unos.
+* Odd Parity (paridad “impar”): el bit de paridad es uno (1) para que haya una cantidad impar de unos.
+
+Después del bit de paridad (si lo hay) continúan los bits de parada (stop bits) que pueden ser 1, 1.5 o 2 dependiendo la implementación.
+
+El formato de trama más utilizado es el formato 8N1, con un bit de start, 8 bits de dato y un bit de stop, sin bits de paridad.
+
+### 21.0.2. Control de flujo
+El control de flujo es indicar al emisor cuando puede transmitir y cuando debe esperar. En RS-232 puede implementarse por software o hardware
+
+* Por software: se envía un caracter (ASCII 19) para indicar al emisor que el buffer de recepción está lleno, y un carácter (ASCII 17) para indicar que puede volver a transmitir
+* Por hardware:  requiere que entre el receptor y el emisor se conecten dos hilos más: RTS y CTS. Cuando el buffer del receptor se llena desactiva la señal CTS, el emisor debe esperar. Cuando vuelva a tener espacio en el buffer, activa nuevamente el CTS para decir que está nuevamente listo.
+
+# 22. SPI (Serial Peripheral Interface)
+SPI Es una interfaz desarollada por Motorola en 1991, permite comunicación serie full duplex **sincrónica** con dispositivos periféricos u otros MCU y altas tasas de transferencia de hasta 10Mbits/s.
+Utiliza una configuracion Master-Slave donde el master genera y distribuye la señal de reloj, y opcionalmente utiliza una línea de seleción de chip por cada dispositivo esclavo.
+
+<p style="text-align:center"><img src="./img/spi-bd.png"/></p>
+El sistema consiste de dos registros de desplazamiento, y un generador de clock maestro. El SPI master inicia el ciclo de comunicación *pulleando a low* el pin Slave Select (SS) del Slave deseado. Luego, maestro y esclavo se preparan para recibir información en sus respectivos registros de desplazamiento, y el maestro genera los pulsos de reloj necesarios en la linea SCK para intercambiar información. La información siempre es desplazada desde el maestro hacia el esclavo en la linea MOSI, y desde el esclavo hacia el maestro en la linea MISO. Luego de cada paquete de datos, el maestro sincroniza al esclavo *pulleando a high* la linea SS.
+
+**Cuando se configura como maestro**, la SPI no tiene control automatico de la linea SS, esta debe ser manejada por el software antes de que comience la comunicación. Luego de esto, escribir en el registro de datos de la SPI inicia el generador de clock y el hardware desplaza los 8 bits al esclavo. Luego de desplazar 1 byte, el generador de reloj se detiene, seteando la flag de fin de transmisión (SPIF).
+Si el bit de interrupción de la SPI está activado (SPIE) en el registro (SPCR), se genera una interrupción. El maestro puede continuar desplazando el proximo byte escribiendolo en SPDR o indicar el fin de paquete, pulleando high la linea SS. El ultimo byte se mantiene en el buffer del registro para su uso posterior.
+
+**Cuando se configura como esclavo**, la SPI se mantiene "durmiendo" con la linea MISO *tri-stated*, mientras el pin SS se mantenga high. Mientras MISO está en este estado, el software puede actualizar el contenido del registro de datos de la SPI (SPDR) pero los datos no serán desplazados por pulsos entrantes en el pin SCK hasta que el pin SS sea pulleado a low. Cuando se completa el desplazamiento de un byte, se setea la flag de fin de transmision (SPIF). Si las interrupciones estan habilitadas (seteando el bit SPIE del registro SPCR), se generará una interrupción. El esclavo puede continuar colocando nuevos datos para ser envíados en el registro SPDR antes de leer datos entrantes. El ultimo dato entrante se mantendrá en el buffer del registro para su uso posterior.
+
+Se usa single buffer para la transmisión y buffer doble para la recepción. Esto significa que los butes para ser transmitidos no puede ser escritos al registro de datos de la SPI antes de que el ciclo de desplazamiento se complete. Sin embargo, cuando se recibe información, el byte recibido debe ser leido del registro de datos de la SPI antes de que se reciba un nuevo byte. De lo contrario, se pierde el primero.
+
+<table>
+<tr>
+<td><img src="./img/spi-m-s.png"/></td>
+<td><img src="./img/spi.png"/></td>
+</tr>
+</table>
+
+<table>
+<tr><th>Ventajas</th><th>Desventajas</th></tr>
+<tr>
+  <td>
+    <ul>
+      <li>No está limitado a la transferencia de bloques de 8 bits, ni al orden de transmisión de los bits</li>
+      <li>Libre elección del tamaño de la trama de bits, de su significado y su propósito</li>
+      <li>Permite seleccionar cuatro modos de operación (polaridad-fase)</li>
+      <li>No es necesario arbitraje o mecanismos de respuesta ante fallos</li>
+      <li>Los dispositivos esclavos usan el reloj que envía el maestro, no necesitan por tanto su propio reloj y este puede configurarse según la aplicación.</li>
+      <li>Un dispositivo puede utilizarse para solo transmitir, sólo recibir o ambas cosas a la vez</li>
+      <li>Existen diferentes versiones para aumentar la eficiencia de la transeferencia (Dual SPI, Quad SPI, QPI)</li>
+    </ul>
+  </td>
+  <td>
+    <ul>
+      <li>Requiere más terminales de conexion que TWI</li>
+      <li>El direccionamiento se hace mediante lineas de seleccion de chip</li>
+      <li>No posee control de flujo por hardware</li>
+      <li>No posee mecanismos de reconocimiento (el maestro podria enviar informacion sin que estuviesen conectados los esclavos)</li>
+      <li>No permite más de un maestro conectado al bus</li>
+    </ul>
+  </td>
+<tr>
+</table>
+
+## 22.1. Registros
+
+### 22.1.1. Data Register (SPDR)
+
+### 22.1.2. Status Register (SPCR)
+<img src="./img/spi-spcr.png"/>
+
+* SPIE (SPI Interrupt Enable)
+* SPE (SPI Enable)
+* DORD (Data Order)
+* MSTR (Master)
+* CPOL (Clock Polarity)
+* CPHA (Clock Phase)
+* SPR1,SPR0: SPI Clock Rate
+
+<table>
+<tr><th>Mode Select</th><th>SCK Frequency</th></tr>
+<tr>
+<td><img src="./img/spi-mode.png"/></td>
+<td><img src="./img/spi-sck.png"/></td>
+</tr>
+</table>
+
+### 22.1.3. Status Register (SPSR)
+<img src="./img/spi-spsr.png"/>
+
+* SPIF (SPI Interrupt Flag): Transferencia completa (tx & rx)
+* WCOL (Write Collision): Registro SPDR escrito durante transferencia de datos
+* SPI2X (Double SPI Speed): Duplicar la frecuencia de SCK duplica cuando el SPI esta en modo maestro
+
+# 23. TWI (2 Wire Interface, I2C)
+La interfaz TWI es ideal para aplicaciones típicas de microcontroladores. El protocolo TWI permite al diseñador de sistemas interconectar hasta 128 dispositivos diferentes usando solo un bus de dos lineas bi-direccionales, una para reloj (SCL) y otra para datos (SDA). El unico hardware externo necesario para implementar el bus es un único resistor de pull up por cada una de las lineas del bus TWI. Todos los dispositivos conectados al bus tienen direcciones individuales y los mecanismos para resolver la contención en el bus son inherentes al protocolo TWI
+
+## 23.1. Terminologia
+<img src="./img/twi.png"/>
+
+* Maestro: Inicia y termina la transmision, genera el reloj en la linea SCL
+* Esclavo: El dispositivo dirigido por un maestro
+* Transmisor: El dispositivo que pone datos en el bus
+* Receptor: El dispositivo que lee datos del bus
+
+## 23.2. Transferencia y formato de trama
+Cada bit de datos se transmite en el bus TWI acompañado de un pulso de reloj en la linea SCL, el nivel de la línea de datos debe ser estable durante el pulso alto de reloj, excepto al generar las condiciones de START y STOP.
+
+El maestro es el encargado de inciar y terminar las transmisiones de datos. La transmisión se inicia cuando el maestro emite una condición de START en el bus, y se termina cuando emite una de STOP. Entre las condiciones de START  y STOP el bus se considera ocupado y ningun Maestro debe intentar tomar control del bus. Se produce un caso especial cuando se emite una nueva condición de START entre una condición de START y una de STOP. Esto se denomina condición de REPEATED START y se utiliza cuando el maestro desea iniciar una nueva transferencia sin renunciar al control del bus. Luego de un REPEATED START el bus se considera ocupado hasta el siguiente STOP (START y REPEATED START son identicos).
+
+La señal de START y STOP se generan con un flanco de bajada y uno de subida respectivamente, junto con un pulso alto en la linea SCL.
+
+### 23.2.1. Formato de paquete de direcciones
+Todos los paquetes de direcciones transmitidos en el bus TWI son de 9 bits, constando de 7 bits de direcciones, 1 bit de READ/WRITE (1/0) y 1 bit de acknowledge. Cuando un esclavo reconoce que esta siendo direccionado por el maestro, debe pullear low la linea SDA durante el 9º ciclo de SCL (el ciclo de ACK). Luego el maestro puede transmitir una condición de STOP o REPEATED START para iniciar a transmitir.
+
+**Nota:** *Un paquete de direcciones con directiva de lectura se denomina **SLA+R**, uno con directiva de escritura **SLA+W**.*
+
+El bit más significativo (MSB) se transmite primero. Las direcciones de esclavo pueden alocarse libremente por el diseñador, pero la direccion 0000 000 está reservada para *llamado general*. Una llamada general se usa cuando el maestro quiere transmitir el mismo mensaje a varios esclavos del sistema. Las llamadas generales no tienen sentido para lectura ya que se producirian colisiones en el bus.
+
+**Nota:** *Todas las direcciones de formato 1111 xxx deberían estar reservadas para futuros propositos*
+
+### 23.2.2. Formato de paquete de datos
+Todos los paquetes de datos transmitidos en el bus TWI son de 9 bits, constando de 1 byte de datos y 1 bit de acknowledge. Durante una transferencia de datos, el maestro genera el reloj y las condiciones de START y STOP, mientras que el receptor es responsable del acknowledge de la recepción. El acknowledge (ACK) es emitido por el receptor pulleando la linea SDA a low durante el 9º ciclo de SCL. El MSB de los datos se transmite primero.
+
+### 23.2.3. Sincronización
+El esclavo puede extender el periodo low de la linea SCL pulleando a low la misma, esto es util para si la velocidad de reloj del maestro es demasiado rapida para el esclavo o para obtener tiempo extra de procesamiento. Esta extension del periodo de SCL no afecta al periodo alto de la misma, el cual es determinado por el maestro. Como consecuencia, el esclabo puede reducir la velocidad de transferencia al prolongar el ciclo de trabajo de SCL.
+
+# 24. Señales PWM (Pulse Width Modulation)
+Pulse Width Modulation es una técnica de modulación digital donde la información útil de la señal se encuentra en el ancho del pulso. Esto permite que se pueda obtener una señal analógica a partir de una señal digital, y controlar dispositivos analogicos por medio de salidas digitales.
